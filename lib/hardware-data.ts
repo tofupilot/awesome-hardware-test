@@ -26,6 +26,7 @@ export type TestCategory =
   | 'Videos & Resources';
 
 export const hardwareTestData: HardwareTestResource[] = [
+  // Test Execution Engines
   {
     id: 'crappy',
     name: 'crappy',
@@ -94,6 +95,64 @@ export const hardwareTestData: HardwareTestResource[] = [
     }
   },
   {
+    id: 'opentap',
+    name: 'OpenTAP',
+    category: 'Test Execution Engines',
+    description: 'Open Source Test Automation Platform for creating, executing, and analyzing test sequences',
+    language: 'C#',
+    tags: ['csharp', 'automation', 'platform', 'sequences'],
+    links: {
+      github: 'https://github.com/opentap/opentap',
+      website: 'https://www.opentap.io'
+    }
+  },
+  {
+    id: 'pytest-qt',
+    name: 'pytest-qt',
+    category: 'Test Execution Engines',
+    description: 'pytest plugin for testing Qt applications',
+    language: 'Python',
+    tags: ['pytest', 'qt', 'gui-testing', 'plugin'],
+    links: {
+      github: 'https://github.com/pytest-dev/pytest-qt'
+    }
+  },
+  {
+    id: 'autolab',
+    name: 'AutoLab',
+    category: 'Test Execution Engines',
+    description: 'Measurement automation made easy',
+    language: 'Python',
+    tags: ['automation', 'measurement', 'instruments'],
+    links: {
+      github: 'https://github.com/qcha/AutoLab'
+    }
+  },
+  {
+    id: 'mats',
+    name: 'MATS',
+    category: 'Test Execution Engines',
+    description: 'Modular Automated Test System for hardware-in-the-loop testing',
+    language: 'LabVIEW',
+    tags: ['labview', 'modular', 'hil', 'automated'],
+    links: {
+      github: 'https://github.com/ni/mats'
+    }
+  },
+  {
+    id: 'lava',
+    name: 'LAVA',
+    category: 'Test Execution Engines',
+    description: 'Linaro Automated Validation Architecture for automated testing of deployed software',
+    language: 'Python',
+    tags: ['linaro', 'validation', 'automated', 'deployment'],
+    links: {
+      github: 'https://github.com/Linaro/lava'
+    }
+  },
+
+  // Test Database & Analytics
+  {
     id: 'tofupilot',
     name: 'TofuPilot',
     category: 'Test Database & Analytics',
@@ -115,6 +174,8 @@ export const hardwareTestData: HardwareTestResource[] = [
       website: 'https://yieldhub.com'
     }
   },
+
+  // Instrument Interface
   {
     id: 'pyvisa',
     name: 'PyVISA',
@@ -127,6 +188,89 @@ export const hardwareTestData: HardwareTestResource[] = [
       docs: 'https://pyvisa.readthedocs.io'
     }
   },
+  {
+    id: 'test-controller',
+    name: 'Test Controller',
+    category: 'Instrument Interface',
+    description: 'Software for logging, storing device data and configuration from laboratory devices via TCP/IP, UDP, and Serial interfaces',
+    language: 'Python',
+    tags: ['logging', 'tcp-ip', 'udp', 'serial', 'configuration'],
+    links: {
+      github: 'https://github.com/TUBvision/test_controller'
+    }
+  },
+
+  // Wafer Maps
+  {
+    id: 'wafer-map',
+    name: 'wafer-map',
+    category: 'Wafer Maps',
+    description: 'Semiconductor Wafer Mapping in Python',
+    language: 'Python',
+    tags: ['semiconductor', 'wafer', 'mapping', 'visualization'],
+    links: {
+      github: 'https://github.com/dougthor42/wafer_map'
+    }
+  },
+  {
+    id: 'py-wdf-reader',
+    name: 'py-wdf-reader',
+    category: 'Wafer Maps',
+    description: 'Python library for reading Renishaw WDF files',
+    language: 'Python',
+    tags: ['wdf', 'renishaw', 'spectroscopy', 'reader'],
+    links: {
+      github: 'https://github.com/alchem0x2A/py-wdf-reader'
+    }
+  },
+  {
+    id: 'waferthin',
+    name: 'waferthin',
+    category: 'Wafer Maps',
+    description: 'A Python library for semiconductor wafer mapping and analysis',
+    language: 'Python',
+    tags: ['wafer', 'mapping', 'analysis', 'semiconductor'],
+    links: {
+      github: 'https://github.com/MatthewTheGhoul/waferthin'
+    }
+  },
+
+  // Hardware Devices
+  {
+    id: 'nanovna-saver',
+    name: 'NanoVNA-Saver',
+    category: 'Hardware Devices',
+    description: 'Tool for reading, displaying and saving data from the NanoVNA vector network analyzer',
+    language: 'Python',
+    tags: ['nanovna', 'vna', 'network-analyzer', 'rf'],
+    links: {
+      github: 'https://github.com/NanoVNA-Saver/nanovna-saver'
+    }
+  },
+  {
+    id: 'red-pitaya',
+    name: 'Red Pitaya',
+    category: 'Hardware Devices',
+    description: 'Open source test and measurement platform',
+    language: 'C',
+    tags: ['oscilloscope', 'signal-generator', 'spectrum-analyzer', 'open-hardware'],
+    links: {
+      github: 'https://github.com/RedPitaya/RedPitaya',
+      website: 'https://www.redpitaya.com'
+    }
+  },
+  {
+    id: 'tinysa',
+    name: 'tinySA',
+    category: 'Hardware Devices',
+    description: 'Tiny Spectrum Analyzer - ultra portable RF test equipment',
+    tags: ['spectrum-analyzer', 'rf', 'portable', 'hardware'],
+    links: {
+      website: 'https://www.tinysa.org'
+    }
+  },
+
+  // Hardware Mocking
   {
     id: 'pyvisa-sim',
     name: 'PyVISA-sim',
@@ -147,6 +291,30 @@ export const hardwareTestData: HardwareTestResource[] = [
     tags: ['linux', 'mocking', 'devices', 'integration'],
     links: {
       github: 'https://github.com/martinpitt/umockdev'
+    }
+  },
+
+  // Test Suites
+  {
+    id: 'ltp',
+    name: 'Linux Test Project',
+    category: 'Test Suites',
+    description: 'Test suite for the Linux kernel and related features',
+    language: 'C',
+    tags: ['linux', 'kernel', 'stress-testing', 'regression'],
+    links: {
+      github: 'https://github.com/linux-test-project/ltp'
+    }
+  },
+  {
+    id: 'stress-ng',
+    name: 'stress-ng',
+    category: 'Test Suites',
+    description: 'Stress test tool that exercises various stress tests on a computer system',
+    language: 'C',
+    tags: ['stress-testing', 'cpu', 'memory', 'disk', 'system'],
+    links: {
+      github: 'https://github.com/ColinIanKing/stress-ng'
     }
   }
 ];
