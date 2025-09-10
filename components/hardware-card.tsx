@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/lib/use-translations';
 import { HardwareItem } from '@/lib/hardware-data';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +13,7 @@ interface HardwareCardProps {
 }
 
 export function HardwareCard({ item }: HardwareCardProps) {
-  const t = useTranslations();
+  const { t } = useTranslations();
   
   return (
     <Card className="h-full flex flex-col">

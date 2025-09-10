@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from '@/lib/use-translations';
 import { hardwareData, categories, type HardwareCategory, searchHardware, getItemsByCategory } from '@/lib/hardware-data';
 import { HardwareCard } from '@/components/hardware-card';
 import { LanguageSwitcher } from '@/components/language-switcher';
@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Filter } from 'lucide-react';
 
 export function HardwareList() {
-  const t = useTranslations();
+  const { t } = useTranslations();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<HardwareCategory | 'all'>('all');
   const [activeTab, setActiveTab] = useState('all');
@@ -119,7 +119,7 @@ export function HardwareList() {
 }
 
 function HardwareGrid({ items }: { items: typeof hardwareData }) {
-  const t = useTranslations();
+  const { t } = useTranslations();
   
   if (items.length === 0) {
     return (
