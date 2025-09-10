@@ -2,8 +2,8 @@
 
 import { useState, useMemo } from 'react';
 import { useTranslations } from '@/lib/use-translations';
-import { hardwareData, categories, type HardwareCategory, searchHardware, getItemsByCategory } from '@/lib/hardware-data';
-import { HardwareCard } from '@/components/hardware-card';
+import { hardwareTestData, categories, type TestCategory, searchHardwareTest, getItemsByCategory } from '@/lib/hardware-data';
+import { ResourceCard } from '@/components/resource-card';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -14,15 +14,15 @@ import { Search, Filter } from 'lucide-react';
 export function HardwareList() {
   const { t } = useTranslations();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<HardwareCategory | 'all'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<TestCategory | 'all'>('all');
   const [activeTab, setActiveTab] = useState('all');
 
   const filteredItems = useMemo(() => {
-    let items = hardwareData;
+    let items = hardwareTestData;
 
     // Apply search filter
     if (searchQuery.trim()) {
-      items = searchHardware(searchQuery);
+      items = searchHardwareTest(searchQuery);
     }
 
     // Apply category filter
@@ -34,7 +34,7 @@ export function HardwareList() {
   }, [searchQuery, selectedCategory]);
 
   const itemsByCategory = useMemo(() => {
-    const result: Record<string, typeof hardwareData> = { all: filteredItems };
+    const result: Record<string, typeof hardwareTestData> = { all: filteredItems };
     categories.forEach(category => {
       result[category] = filteredItems.filter(item => item.category === category);
     });
@@ -67,7 +67,7 @@ export function HardwareList() {
             />
           </div>
           
-          <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as HardwareCategory | 'all')}>
+          <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as TestCategory | 'all')}>
             <SelectTrigger className="w-full sm:w-[180px]">
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder="Category" />
@@ -76,7 +76,7 @@ export function HardwareList() {
               <SelectItem value="all">{t('categories.all')}</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
-                  {t(`categories.${category.toLowerCase()}`)}
+                  {t(`categories.${category.toLowerCase().replace(/ & /g, ' & ').replace(/ /g, ' ')}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -99,7 +99,7 @@ export function HardwareList() {
           </TabsTrigger>
           {categories.slice(0, 11).map((category) => (
             <TabsTrigger key={category} value={category} className="text-xs">
-              {t(`categories.${category.toLowerCase()}`)} ({itemsByCategory[category].length})
+              {t(`categories.${category.toLowerCase().replace(/ & /g, ' & ').replace(/ /g, ' ')}`)} ({itemsByCategory[category].length})
             </TabsTrigger>
           ))}
         </TabsList>
@@ -118,15 +118,15 @@ export function HardwareList() {
   );
 }
 
-function HardwareGrid({ items }: { items: typeof hardwareData }) {
+function HardwareGrid({ items }: { items: typeof hardwareTestData }) {
   const { t } = useTranslations();
   
   if (items.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-lg text-muted-foreground">{t('hardware.noItems')}</p>
+        <p className="text-lg text-muted-foreground">{t('resource.noItems')}</p>
         <p className="text-sm text-muted-foreground mt-2">
-          {t('hardware.adjustFilters')}
+          {t('resource.adjustFilters')}
         </p>
       </div>
     );
@@ -135,7 +135,7 @@ function HardwareGrid({ items }: { items: typeof hardwareData }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item) => (
-        <HardwareCard key={item.id} item={item} />
+        <ResourceCard key={item.id} item={item} />
       ))}
     </div>
   );
