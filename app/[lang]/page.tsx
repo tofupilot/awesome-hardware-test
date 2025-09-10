@@ -1,5 +1,5 @@
-import { AwesomeList } from '@/components/awesome-list';
+import { GitHubStyle } from '@/components/github-style';
 
 export default function Home() {
-  return <AwesomeList />;
+  return <GitHubStyle />;
 }
