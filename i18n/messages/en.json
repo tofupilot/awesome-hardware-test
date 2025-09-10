@@ -1,0 +1,33 @@
+{
+  "title": "Awesome Hardware Test",
+  "description": "Curated list of tested hardware components with benchmarks and reviews",
+  "search": {
+    "placeholder": "Search hardware...",
+    "results": "{count} items found"
+  },
+  "categories": {
+    "all": "All Categories",
+    "cpu": "CPU",
+    "gpu": "GPU", 
+    "motherboard": "Motherboard",
+    "ram": "RAM",
+    "storage": "Storage",
+    "psu": "PSU",
+    "cooling": "Cooling",
+    "case": "Case",
+    "monitor": "Monitor",
+    "audio": "Audio",
+    "network": "Network"
+  },
+  "hardware": {
+    "specifications": "Key Specifications",
+    "testResults": "Test Results",
+    "officialPage": "Official Page",
+    "reviews": "Reviews",
+    "noItems": "No hardware items found.",
+    "adjustFilters": "Try adjusting your search or category filter."
+  },
+  "tabs": {
+    "all": "All ({count})"
+  }
+}
