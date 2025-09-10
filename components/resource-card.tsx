@@ -1,93 +1,158 @@
-'use client';
+"use client"
 
-import { useTranslations } from '@/lib/use-translations';
-import { HardwareTestResource } from '@/lib/hardware-data';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { ExternalLink, Github, Globe } from 'lucide-react';
+import Link from "next/link"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Github, Star, ExternalLink, Skull } from "lucide-react"
 
-interface ResourceCardProps {
-  item: HardwareTestResource;
+interface Resource {
+  id: string
+  name: string
+  description: string
+  language: string
+  category: string
+  url: string
+  stars?: number
+  githubUrl?: string
+  voltage: string
+  frequency: string
+  commercial?: boolean
+  unmaintained?: boolean
 }
 
-export function ResourceCard({ item }: ResourceCardProps) {
-  const { t } = useTranslations();
-  
+interface ResourceCardProps {
+  resource: Resource
+}
+
+export function ResourceCard({ resource }: ResourceCardProps) {
+  const getPlaceholderImage = (resourceName: string, category: string) => {
+    const queries = {
+      crappy: "python hardware testing framework dashboard",
+      exclave: "rust factory testing infrastructure",
+      "Flojoy Studio": "visual scripting IDE interface",
+      htf: "medical device testing framework",
+      mats: "manufacturing test environment",
+      octoprobe: "micropython board testing setup",
+      openhtf: "google hardware testing framework",
+      robotframework: "automation testing framework",
+      sopic: "production line test station",
+      TreeATE: "factory testing automation platform",
+      "pytest-embedded": "embedded testing plugin",
+      HardPy: "pytest hardware test bench",
+      TofuPilot: "hardware test database analytics",
+      yieldHUB: "semiconductor test analytics",
+      pyvisa: "measurement device interface",
+      "Test controller": "device control software",
+      stdf2map: "wafer map visualization",
+    }
+
+    const query = queries[resourceName as keyof typeof queries] || `${category.toLowerCase()} hardware testing tool`
+    return `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(query)}`
+  }
+
+  const formatStars = (stars?: number) => {
+    if (!stars) return null
+    if (stars >= 1000) {
+      return `${(stars / 1000).toFixed(1)}k`
+    }
+    return stars.toString()
+  }
+
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-lg">{item.name}</CardTitle>
-            <CardDescription className="mt-1">{item.description}</CardDescription>
-          </div>
-          <Badge variant="secondary">{item.category}</Badge>
-        </div>
-        
-        <div className="flex items-center gap-2 mt-2">
-          {item.language && (
-            <Badge variant="outline" className="text-xs">
-              {item.language}
-            </Badge>
-          )}
-          {item.isCommercial ? (
-            <Badge variant="destructive" className="text-xs">
-              {t('resource.commercial')}
-            </Badge>
-          ) : (
-            <Badge variant="default" className="text-xs">
-              {t('resource.openSource')}
-            </Badge>
-          )}
-        </div>
-      </CardHeader>
-      
-      <CardContent className="flex-1 flex flex-col">
-        {/* Tags */}
-        <div className="mb-4">
-          <div className="flex flex-wrap gap-1">
-            {item.tags.map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
+    <Card className="bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 transition-all duration-300 overflow-hidden group cursor-pointer backdrop-blur-sm hover:shadow-lg hover:shadow-green-500/10 rounded-none p-3">
+      <Link href={`/resource/${resource.id}`}>
+        {/* Image */}
+        <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
+          <Image
+            src={getPlaceholderImage(resource.name, resource.category) || "/placeholder.svg"}
+            alt={`${resource.name} preview`}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          {/* Hardware overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
+
+          {/* Overlay badges */}
+          <div className="absolute top-3 right-3 flex gap-2">
+            {resource.stars && (
+              <Badge
+                variant="secondary"
+                className="bg-zinc-900/90 text-green-400 text-xs backdrop-blur-sm font-mono rounded-none"
+              >
+                <Star className="h-3 w-3 mr-1 fill-current" />
+                {formatStars(resource.stars)}
               </Badge>
-            ))}
+            )}
+            {resource.commercial && (
+              <Badge
+                variant="secondary"
+                className="bg-yellow-900/90 text-yellow-300 text-xs backdrop-blur-sm font-mono rounded-none"
+              >
+                COMMERCIAL
+              </Badge>
+            )}
+            {resource.unmaintained && (
+              <Badge
+                variant="secondary"
+                className="bg-red-900/90 text-red-300 text-xs flex items-center backdrop-blur-sm font-mono rounded-none"
+              >
+                <Skull className="h-3 w-3 mr-1" />
+                RIP
+              </Badge>
+            )}
           </div>
         </div>
 
-        <Separator className="mb-4" />
-
-        {/* Links */}
-        <div className="mt-auto space-y-2">
-          {item.links.github && (
-            <Button variant="outline" size="sm" className="w-full" asChild>
-              <a href={item.links.github} target="_blank" rel="noopener noreferrer">
-                <Github className="w-4 h-4 mr-2" />
-                {t('resource.github')}
-              </a>
-            </Button>
-          )}
-          
-          {item.links.website && (
-            <Button variant="outline" size="sm" className="w-full" asChild>
-              <a href={item.links.website} target="_blank" rel="noopener noreferrer">
-                <Globe className="w-4 h-4 mr-2" />
-                {t('resource.website')}
-              </a>
-            </Button>
-          )}
-
-          {item.links.docs && (
-            <Button variant="outline" size="sm" className="w-full" asChild>
-              <a href={item.links.docs} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                {t('resource.documentation')}
-              </a>
-            </Button>
-          )}
-        </div>
-      </CardContent>
+        <CardHeader className="pb-3">
+          <div className="flex items-start justify-between mb-2">
+            <CardTitle className="text-lg font-mono text-green-400 group-hover:text-green-300 transition-colors">
+              {resource.name.toUpperCase()}
+            </CardTitle>
+            <div className="flex items-center gap-2">
+              {resource.githubUrl && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 w-6 p-0 text-zinc-400 hover:text-green-400 rounded-none bg-transparent"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    window.open(resource.githubUrl, "_blank")
+                  }}
+                >
+                  <Github className="h-3 w-3" />
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 w-6 p-0 text-zinc-400 hover:text-green-400 rounded-none bg-transparent"
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.open(resource.url, "_blank")
+                }}
+              >
+                <ExternalLink className="h-3 w-3" />
+              </Button>
+            </div>
+          </div>
+          <div className="flex gap-2 mb-3 flex-wrap">
+            <Badge
+              variant="outline"
+              className="border-green-500/30 text-green-400 text-xs font-mono rounded-none bg-transparent"
+            >
+              {resource.language.toUpperCase()}
+            </Badge>
+            <Badge variant="secondary" className="bg-zinc-700/70 text-zinc-300 text-xs font-mono rounded-none">
+              {resource.category.replace(" ", "_").toUpperCase()}
+            </Badge>
+          </div>
+          <CardDescription className="text-zinc-400 text-sm leading-relaxed line-clamp-3 font-mono">
+            {resource.description}
+          </CardDescription>
+        </CardHeader>
+      </Link>
     </Card>
-  );
+  )
 }
