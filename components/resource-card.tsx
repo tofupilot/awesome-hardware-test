@@ -101,10 +101,10 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
                   href={resource.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`h-6 w-6 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400' : 'hover:text-green-400'} transition-colors`}
+                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Github className="h-3 w-3" />
+                  <Github className="h-4 w-4" />
                 </Link>
               )}
               {resource.links?.website && (
@@ -112,10 +112,10 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
                   href={resource.links.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`h-6 w-6 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400' : 'hover:text-green-400'} transition-colors`}
+                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm`}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <ExternalLink className="h-3 w-3" />
+                  <ExternalLink className="h-4 w-4" />
                 </Link>
               )}
             </div>

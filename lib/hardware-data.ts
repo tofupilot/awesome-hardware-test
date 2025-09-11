@@ -56,8 +56,8 @@ export const hardwareTestData: HardwareTestResource[] = [
     name: 'crappy',
     category: 'Test Execution Engines',
     description: {
-      en: 'Python framework for real-time data acquisition and parallel hardware test control',
-      fr: 'Framework Python pour l\'acquisition de données en temps réel et le contrôle de tests parallèles'
+      en: 'Python framework for real-time data acquisition and parallel hardware control',
+      fr: 'Framework Python pour acquisition temps réel et contrôle hardware parallèle'
     },
     language: 'Python',
     license: 'GPL-3.0',
@@ -110,8 +110,8 @@ test.run()`
     name: 'exclave',
     category: 'Test Execution Engines',
     description: {
-      en: 'Rust-based infrastructure for high-performance factory testing and automation',
-      fr: 'Infrastructure Rust pour les tests et l\'automatisation en usine haute performance'
+      en: 'Rust infrastructure for high-performance factory testing and automation',
+      fr: 'Infrastructure Rust pour tests et automatisation usine haute performance'
     },
     language: 'Rust',
     license: 'Apache-2.0',
@@ -179,8 +179,8 @@ runner.execute(test)?;`
     name: 'openhtf',
     category: 'Test Execution Engines',
     description: {
-      en: 'Google\'s open-source framework for scalable hardware validation and manufacturing tests',
-      fr: 'Framework open-source de Google pour la validation matérielle et les tests de production'
+      en: 'Google\'s framework for scalable hardware validation and manufacturing tests',
+      fr: 'Framework Google pour validation matérielle et tests de production'
     },
     language: 'Python',
     license: 'Apache-2.0',
@@ -239,8 +239,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     name: 'HardPy',
     category: 'Test Execution Engines',
     description: {
-      en: 'Python library for browser-based pytest test benches with database result storage',
-      fr: 'Bibliothèque Python pour bancs d\'essai pytest via navigateur avec stockage en base de données'
+      en: 'Python library for browser-based pytest test benches with database storage',
+      fr: 'Bibliothèque Python pour bancs d\'essai pytest via navigateur avec stockage BD'
     },
     language: 'Python',
     tags: ['pytest', 'browser', 'database', 'test-bench'],
@@ -390,8 +390,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     name: 'PyVISA',
     category: 'Instrument Interface',
     description: {
-      en: 'Python package for universal control of measurement instruments via VISA protocol',
-      fr: 'Package Python pour le contrôle universel d\'instruments de mesure via le protocole VISA'
+      en: 'Python package for universal instrument control via VISA protocol',
+      fr: 'Package Python pour contrôle universel d\'instruments via protocole VISA'
     },
     language: 'Python',
     tags: ['visa', 'instruments', 'control', 'measurement'],
