@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { Earth, ChevronDown } from "lucide-react"
+import { Earth, X } from "lucide-react"
 import { translations, Locale } from "@/lib/translations"
 
 interface LanguageDropdownProps {
@@ -11,8 +11,7 @@ interface LanguageDropdownProps {
 
 export function LanguageDropdown({ lang }: LanguageDropdownProps) {
   const t = translations[lang] || translations['en']
-  const [isOpen, setIsOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   
@@ -23,49 +22,91 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
   const handleLanguageChange = (newLang: Locale) => {
     const currentPath = pathname.replace(`/${lang}`, `/${newLang}`)
     router.push(currentPath)
-    setIsOpen(false)
+    setIsModalOpen(false)
   }
 
+  // Close modal on escape key
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden'
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [isModalOpen])
 
   return (
-    <div className="relative flex-1" ref={dropdownRef}>
-      <div 
-        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors w-full"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
-          <Earth className="h-3 w-3" />
-          {t.hero.stats.languages}
-          <ChevronDown className={`h-3 w-3 ml-auto transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+    <>
+      <div className="w-44 flex-shrink-0">
+        <div 
+          className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors w-full"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
+            <Earth className="h-3 w-3" />
+            {t.hero.stats.languages}
+          </div>
+          <div className="text-white font-bold">{getLanguagesCount()}</div>
         </div>
-        <div className="text-white font-bold">{getLanguagesCount()}</div>
       </div>
-      
-      {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-green-500/20 rounded-none z-[9999] shadow-lg">
-          <button
-            className={`w-full text-left p-3 font-mono text-sm hover:bg-green-500/10 transition-colors ${lang === 'en' ? 'text-green-400' : 'text-zinc-300'}`}
-            onClick={() => handleLanguageChange('en')}
-          >
-            🇺🇸 English
-          </button>
-          <button
-            className={`w-full text-left p-3 font-mono text-sm hover:bg-green-500/10 transition-colors border-t border-green-500/10 ${lang === 'fr' ? 'text-green-400' : 'text-zinc-300'}`}
-            onClick={() => handleLanguageChange('fr')}
-          >
-            🇫🇷 Français
-          </button>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsModalOpen(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative bg-zinc-800 border border-green-500/20 rounded-none shadow-2xl max-w-sm w-full mx-4">
+            <div className="flex items-center justify-between p-4 border-b border-green-500/20">
+              <h3 className="text-green-400 font-mono text-sm">{t.hero.stats.languages}</h3>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-zinc-400 hover:text-green-400 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            
+            <div className="p-4">
+              <div className="space-y-2">
+                <button
+                  className={`w-full text-left p-3 font-mono text-sm rounded-none border transition-all ${
+                    lang === 'en' 
+                      ? 'bg-green-500/10 border-green-500/30 text-green-400' 
+                      : 'bg-zinc-700/50 border-zinc-600/30 text-zinc-300 hover:bg-green-500/5 hover:border-green-500/20'
+                  }`}
+                  onClick={() => handleLanguageChange('en')}
+                >
+                  🇺🇸 English
+                </button>
+                <button
+                  className={`w-full text-left p-3 font-mono text-sm rounded-none border transition-all ${
+                    lang === 'fr' 
+                      ? 'bg-green-500/10 border-green-500/30 text-green-400' 
+                      : 'bg-zinc-700/50 border-zinc-600/30 text-zinc-300 hover:bg-green-500/5 hover:border-green-500/20'
+                  }`}
+                  onClick={() => handleLanguageChange('fr')}
+                >
+                  🇫🇷 Français
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
