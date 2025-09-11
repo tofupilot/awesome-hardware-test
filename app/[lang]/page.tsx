@@ -154,18 +154,14 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
             // Insert Discord card after 6th resource (2nd row in 3-col grid)
             if (index === 5) {
               items.push(
-                <div key="discord-card" className="md:col-span-2 lg:col-span-3">
-                  <DiscordSection lang={lang} />
-                </div>
+                <DiscordSection key="discord-card" lang={lang} />
               );
             }
             
             // Insert Newsletter card after 12th resource (4th row in 3-col grid)  
             if (index === 11) {
               items.push(
-                <div key="newsletter-card" className="md:col-span-2 lg:col-span-3">
-                  <NewsletterSection lang={lang} />
-                </div>
+                <NewsletterSection key="newsletter-card" lang={lang} />
               );
             }
             
