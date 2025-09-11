@@ -143,6 +143,7 @@ Exclave emphasizes modularity and extensibility, making it easy to integrate wit
     links: {
       github: 'https://github.com/flojoy-ai/studio'
     },
+    unmaintained: true,
   },
   {
     id: 'openhtf',

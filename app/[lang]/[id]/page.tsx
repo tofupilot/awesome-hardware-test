@@ -372,6 +372,63 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
               </CardContent>
             </Card>
 
+            {/* Explanation Card */}
+            <Card className="bg-zinc-800/70 border-green-500/20 rounded-none">
+              <CardHeader>
+                <CardTitle className="font-mono text-green-400">[HOW_IT_WORKS]</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 text-zinc-300 font-mono text-sm">
+                  <div>
+                    <h4 className="text-green-400 mb-2">ARCHITECTURE</h4>
+                    <p className="leading-relaxed">
+                      This tool implements a modular architecture with plugin-based extensions 
+                      for different test equipment. The core engine handles test sequencing, 
+                      data collection, and result reporting through a unified API.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="text-green-400 mb-2">KEY_CONCEPTS</h4>
+                    <ul className="space-y-1">
+                      <li className="flex items-start">
+                        <span className="text-green-400 mr-2">•</span>
+                        <span>Test fixtures define hardware interfaces and measurement points</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-green-400 mr-2">•</span>
+                        <span>Sequences orchestrate test flow with conditional logic</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-green-400 mr-2">•</span>
+                        <span>Data pipelines process and store results in real-time</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-green-400 mb-2">TYPICAL_WORKFLOW</h4>
+                    <ol className="space-y-1">
+                      <li className="flex items-start">
+                        <span className="text-yellow-400 mr-2">1.</span>
+                        <span>Configure test stations and equipment connections</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-400 mr-2">2.</span>
+                        <span>Define test sequences and pass/fail criteria</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-400 mr-2">3.</span>
+                        <span>Execute tests with automated data collection</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-400 mr-2">4.</span>
+                        <span>Analyze results and generate test reports</span>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Features */}
             <Card className="bg-zinc-800/70 border-green-500/20 rounded-none">
               <CardHeader>
