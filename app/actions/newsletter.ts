@@ -5,7 +5,6 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function subscribeToNewsletter(email: string, lang: string) {
-  console.log('Server action subscribeToNewsletter called:', { email, lang, timestamp: new Date().toISOString() });
   let cleanEmail = '';
   
   try {
@@ -47,14 +46,6 @@ export async function subscribeToNewsletter(email: string, lang: string) {
     }
 
     // Create contact in Resend
-    console.log('Attempting to create Resend contact:', {
-      email: cleanEmail,
-      firstName: firstName || undefined,
-      lastName: lastName || undefined,
-      audienceId: process.env.RESEND_AUDIENCE_ID,
-      hasApiKey: !!process.env.RESEND_API_KEY
-    });
-
     const contactResponse = await resend.contacts.create({
       email: cleanEmail,
       firstName: firstName || undefined,
@@ -63,21 +54,11 @@ export async function subscribeToNewsletter(email: string, lang: string) {
       audienceId: process.env.RESEND_AUDIENCE_ID,
     });
 
-    // Log full response including status code
-    console.log('Resend API full response:', {
-      response: contactResponse,
-      responseType: typeof contactResponse,
-      responseKeys: contactResponse ? Object.keys(contactResponse) : null,
-      email: cleanEmail,
-      audienceId: process.env.RESEND_AUDIENCE_ID
-    });
-
     // Check if contact was actually created - Resend SDK returns {data, error} structure
     if (!contactResponse || contactResponse.error) {
       console.error('Resend contact creation failed:', {
-        response: contactResponse,
         error: contactResponse?.error,
-        fullResponse: JSON.stringify(contactResponse)
+        email: cleanEmail
       });
       throw new Error(contactResponse?.error?.message || 'Failed to create contact in Resend');
     }
@@ -85,17 +66,11 @@ export async function subscribeToNewsletter(email: string, lang: string) {
     // Check if we have valid data
     if (!contactResponse.data || !contactResponse.data.id) {
       console.error('Resend contact creation - no contact ID in response:', {
-        response: contactResponse,
         data: contactResponse?.data,
-        fullResponse: JSON.stringify(contactResponse)
+        email: cleanEmail
       });
       throw new Error('Failed to create contact in Resend - no contact ID returned');
     }
-
-    console.log(`Newsletter subscription successful for ${cleanEmail} (lang: ${lang || 'en'})`, {
-      resendResponse: contactResponse,
-      resendContactId: contactResponse.data.id
-    });
 
     return {
       success: true,
@@ -118,7 +93,6 @@ export async function subscribeToNewsletter(email: string, lang: string) {
     
     // Check if it's a Resend API error for duplicate email
     if (error instanceof Error && error.message.includes('already exists')) {
-      console.log(`Email already subscribed: ${cleanEmail}`);
       return {
         success: true,
         message: 'Email already subscribed',

@@ -42,28 +42,15 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
       if (result.success) {
         setIsSubscribed(true);
         setEmail("");
-        console.log('Newsletter subscription successful:', {
-          email,
-          response: result,
-          timestamp: new Date().toISOString()
-        });
       } else {
         console.error('Newsletter subscription failed:', {
           error: result.error,
-          details: result.details,
-          fullResult: result,
-          email,
-          timestamp: new Date().toISOString()
+          details: result.details
         });
         setError(result.error || 'Failed to subscribe. Please try again.');
       }
     } catch (error) {
-      console.error('Error during newsletter subscription:', {
-        error,
-        message: error instanceof Error ? error.message : 'Unknown error',
-        email,
-        timestamp: new Date().toISOString()
-      });
+      console.error('Error during newsletter subscription:', error);
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
