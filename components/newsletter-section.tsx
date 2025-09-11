@@ -35,16 +35,13 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
 
   if (isSubscribed) {
     return (
-      <Card className="bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 transition-all duration-300 overflow-hidden group rounded-none !py-0">
-        <div className="relative h-48 bg-zinc-900/70 overflow-hidden flex items-center justify-center">
-          <CheckCircle className="h-16 w-16 text-green-400" />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
-        </div>
-        <CardHeader className="p-4">
-          <CardTitle className="text-lg font-mono text-green-400 text-center">
+      <Card className="bg-zinc-800/70 border-sky-500/20 hover:border-sky-500/50 transition-all duration-300 overflow-hidden group rounded-none">
+        <CardHeader className="p-4 text-center">
+          <CheckCircle className="h-12 w-12 text-sky-400 mx-auto mb-4" />
+          <CardTitle className="text-lg font-mono text-sky-400">
             {t.newsletter.confirmed.toUpperCase()}
           </CardTitle>
-          <CardDescription className="text-zinc-400 text-sm leading-relaxed text-center font-mono">
+          <CardDescription className="text-zinc-400 text-sm leading-relaxed font-mono">
             {t.newsletter.confirmedText}
           </CardDescription>
         </CardHeader>
@@ -53,39 +50,18 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
   }
 
   return (
-    <Card className="bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg hover:shadow-green-500/10 rounded-none !py-0">
+    <Card className="bg-zinc-800/70 border-sky-500/20 hover:border-sky-500/50 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg hover:shadow-sky-500/10 rounded-none">
       <div onClick={(e) => e.preventDefault()}>
-        {/* Image */}
-        <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
-          <ImagePlaceholder 
-            text="Stay updated with latest tools"
-            className="group-hover:scale-105 transition-transform duration-500"
-          />
-          {/* Hardware overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
-
-          {/* Overlay badges */}
-          <div className="absolute top-3 right-3 flex gap-2">
-            <Badge
-              variant="secondary"
-              className="bg-zinc-900/90 text-green-400 text-xs font-mono rounded-none"
-            >
-              <Mail className="h-3 w-3 mr-1" />
-              NEWSLETTER
-            </Badge>
-          </div>
-        </div>
-
         <CardHeader className="p-4">
           <div className="flex items-start justify-between mb-2">
-            <CardTitle className="text-lg font-mono text-green-400 group-hover:text-green-300 transition-colors">
+            <CardTitle className="text-lg font-mono text-sky-400 group-hover:text-sky-300 transition-colors">
               {t.newsletter.title.toUpperCase()}
             </CardTitle>
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 w-6 p-0 text-zinc-400 hover:text-green-400 rounded-none bg-transparent"
+                className="h-6 w-6 p-0 text-zinc-400 hover:text-sky-400 rounded-none bg-transparent"
                 onClick={(e) => {
                   e.preventDefault();
                   // Focus on email input when external link button is clicked
@@ -100,7 +76,7 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
           <div className="flex gap-2 mb-3 flex-wrap">
             <Badge
               variant="outline"
-              className="border-green-500/30 text-green-400 text-xs font-mono rounded-none bg-transparent"
+              className="border-sky-500/30 text-sky-400 text-xs font-mono rounded-none bg-transparent"
             >
               EMAIL
             </Badge>
@@ -121,13 +97,13 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
               placeholder={t.newsletter.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-zinc-900/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-green-500 focus:ring-green-500/20 rounded-none text-xs"
+              className="bg-zinc-900/70 border-sky-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-sky-500 focus:ring-sky-500/20 rounded-none text-xs"
               required
             />
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-mono rounded-none text-xs h-8"
+              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-mono rounded-none text-xs h-8"
             >
               {isLoading ? t.newsletter.subscribing : t.newsletter.subscribe}
             </Button>
