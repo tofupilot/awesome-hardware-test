@@ -3,6 +3,7 @@ import { translations, Locale } from "@/lib/translations"
 import { HeroSection } from "@/components/hero-section"
 import { SiteFooter } from "@/components/site-footer"
 import { NewsletterSection } from "@/components/newsletter-section"
+import { DiscordSection } from "@/components/discord-section"
 import { getAllGitHubData } from "@/lib/github-data"
 import { CategoryNavigationServer } from "@/components/category-navigation-server"
 import { ResourceCard } from "@/components/resource-card"
@@ -135,16 +136,41 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
 
         {/* Resources Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredResources.map((resource, index) => (
-            <ResourceCard 
-              key={resource.id} 
-              resource={resource} 
-              lang={lang}
-              starCount={githubData[resource.id]?.stars}
-              lastRelease={githubData[resource.id]?.lastRelease}
-              contributors={githubData[resource.id]?.contributors}
-            />
-          ))}
+          {filteredResources.map((resource, index) => {
+            const items = [];
+            
+            // Add the resource card
+            items.push(
+              <ResourceCard 
+                key={resource.id} 
+                resource={resource} 
+                lang={lang}
+                starCount={githubData[resource.id]?.stars}
+                lastRelease={githubData[resource.id]?.lastRelease}
+                contributors={githubData[resource.id]?.contributors}
+              />
+            );
+            
+            // Insert Discord card after 6th resource (2nd row in 3-col grid)
+            if (index === 5) {
+              items.push(
+                <div key="discord-card" className="md:col-span-2 lg:col-span-3">
+                  <DiscordSection lang={lang} />
+                </div>
+              );
+            }
+            
+            // Insert Newsletter card after 12th resource (4th row in 3-col grid)  
+            if (index === 11) {
+              items.push(
+                <div key="newsletter-card" className="md:col-span-2 lg:col-span-3">
+                  <NewsletterSection lang={lang} />
+                </div>
+              );
+            }
+            
+            return items;
+          }).flat()}
         </div>
 
         {filteredResources.length === 0 && (
@@ -158,10 +184,6 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
           </div>
         )}
 
-        {/* Newsletter Section */}
-        <div className="mt-16">
-          <NewsletterSection lang={lang} />
-        </div>
 
         <SiteFooter lang={lang} />
       </main>

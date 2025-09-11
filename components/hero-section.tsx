@@ -12,7 +12,7 @@ export function HeroSection({ lang }: HeroSectionProps) {
   const t = translations[lang] || translations['en']  // Fallback to English
   return (
     <section className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-green-500/20 relative">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl relative z-10">
           <div className="flex items-center mb-6">
             <div className="relative mr-4 flex-shrink-0 p-1 border border-green-500/20">
@@ -75,24 +75,6 @@ export function HeroSection({ lang }: HeroSectionProps) {
             </div>
           </div>
 
-          {/* Discord CTA */}
-          <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-4 mb-6 font-mono">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-green-400 font-bold mb-1">{t.hero.discord.title}</h3>
-                <p className="text-zinc-400 text-sm">{t.hero.discord.description}</p>
-              </div>
-              <Button
-                asChild
-                className="border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300 font-mono rounded-none bg-transparent"
-              >
-                <Link href="https://discord.gg/cahVxMvW" target="_blank" className="flex items-center gap-2">
-                  <MessageCircle className="h-4 w-4" />
-                  {t.hero.discord.button}
-                </Link>
-              </Button>
-            </div>
-          </div>
 
           <p className="text-sm text-zinc-500 font-mono">
             [{t.hero.credits.createdBy}:{" "}
