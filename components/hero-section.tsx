@@ -44,7 +44,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
     if (diffDays === 1) return '1d'
     if (diffDays < 7) return `${diffDays}d`
     if (diffDays < 30) return `${Math.floor(diffDays / 7)}w`
-    return `${Math.floor(diffDays / 30)}m`
+    return `${Math.floor(diffDays / 30)}mo`
   }
   return (
     <section className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-green-500/20 relative">

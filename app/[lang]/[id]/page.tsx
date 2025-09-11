@@ -166,7 +166,9 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
     if (diffYears > 0) {
       return `${diffYears}y ago`
     } else if (diffDays > 30) {
-      return `${Math.floor(diffDays / 30)}m ago`
+      return `${Math.floor(diffDays / 30)}mo ago`
+    } else if (diffDays > 7) {
+      return `${Math.floor(diffDays / 7)}w ago`
     } else if (diffDays > 0) {
       return `${diffDays}d ago`
     } else {
