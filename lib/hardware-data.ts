@@ -29,6 +29,11 @@ export interface HardwareTestResource {
   documentation?: string;
   unmaintained?: boolean;
   unmaintainedReason?: string;
+  recommendedReplacements?: {
+    id: string;
+    name: string;
+    reason?: string;
+  }[];
   image?: string;
   imagePlaceholder?: string;
   codeExample?: string;
@@ -163,7 +168,11 @@ runner.execute(test)?;`
       github: 'https://github.com/flojoy-ai/studio'
     },
     unmaintained: true,
-    unmaintainedReason: 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed. Consider alternatives like OpenHTF or pytest-embedded for similar functionality.',
+    unmaintainedReason: 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed.',
+    recommendedReplacements: [
+      { id: 'openhtf', name: 'OpenHTF', reason: 'Google\'s framework for hardware test automation' },
+      { id: 'pytest-embedded', name: 'pytest-embedded', reason: 'Modern pytest plugin for embedded testing' }
+    ],
   },
   {
     id: 'openhtf',
@@ -404,7 +413,11 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       github: 'https://github.com/test-controller/test-controller'
     },
     unmaintained: true,
-    unmaintainedReason: 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions like PyVISA and LabGrid which offer better protocol support and active maintenance.',
+    unmaintainedReason: 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions with better protocol support and active maintenance.',
+    recommendedReplacements: [
+      { id: 'pyvisa', name: 'PyVISA', reason: 'Modern Python library for instrument control' },
+      { id: 'labgrid', name: 'labgrid', reason: 'Advanced embedded board control framework' }
+    ],
   },
 
   // Wafer Maps
@@ -626,6 +639,10 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     },
     unmaintained: true,
     unmaintainedReason: 'TreeATE has not received updates since 2022. While the factory automation platform still functions, it lacks support for modern testing protocols and newer hardware interfaces. The Chinese-language documentation may also limit adoption outside of specific regions.',
+    recommendedReplacements: [
+      { id: 'openhtf', name: 'OpenHTF', reason: 'Comprehensive test execution framework' },
+      { id: 'exclave', name: 'Exclave', reason: 'Rust-based factory test runner' }
+    ],
   },
   {
     id: 'pytest-embedded',
