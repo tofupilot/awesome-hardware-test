@@ -3,6 +3,19 @@ import { NextRequest, NextResponse } from 'next/server';
 const locales = ['en', 'fr'];
 const defaultLocale = 'en';
 
+function getLocale(request: NextRequest): string {
+  // Try to get locale from Accept-Language header
+  const acceptLanguage = request.headers.get('accept-language');
+  if (acceptLanguage) {
+    const preferredLocale = acceptLanguage
+      .split(',')
+      .map((lang) => lang.split(';')[0].trim().substring(0, 2))
+      .find((lang) => locales.includes(lang));
+    if (preferredLocale) return preferredLocale;
+  }
+  return defaultLocale;
+}
+
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
@@ -11,11 +24,21 @@ export function middleware(request: NextRequest) {
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
 
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = defaultLocale;
+  // For root path, redirect to detected locale or default
+  if (pathname === '/') {
+    const locale = getLocale(request);
     return NextResponse.redirect(
-      new URL(`/${locale}${pathname}`, request.url)
+      new URL(`/${locale}`, request.url),
+      { status: 302 } // Use temporary redirect for language detection
+    );
+  }
+
+  // Redirect other paths missing locale
+  if (pathnameIsMissingLocale) {
+    const locale = getLocale(request);
+    return NextResponse.redirect(
+      new URL(`/${locale}${pathname}`, request.url),
+      { status: 301 } // Use permanent redirect for SEO
     );
   }
 }

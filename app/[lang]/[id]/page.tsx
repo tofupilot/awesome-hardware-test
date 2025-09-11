@@ -75,8 +75,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     alternates: {
       canonical: `${siteUrl}/${lang}/${id}`,
       languages: {
-        'en': `/en/${id}`,
-        'fr': `/fr/${id}`,
+        'x-default': `${siteUrl}/en/${id}`,
+        'en': `${siteUrl}/en/${id}`,
+        'fr': `${siteUrl}/fr/${id}`,
       },
     },
     openGraph: {
@@ -217,7 +218,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
             <ArrowLeft className="h-4 w-4" />
             <span className="text-sm">[BACK_TO_RESOURCES]</span>
           </Link>
-          <div className="flex items-center space-x-4">
+          <div className="hidden sm:flex items-center space-x-4">
             <Button
               variant="outline"
               size="sm"
@@ -237,7 +238,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
             >
               <Link href={resource.links?.website || resource.links?.github || '#'} target="_blank">
                 <ExternalLink className="h-4 w-4 mr-2" />
-                VISIT
+                WEBSITE
               </Link>
             </Button>
           </div>
@@ -247,14 +248,13 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
       <main className="container mx-auto px-4 py-8 relative z-10">
         {/* Hero Section */}
         <div className="mb-8">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="relative">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+            <div className="relative flex-shrink-0">
               <CategoryIcon className={`h-12 w-12 ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`} />
-              <div className={`absolute -top-1 -right-1 w-3 h-3 ${resource.unmaintained ? 'bg-red-400' : 'bg-green-400'} rounded-none`} />
             </div>
-            <div>
-              <h1 className={`text-4xl font-bold font-mono ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>{resource.name.toUpperCase()}</h1>
-              <p className="text-zinc-400 font-mono text-sm">
+            <div className="min-w-0 flex-1">
+              <h1 className={`text-2xl sm:text-4xl font-bold font-mono ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} break-words`}>{resource.name.toUpperCase()}</h1>
+              <p className="text-zinc-400 font-mono text-sm sm:text-base break-words mt-1">
                 [{typeof resource.description === 'object' 
                   ? resource.description[lang].toUpperCase() 
                   : (resource.description as string).toUpperCase()}]
@@ -263,8 +263,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Repository stats */}
-          <div className="overflow-x-auto mb-6">
-            <div className="flex gap-3 min-w-max">
+          <div className="overflow-x-auto">
+            <div className="flex gap-3 pb-2 min-w-max">
               <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
                 <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
                   <Star className="h-3 w-3 mr-1" />
@@ -297,7 +297,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Category and Language badges */}
-          <div className="flex flex-wrap gap-4 mb-6">
+          <div className="flex flex-wrap gap-4 mt-4">
             <Badge variant="secondary" className="bg-zinc-700/70 text-zinc-300 font-mono rounded-none">
               {resource.language?.toUpperCase() || 'UNKNOWN'}
             </Badge>
@@ -317,7 +317,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                   <CardHeader>
                     <CardTitle className="font-mono text-red-400 flex items-center">
                       <Skull className="h-5 w-5 mr-2 flex-shrink-0" />
-                      <span>[RIP {resource.name.toUpperCase()}]</span>
+                      <span className="break-all">[RIP {resource.name.toUpperCase()}]</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -345,8 +345,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                             className="block p-3 bg-green-900/10 border border-green-500/20 rounded-none hover:bg-green-900/20 hover:border-green-500/40 transition-all group"
                           >
                             <div className="flex items-center gap-2 mb-2">
-                              <span className="text-green-400">→</span>
-                              <div className="font-bold text-green-400 group-hover:text-green-300 font-mono">
+                              <span className="text-green-400 flex-shrink-0">→</span>
+                              <div className="font-bold text-green-400 group-hover:text-green-300 font-mono break-words">
                                 {replacement.name.toUpperCase()}
                               </div>
                             </div>
@@ -419,13 +419,13 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className={`bg-zinc-900/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-4 font-mono text-sm`}>
+                <div className={`bg-zinc-900/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-4 font-mono text-sm overflow-x-auto`}>
                   <div className="text-zinc-500 mb-2"># Installation</div>
-                  <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>{resource.installation || 'Installation instructions not available'}</div>
+                  <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} break-all`}>{resource.installation || 'Installation instructions not available'}</div>
                   {resource.codeExample && (
                     <>
                       <div className="text-zinc-500 mt-4 mb-2"># Basic usage example</div>
-                      <div className="text-zinc-300 whitespace-pre-wrap font-mono">{resource.codeExample}</div>
+                      <div className="text-zinc-300 whitespace-pre-wrap font-mono overflow-x-auto">{resource.codeExample}</div>
                     </>
                   )}
                 </div>
@@ -446,9 +446,9 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                           : resource.features as string[])
                       : [];
                     return features.map((feature, index) => (
-                      <div key={index} className="flex items-center text-zinc-300 font-mono text-sm">
-                        <div className={`w-2 h-2 ${resource.unmaintained ? 'bg-red-400' : 'bg-green-400'} rounded-none mr-3 flex-shrink-0`} />
-                        {feature.toUpperCase()}
+                      <div key={index} className="flex items-start text-zinc-300 font-mono text-sm">
+                        <div className={`w-2 h-2 ${resource.unmaintained ? 'bg-red-400' : 'bg-green-400'} rounded-none mr-3 flex-shrink-0 mt-1`} />
+                        <span className="break-words">{feature.toUpperCase()}</span>
                       </div>
                     ));
                   })()}
@@ -464,9 +464,9 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
               <CardContent>
                 <div className="grid gap-3">
                   {(resource.useCases || []).map((useCase, index) => (
-                    <div key={index} className="flex items-center text-zinc-300 font-mono text-sm">
-                      <div className="w-2 h-2 bg-yellow-400 rounded-none mr-3 flex-shrink-0" />
-                      {useCase.toUpperCase()}
+                    <div key={index} className="flex items-start text-zinc-300 font-mono text-sm">
+                      <div className="w-2 h-2 bg-yellow-400 rounded-none mr-3 flex-shrink-0 mt-1" />
+                      <span className="break-words">{useCase.toUpperCase()}</span>
                     </div>
                   ))}
                 </div>
@@ -485,8 +485,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className={`bg-zinc-900/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono text-sm ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                  $ {resource.installation}
+                <div className={`bg-zinc-900/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono text-sm ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} overflow-x-auto`}>
+                  <span className="break-all">$ {resource.installation}</span>
                 </div>
               </CardContent>
             </Card>
@@ -529,29 +529,29 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 <div className="flex justify-between font-mono text-sm">
                   <span className="text-zinc-400">STARS</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Star className="h-3 w-3 mr-1" />
-                    {formatStars(githubStars)}
+                    <Star className="h-3 w-3 mr-1 flex-shrink-0" />
+                    <span className="break-all">{formatStars(githubStars)}</span>
                   </span>
                 </div>
                 <div className="flex justify-between font-mono text-sm">
                   <span className="text-zinc-400">CONTRIBUTORS</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Users className="h-3 w-3 mr-1" />
-                    {repoData?.contributors || 'N/A'}
+                    <Users className="h-3 w-3 mr-1 flex-shrink-0" />
+                    <span className="break-all">{repoData?.contributors || 'N/A'}</span>
                   </span>
                 </div>
                 <div className="flex justify-between font-mono text-sm">
                   <span className="text-zinc-400">LAST_RELEASE</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Calendar className="h-3 w-3 mr-1" />
-                    {formatReleaseDate(individualRepoData?.lastRelease)}
+                    <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
+                    <span className="break-all">{formatReleaseDate(individualRepoData?.lastRelease)}</span>
                   </span>
                 </div>
                 <div className="flex justify-between font-mono text-sm">
                   <span className="text-zinc-400">LICENSE</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Scale className="h-3 w-3 mr-1" />
-                    {formatLicense(individualRepoData?.license || resource.license)}
+                    <Scale className="h-3 w-3 mr-1 flex-shrink-0" />
+                    <span className="break-all">{formatLicense(individualRepoData?.license || resource.license)}</span>
                   </span>
                 </div>
               </CardContent>
