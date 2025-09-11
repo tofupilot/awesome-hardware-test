@@ -409,9 +409,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     },
     language: 'Various',
     tags: ['logging', 'tcp-ip', 'udp', 'serial', 'configuration'],
-    links: {
-      github: 'https://github.com/test-controller/test-controller'
-    },
+    links: {},
     unmaintained: true,
     unmaintainedReason: 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions with better protocol support and active maintenance.',
     recommendedReplacements: [

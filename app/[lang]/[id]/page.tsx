@@ -123,7 +123,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   }
 
   const formatStars = (stars?: number) => {
-    if (!stars) return "0"
+    if (stars === undefined || stars === null) return "N/A"
+    if (stars === 0) return "0"
     if (stars >= 1000) {
       return `${(stars / 1000).toFixed(1)}k`
     }
