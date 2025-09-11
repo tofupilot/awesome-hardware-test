@@ -290,8 +290,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'C#',
     tags: ['csharp', 'automation', 'platform', 'sequences'],
     links: {
-      github: 'https://github.com/opentap/opentap'
-    },
+      github: 'https://github.com/opentap/opentap',
       website: 'https://www.opentap.io'
     }
   },
@@ -396,8 +395,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['visa', 'instruments', 'control', 'measurement'],
     links: {
-      github: 'https://github.com/pyvisa/pyvisa'
-    },
+      github: 'https://github.com/pyvisa/pyvisa',
       docs: 'https://pyvisa.readthedocs.io'
     },
   },
@@ -504,8 +502,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'C',
     tags: ['oscilloscope', 'signal-generator', 'spectrum-analyzer', 'open-hardware'],
     links: {
-      github: 'https://github.com/RedPitaya/RedPitaya'
-    },
+      github: 'https://github.com/RedPitaya/RedPitaya',
       website: 'https://www.redpitaya.com'
     },
   },
