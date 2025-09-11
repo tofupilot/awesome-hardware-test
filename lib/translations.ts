@@ -8,7 +8,7 @@ export const translations = {
         hardware: "HARDWARE", 
         test: "TEST"
       },
-      subtitle: "A curated collection of useful resources for hardware test teams. From test execution engines to wafer maps, find the tools you need.",
+      subtitle: "A curated collection of open-source tools for hardware testing. Test frameworks, instrument control libraries, wafer analysis tools, and automation solutions for validation engineers.",
       discord: {
         title: "Don't debug alone - hardware testing is hard enough already.",
         description: "Join our Discord for technical support, emotional support, and to suggest resources.",
@@ -96,7 +96,7 @@ export const translations = {
         hardware: "MATÉRIEL", 
         test: "TEST"
       },
-      subtitle: "Une collection organisée de ressources utiles pour les équipes de test matériel. Des moteurs d'exécution aux cartes de wafers, trouvez les outils dont vous avez besoin.",
+      subtitle: "Une collection organisée d'outils open-source pour les tests matériels. Frameworks de test, bibliothèques de contrôle d'instruments, outils d'analyse de wafers et solutions d'automatisation pour ingénieurs de validation.",
       discord: {
         title: "Ne débuggez pas seul - les tests matériels sont déjà assez difficiles.",
         description: "Rejoignez notre Discord pour du support technique, émotionnel, et suggérer des ressources.",

@@ -282,41 +282,52 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           <div className="lg:col-span-2 space-y-8">
             {/* Unmaintained Project Explanation */}
             {resource.unmaintained && (
-              <Card className="bg-red-900/20 border-red-500/30 rounded-none">
-                <CardHeader>
-                  <CardTitle className="font-mono text-red-400 flex items-center items-baseline">
-                    <Skull className="h-5 w-5 mr-2 flex-shrink-0" />
-                    <span>[RIP {resource.name.toUpperCase()}]</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-zinc-300 font-mono text-sm leading-relaxed">
-                    {resource.unmaintainedReason || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.'}
-                  </div>
-                  {resource.recommendedReplacements && resource.recommendedReplacements.length > 0 && (
-                    <div className="border-t border-red-500/20 pt-4">
-                      <div className="text-zinc-400 font-mono text-xs mb-2">[RECOMMENDED_ALTERNATIVES]</div>
-                      <div className="space-y-2">
+              <>
+                <Card className="bg-red-900/20 border-red-500/30 rounded-none">
+                  <CardHeader>
+                    <CardTitle className="font-mono text-red-400 flex items-center items-baseline">
+                      <Skull className="h-5 w-5 mr-2 flex-shrink-0" />
+                      <span>[RIP {resource.name.toUpperCase()}]</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-zinc-300 font-mono text-sm leading-relaxed">
+                      {resource.unmaintainedReason || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.'}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Recommended Alternatives Card */}
+                {resource.recommendedReplacements && resource.recommendedReplacements.length > 0 && (
+                  <Card className="bg-green-900/20 border-green-500/30 rounded-none">
+                    <CardHeader>
+                      <CardTitle className="font-mono text-green-400 flex items-center">
+                        <Zap className="h-5 w-5 mr-2" />
+                        [RECOMMENDED_ALTERNATIVES]
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
                         {resource.recommendedReplacements.map((replacement) => (
                           <Link
                             key={replacement.id}
                             href={`/${lang}/${replacement.id}`}
-                            className="flex items-start gap-2 text-green-400 hover:text-green-300 font-mono text-sm transition-colors group"
+                            className="flex items-start gap-3 text-green-400 hover:text-green-300 font-mono text-sm transition-colors group"
                           >
-                            <span className="text-green-400">→</span>
-                            <div>
-                              <span className="underline">{replacement.name}</span>
+                            <span className="text-green-400 mt-0.5">→</span>
+                            <div className="flex-1">
+                              <div className="font-bold underline">{replacement.name.toUpperCase()}</div>
                               {replacement.reason && (
-                                <span className="text-zinc-400 ml-2 text-xs">// {replacement.reason}</span>
+                                <div className="text-zinc-400 text-xs mt-1">// {replacement.reason}</div>
                               )}
                             </div>
                           </Link>
                         ))}
                       </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </Card>
+                )}
+              </>
             )}
 
             {/* Hero Image */}
