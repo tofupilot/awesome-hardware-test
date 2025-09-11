@@ -40,7 +40,7 @@ export const translations = {
     categories: {
       all: "All Categories",
       "test execution engines": "Test Execution Engines",
-      "test database & analytics": "Test Database & Analytics", 
+      "test database analytics": "Test Database Analytics", 
       "instrument interface": "Instrument Interface", 
       "wafer maps": "Wafer Maps",
       "hardware devices": "Hardware Devices",
@@ -123,7 +123,7 @@ export const translations = {
     categories: {
       all: "Toutes les catégories",
       "test execution engines": "Moteurs d'exécution de tests",
-      "test database & analytics": "Base de données et analyses de tests", 
+      "test database analytics": "Base de données analyses de tests", 
       "instrument interface": "Interface d'instruments", 
       "wafer maps": "Cartes de plaquettes",
       "hardware devices": "Dispositifs matériels",

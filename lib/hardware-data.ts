@@ -15,6 +15,7 @@ export interface HardwareTestResource {
     docs?: string;
   };
   isCommercial?: boolean;
+  licenseTypes?: ('OSS' | 'FREE' | 'PAID')[];
   features?: {
     en: string[];
     fr: string[];
@@ -41,7 +42,7 @@ export interface HardwareTestResource {
 
 export type TestCategory = 
   | 'Test Execution Engines'
-  | 'Test Database & Analytics' 
+  | 'Test Database Analytics' 
   | 'Instrument Interface' 
   | 'Wafer Maps'
   | 'Hardware Devices'
@@ -61,6 +62,7 @@ export const hardwareTestData: HardwareTestResource[] = [
     },
     language: 'Python',
     license: 'Apache-2.0',
+    licenseTypes: ['OSS'],
     tags: ['google', 'framework', 'open-source', 'manufacturing'],
     links: {
       github: 'https://github.com/google/openhtf',
@@ -121,6 +123,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     },
     language: 'Python',
     license: 'GPL-3.0',
+    licenseTypes: ['OSS'],
     tags: ['python', 'real-time', 'acquisition', 'parallel'],
     links: {
       github: 'https://github.com/LaboratoireMecaniqueLille/crappy'
@@ -336,26 +339,28 @@ runner.execute(test)?;`
     }
   },
 
-  // Test Database & Analytics
+  // Test Database Analytics
   {
     id: 'tofupilot',
     name: 'TofuPilot',
-    category: 'Test Database & Analytics',
+    category: 'Test Database Analytics',
     description: {
       en: 'Plug-and-play database and analytics platform for hardware test data management',
       fr: 'Plateforme de base de données et d\'analyse plug-and-play pour la gestion des tests matériels'
     },
     language: 'Various',
     isCommercial: true,
+    licenseTypes: ['FREE', 'PAID'],
     tags: ['database', 'pytest', 'analytics', 'commercial'],
     links: {
       website: 'https://tofupilot.com'
     },
+    image: '/resources/tofupilot.png',
   },
   {
     id: 'yieldhub',
     name: 'yieldHUB',
-    category: 'Test Database & Analytics',
+    category: 'Test Database Analytics',
     description: {
       en: 'Enterprise analytics platform for semiconductor yield and test data analysis',
       fr: 'Plateforme d\'analyse d\'entreprise pour le rendement et les données de test des semiconducteurs'
@@ -646,7 +651,7 @@ runner.execute(test)?;`
 
 export const categories: TestCategory[] = [
   'Test Execution Engines',
-  'Test Database & Analytics', 
+  'Test Database Analytics', 
   'Instrument Interface', 
   'Wafer Maps',
   'Hardware Devices',
@@ -657,7 +662,7 @@ export const categories: TestCategory[] = [
 
 export const categoryIcons = {
   "Test Execution Engines": "Zap",
-  "Test Database & Analytics": "Database",
+  "Test Database Analytics": "Database",
   "Instrument Interface": "Cable",
   "Wafer Maps": "Map",
   "Hardware Devices": "HardDrive",

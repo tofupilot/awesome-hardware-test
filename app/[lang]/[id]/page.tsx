@@ -33,7 +33,7 @@ import { hardwareTestData } from "@/lib/hardware-data"
 
 const categoryIcons = {
   "Test Execution Engines": Zap,
-  "Test Database & Analytics": Database,
+  "Test Database Analytics": Database,
   "Instrument Interface": Cable,
   "Wafer Maps": Map,
   "Hardware Devices & Tools": HardDrive,
