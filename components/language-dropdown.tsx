@@ -46,7 +46,7 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
 
   return (
     <>
-      <div className="w-44 flex-shrink-0">
+      <div className="w-48 flex-shrink-0">
         <div 
           className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors w-full"
           onClick={() => setIsModalOpen(true)}

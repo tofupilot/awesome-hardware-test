@@ -261,34 +261,36 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Repository stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Star className="h-3 w-3 mr-1" />
-                STARS
+          <div className="overflow-x-auto mb-6">
+            <div className="flex gap-3 min-w-max">
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Star className="h-3 w-3 mr-1" />
+                  STARS
+                </div>
+                <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
               </div>
-              <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
-            </div>
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Users className="h-3 w-3 mr-1" />
-                CONTRIBUTORS
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Users className="h-3 w-3 mr-1" />
+                  CONTRIBUTORS
+                </div>
+                <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
               </div>
-              <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
-            </div>
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Calendar className="h-3 w-3 mr-1" />
-                LAST_RELEASE
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Calendar className="h-3 w-3 mr-1" />
+                  LAST_RELEASE
+                </div>
+                <div className="text-white font-bold">{formatReleaseDate(individualRepoData?.lastRelease)}</div>
               </div>
-              <div className="text-white font-bold">{formatReleaseDate(individualRepoData?.lastRelease)}</div>
-            </div>
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Scale className="h-3 w-3 mr-1" />
-                LICENSE
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Scale className="h-3 w-3 mr-1" />
+                  LICENSE
+                </div>
+                <div className="text-white font-bold">{formatLicense(individualRepoData?.license || resource.license)}</div>
               </div>
-              <div className="text-white font-bold">{formatLicense(individualRepoData?.license || resource.license)}</div>
             </div>
           </div>
 
