@@ -28,6 +28,7 @@ export interface HardwareTestResource {
   installation?: string;
   documentation?: string;
   unmaintained?: boolean;
+  image?: string;
 }
 
 export type TestCategory = 

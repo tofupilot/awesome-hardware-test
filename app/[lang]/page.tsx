@@ -105,7 +105,7 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
             {/* Search Bar - Client Component */}
             <SearchInput 
               defaultValue={search} 
-              placeholder="SEARCH..."
+              placeholder="SEARCH"
               lang={lang}
             />
             

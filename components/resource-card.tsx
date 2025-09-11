@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Github, Star, ExternalLink, Skull } from "lucide-react";
 import { translations, Locale } from "@/lib/translations";
 import { HardwareTestResource } from "@/lib/hardware-data";
+import { ImagePlaceholder } from "@/components/image-placeholder";
 
 interface ResourceCardProps {
   resource: HardwareTestResource;
@@ -22,34 +23,6 @@ interface ResourceCardProps {
 
 export function ResourceCard({ resource, lang, starCount }: ResourceCardProps) {
   const t = translations[lang] || translations['en'];  // Fallback to English
-  const getPlaceholderImage = (resourceName: string, category: string) => {
-    const queries = {
-      crappy: "python hardware testing framework dashboard",
-      exclave: "rust factory testing infrastructure",
-      "Flojoy Studio": "visual scripting IDE interface",
-      htf: "medical device testing framework",
-      mats: "manufacturing test environment",
-      octoprobe: "micropython board testing setup",
-      openhtf: "google hardware testing framework",
-      robotframework: "automation testing framework",
-      sopic: "production line test station",
-      TreeATE: "factory testing automation platform",
-      "pytest-embedded": "embedded testing plugin",
-      HardPy: "pytest hardware test bench",
-      TofuPilot: "hardware test database analytics",
-      yieldHUB: "semiconductor test analytics",
-      pyvisa: "measurement device interface",
-      "Test controller": "device control software",
-      stdf2map: "wafer map visualization",
-    };
-
-    const query =
-      queries[resourceName as keyof typeof queries] ||
-      `${category.toLowerCase()} hardware testing tool`;
-    return `/placeholder.svg?height=200&width=300&text=${encodeURIComponent(
-      query
-    )}`;
-  };
 
   const formatStars = (stars?: number) => {
     if (!stars) return null;
@@ -61,21 +34,26 @@ export function ResourceCard({ resource, lang, starCount }: ResourceCardProps) {
 
   // Only use fetched star count from GitHub API, no fallback to hardcoded values
   const displayStars = starCount;
+  const formattedStars = formatStars(displayStars);
 
   return (
     <Card className="bg-zinc-800/70 !py-0 border-green-500/20 hover:border-green-500/50 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg hover:shadow-green-500/10 rounded-none">
       <Link href={`/${lang}/${resource.id}`}>
         {/* Image */}
         <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
-          <Image
-            src={
-              getPlaceholderImage(resource.name, resource.category) ||
-              "/placeholder.svg"
-            }
-            alt={`${resource.name} preview`}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          {resource.image ? (
+            <Image
+              src={resource.image}
+              alt={`${resource.name} preview`}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <ImagePlaceholder 
+              text={`${resource.name} image coming soon`}
+              className="group-hover:scale-105 transition-transform duration-500"
+            />
+          )}
           {/* Hardware overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
 
@@ -87,7 +65,7 @@ export function ResourceCard({ resource, lang, starCount }: ResourceCardProps) {
                 className="bg-zinc-900/90 text-green-400 text-xs font-mono rounded-none"
               >
                 <Star className="h-3 w-3 mr-1 fill-current" />
-                {formatStars(displayStars)}
+                {formattedStars}
               </Badge>
             )}
             {resource.isCommercial && (

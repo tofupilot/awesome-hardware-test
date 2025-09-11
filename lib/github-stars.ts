@@ -6,8 +6,9 @@ const CACHE_DURATION = 3600;
 
 async function fetchGitHubStars(owner: string, repo: string): Promise<number | null> {
   try {
+    // Use GITHUB_FETCH_STARS_TOKEN to avoid conflicts with shell environment
     // Clean the token - remove any quotes or whitespace
-    const token = process.env.GITHUB_TOKEN?.trim().replace(/^["']|["']$/g, '');
+    const token = process.env.GITHUB_FETCH_STARS_TOKEN?.trim().replace(/^["']|["']$/g, '');
     
     const headers: HeadersInit = {
       'Accept': 'application/vnd.github.v3+json'
@@ -15,6 +16,8 @@ async function fetchGitHubStars(owner: string, repo: string): Promise<number | n
     
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      console.warn('No GitHub token found, API rate limits will apply');
     }
     
     const response = await fetch(
@@ -72,7 +75,8 @@ export const getAllGitHubStars = unstable_cache(
         return acc;
       }, {} as Record<string, number>);
 
-      return starsMap;
+      // Force object serialization to avoid caching issues
+      return JSON.parse(JSON.stringify(starsMap));
     } catch (error) {
       console.error('Error fetching GitHub stars:', error);
       return {};

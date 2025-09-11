@@ -1,7 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Star, GitFork, Users, GitCommit, CircleDot } from "lucide-react"
+import { Star, GitFork, Users, GitCommit, CircleDot, MessageCircle } from "lucide-react"
 import { translations, Locale } from "@/lib/translations"
+import { Button } from "@/components/ui/button"
 
 interface HeroSectionProps {
   lang: Locale
@@ -71,6 +72,25 @@ export function HeroSection({ lang }: HeroSectionProps) {
                 {t.hero.stats.issues}
               </div>
               <div className="text-green-400 font-bold">5 {t.hero.stats.open}</div>
+            </div>
+          </div>
+
+          {/* Discord CTA */}
+          <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-4 mb-6 font-mono">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-green-400 font-bold mb-1">{t.hero.discord.title}</h3>
+                <p className="text-zinc-400 text-sm">{t.hero.discord.description}</p>
+              </div>
+              <Button
+                asChild
+                className="border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300 font-mono rounded-none bg-transparent"
+              >
+                <Link href="https://discord.gg/cahVxMvW" target="_blank" className="flex items-center gap-2">
+                  <MessageCircle className="h-4 w-4" />
+                  {t.hero.discord.button}
+                </Link>
+              </Button>
             </div>
           </div>
 

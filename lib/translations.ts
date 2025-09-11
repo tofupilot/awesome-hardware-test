@@ -8,7 +8,12 @@ export const translations = {
         hardware: "HARDWARE", 
         test: "TEST"
       },
-      subtitle: "A curated collection of hardware testing frameworks, instruments, and tools. From embedded systems to semiconductor fabrication, this repository contains everything needed for professional hardware validation and quality assurance.",
+      subtitle: "A curated collection of useful resources for hardware test teams. From test execution engines to wafer maps, find the tools you need.",
+      discord: {
+        title: "Don't debug alone - hardware testing is hard enough already.",
+        description: "Join our Discord for technical support, emotional support, and to suggest resources.",
+        button: "JOIN DISCORD"
+      },
       stats: {
         stars: "STARS",
         contributors: "CONTRIBUTORS",
@@ -91,7 +96,12 @@ export const translations = {
         hardware: "MATÉRIEL", 
         test: "TEST"
       },
-      subtitle: "Une collection organisée de frameworks de test matériel, d'instruments et d'outils. Des systèmes embarqués à la fabrication de semi-conducteurs, ce référentiel contient tout ce qui est nécessaire pour la validation matérielle professionnelle et l'assurance qualité.",
+      subtitle: "Une collection organisée de ressources utiles pour les équipes de test matériel. Des moteurs d'exécution aux cartes de wafers, trouvez les outils dont vous avez besoin.",
+      discord: {
+        title: "Ne débuggez pas seul - les tests matériels sont déjà assez difficiles.",
+        description: "Rejoignez notre Discord pour du support technique, émotionnel, et suggérer des ressources.",
+        button: "REJOINDRE DISCORD"
+      },
       stats: {
         stars: "ÉTOILES",
         contributors: "CONTRIBUTEURS",
