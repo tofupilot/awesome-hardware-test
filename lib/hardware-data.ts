@@ -319,9 +319,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     },
     language: 'Python',
     tags: ['automation', 'measurement', 'instruments'],
-    links: {
-      github: 'https://github.com/qcha/AutoLab'
-    }
+    links: {}
   },
   {
     id: 'lava',
@@ -446,7 +444,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['wafer', 'mapping', 'analysis', 'semiconductor'],
     links: {
-      github: 'https://github.com/MatthewTheGhoul/waferthin'
+      // GitHub repo appears to be private or removed
     },
   },
   {
@@ -460,7 +458,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['stdf', 'wafermap', 'semiconductor', 'analysis'],
     links: {
-      github: 'https://github.com/noonchen/stdf2map'
+      // GitHub repo appears to be private or removed
     },
   },
 
@@ -579,7 +577,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['medical', 'iso', 'ci-cd', 'automated'],
     links: {
-      github: 'https://github.com/Siemens/htf'
+      // GitHub repo appears to be private or removed
     },
   },
   {
@@ -593,7 +591,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['micropython', 'boards', 'embedded', 'automated'],
     links: {
-      github: 'https://github.com/hmaerki/octoprobe'
+      // GitHub repo appears to be private or removed
     },
   },
   {
@@ -607,7 +605,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['production', 'test-station', 'manufacturing', 'helper'],
     links: {
-      github: 'https://github.com/Semi-ATE/sopic'
+      // GitHub repo appears to be private or removed
     },
   },
   {
