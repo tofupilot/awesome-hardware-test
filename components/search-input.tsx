@@ -19,15 +19,19 @@ export function SearchInput({ defaultValue, placeholder }: SearchInputProps) {
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
   const [mounted, setMounted] = useState(false)
+  const [searchValue, setSearchValue] = useState(defaultValue)
 
   useEffect(() => {
     setMounted(true)
-  }, [])
+    // Initialize with defaultValue when component mounts
+    setSearchValue(defaultValue)
+  }, [defaultValue])
 
-  const handleSearch = useDebouncedCallback((term: string) => {
+  // Debounced function to update URL
+  const debouncedUpdateURL = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams)
-    if (term) {
-      params.set('search', term)
+    if (term.trim()) {
+      params.set('search', term.trim())
     } else {
       params.delete('search')
     }
@@ -37,6 +41,13 @@ export function SearchInput({ defaultValue, placeholder }: SearchInputProps) {
     })
   }, 300)
 
+  // Handle input changes - update local state immediately, debounce URL updates
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setSearchValue(value)
+    debouncedUpdateURL(value)
+  }
+
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
@@ -44,7 +55,7 @@ export function SearchInput({ defaultValue, placeholder }: SearchInputProps) {
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500" />
         <Input
           placeholder={placeholder}
-          defaultValue={defaultValue}
+          value=""
           readOnly
           className="pl-10 bg-zinc-800/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono rounded-none"
           suppressHydrationWarning
@@ -58,10 +69,10 @@ export function SearchInput({ defaultValue, placeholder }: SearchInputProps) {
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500" />
       <Input
         placeholder={placeholder}
-        defaultValue={defaultValue}
-        onChange={(e) => handleSearch(e.target.value)}
-        className={`pl-10 bg-zinc-800/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-green-500 focus:ring-green-500/20 rounded-none ${
-          isPending ? 'opacity-50' : ''
+        value={searchValue}
+        onChange={handleInputChange}
+        className={`pl-10 bg-zinc-800/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-green-500 focus:ring-green-500/20 rounded-none transition-opacity ${
+          isPending ? 'opacity-70' : 'opacity-100'
         }`}
         suppressHydrationWarning
       />
