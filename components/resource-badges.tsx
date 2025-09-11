@@ -21,7 +21,7 @@ export function ResourceBadges({ resource, className = "" }: ResourceBadgesProps
         variant="secondary"
         className="bg-zinc-700/70 text-zinc-300 text-xs font-mono rounded-none"
       >
-        {resource.category.replace(" ", "_").toUpperCase()}
+        {resource.category.toUpperCase()}
       </Badge>
     </div>
   );

@@ -63,6 +63,40 @@ export async function fetchGitHubRepoData(owner: string, repo: string): Promise<
       // No releases or error fetching releases - that's ok
     }
     
+    // If no release found, try to get the latest tag
+    if (!lastRelease) {
+      try {
+        const tagsResponse = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/tags?per_page=1`,
+          {
+            headers,
+            next: { revalidate: CACHE_DURATION }
+          }
+        );
+        
+        if (tagsResponse.ok) {
+          const tagsData = await tagsResponse.json();
+          if (tagsData.length > 0) {
+            // Get the commit date for the latest tag
+            const tagCommitResponse = await fetch(
+              tagsData[0].commit.url,
+              {
+                headers,
+                next: { revalidate: CACHE_DURATION }
+              }
+            );
+            
+            if (tagCommitResponse.ok) {
+              const commitData = await tagCommitResponse.json();
+              lastRelease = commitData.commit.committer.date ? new Date(commitData.commit.committer.date).toISOString().split('T')[0] : undefined;
+            }
+          }
+        }
+      } catch (error) {
+        // No tags or error fetching tags - that's ok
+      }
+    }
+    
     // Fetch contributors count
     let contributors: number | undefined;
     try {

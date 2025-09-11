@@ -25,7 +25,7 @@ export const translations = {
     navigation: {
       contribute: "Contribute",
       github: "GitHub",
-      allResources: "ALL_RESOURCES"
+      allResources: "ALL"
     },
     search: {
       placeholder: "Search testing tools and frameworks...",
@@ -39,14 +39,14 @@ export const translations = {
     },
     categories: {
       all: "All Categories",
-      "test execution engines": "Test Execution Engines",
-      "test database analytics": "Test Database Analytics", 
-      "instrument interface": "Instrument Interface", 
-      "wafer maps": "Wafer Maps",
-      "hardware devices": "Hardware Devices",
-      "hardware mocking": "Hardware Mocking",
-      "test suites": "Test Suites",
-      "videos & resources": "Videos & Resources"
+      "execution_engines": "Execution Engines",
+      "database_analytics": "Database Analytics", 
+      "instrument_interface": "Instrument Interface", 
+      "wafer_maps": "Wafer Maps",
+      "hardware_devices": "Hardware Devices",
+      "hardware_mocking": "Hardware Mocking",
+      "test_suites": "Test Suites",
+      "videos_resources": "Videos & Resources"
     },
     resource: {
       language: "Language",
@@ -108,7 +108,7 @@ export const translations = {
     navigation: {
       contribute: "Contribuer",
       github: "GitHub",
-      allResources: "TOUTES_RESSOURCES"
+      allResources: "TOUT"
     },
     search: {
       placeholder: "Rechercher des outils et frameworks de test...",
@@ -122,14 +122,14 @@ export const translations = {
     },
     categories: {
       all: "Toutes les catégories",
-      "test execution engines": "Moteurs d'exécution de tests",
-      "test database analytics": "Base de données analyses de tests", 
-      "instrument interface": "Interface d'instruments", 
-      "wafer maps": "Cartes de plaquettes",
-      "hardware devices": "Dispositifs matériels",
-      "hardware mocking": "Simulation matérielle",
-      "test suites": "Suites de tests",
-      "videos & resources": "Vidéos et ressources"
+      "execution_engines": "Moteurs d'exécution",
+      "database_analytics": "Base de données analyses", 
+      "instrument_interface": "Interface d'instruments", 
+      "wafer_maps": "Cartes de plaquettes",
+      "hardware_devices": "Dispositifs matériels",
+      "hardware_mocking": "Simulation matérielle",
+      "test_suites": "Suites de tests",
+      "videos_resources": "Vidéos et ressources"
     },
     resource: {
       language: "Langage",

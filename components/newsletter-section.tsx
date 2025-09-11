@@ -88,7 +88,7 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
       
       <form
         onSubmit={handleSubmit}
-        className="flex gap-2 mt-auto"
+        className="flex flex-col sm:flex-row gap-2 mt-auto"
         suppressHydrationWarning={true}
       >
         <Input
@@ -105,7 +105,7 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
         <Button
           type="submit"
           disabled={isLoading}
-          className="bg-sky-600 hover:bg-sky-700 text-white font-mono rounded-none text-sm px-6"
+          className="bg-sky-600 hover:bg-sky-700 text-white font-mono rounded-none text-sm px-6 w-full sm:w-auto"
         >
           {isLoading ? t.newsletter.subscribing : t.newsletter.subscribe}
         </Button>

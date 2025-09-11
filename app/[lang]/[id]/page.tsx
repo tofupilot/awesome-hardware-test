@@ -32,14 +32,14 @@ import {
 import { hardwareTestData } from "@/lib/hardware-data"
 
 const categoryIcons = {
-  "Test Execution Engines": Zap,
-  "Test Database Analytics": Database,
-  "Instrument Interface": Cable,
-  "Wafer Maps": Map,
-  "Hardware Devices & Tools": HardDrive,
-  "Hardware Mocking": TestTube,
-  "Test Suites": Package,
-  "Resources & Learning": BookOpen,
+  "Execution_Engines": Zap,
+  "Database_Analytics": Database,
+  "Instrument_Interface": Cable,
+  "Wafer_Maps": Map,
+  "Hardware_Devices": HardDrive,
+  "Hardware_Mocking": TestTube,
+  "Test_Suites": Package,
+  "Videos_Resources": BookOpen,
 }
 
 import { Locale, locales } from "@/lib/translations"
@@ -360,7 +360,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
 
             {/* Hero Image */}
             <Card className={`bg-zinc-800/70 !py-0 ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} overflow-hidden rounded-none`}>
-              <div className="relative h-64 bg-zinc-900/70">
+              <div className="relative h-[400px] bg-zinc-900/70">
                 {resource.image ? (
                   <Image
                     src={resource.image}
