@@ -112,9 +112,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   }
 
   // Fetch GitHub data server-side
-  const githubData = await getAllGitHubData()
-  const repoData = githubData[resource.id]
-  const githubStars = repoData?.stars
+  const { stars, repoData } = await getAllGitHubData()
+  const githubStars = stars[resource.id]
   
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
