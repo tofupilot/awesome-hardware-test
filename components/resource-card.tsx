@@ -39,7 +39,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
   const formattedStars = formatStars(displayStars);
 
   return (
-    <Card className="bg-zinc-800/70 !py-0 border-green-500/20 hover:border-green-500/50 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg hover:shadow-green-500/10 rounded-none">
+    <Card className={`${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none`}>
       <Link href={`/${lang}/${resource.id}`}>
         {/* Image */}
         <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
@@ -61,10 +61,19 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
 
           {/* Overlay badges */}
           <div className="absolute top-3 right-3 flex gap-2">
+            {resource.unmaintained && (
+              <Badge
+                variant="secondary"
+                className="bg-red-900/90 text-red-300 text-xs flex items-center font-mono rounded-none"
+              >
+                <Skull className="h-3 w-3 mr-1" />
+                {t.resource.badges.rip}
+              </Badge>
+            )}
             {displayStars && (
               <Badge
                 variant="secondary"
-                className="bg-zinc-900/90 text-green-400 text-xs font-mono rounded-none"
+                className={`bg-zinc-900/90 ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs font-mono rounded-none`}
               >
                 <Star className="h-3 w-3 mr-1 fill-current" />
                 {formattedStars}
@@ -78,21 +87,12 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
                 {t.resource.badges.commercial}
               </Badge>
             )}
-            {resource.unmaintained && (
-              <Badge
-                variant="secondary"
-                className="bg-red-900/90 text-red-300 text-xs flex items-center font-mono rounded-none"
-              >
-                <Skull className="h-3 w-3 mr-1" />
-                {t.resource.badges.rip}
-              </Badge>
-            )}
           </div>
         </div>
 
         <CardHeader className="p-4">
           <div className="flex items-start justify-between mb-2">
-            <CardTitle className="text-lg font-mono text-green-400 group-hover:text-green-300 transition-colors">
+            <CardTitle className={`text-lg font-mono ${resource.unmaintained ? 'text-red-400 group-hover:text-red-300' : 'text-green-400 group-hover:text-green-300'} transition-colors`}>
               {resource.name.toUpperCase()}
             </CardTitle>
             <div className="flex items-center gap-2">
@@ -100,7 +100,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 w-6 p-0 text-zinc-400 hover:text-green-400 rounded-none bg-transparent"
+                  className={`h-6 w-6 p-0 text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400' : 'hover:text-green-400'} rounded-none bg-transparent`}
                   onClick={(e) => {
                     e.preventDefault();
                     window.open(resource.links.github, "_blank");
@@ -112,7 +112,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 w-6 p-0 text-zinc-400 hover:text-green-400 rounded-none bg-transparent"
+                className={`h-6 w-6 p-0 text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400' : 'hover:text-green-400'} rounded-none bg-transparent`}
                 onClick={(e) => {
                   e.preventDefault();
                   window.open(
@@ -129,7 +129,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
             {resource.language && (
               <Badge
                 variant="outline"
-                className="border-green-500/30 text-green-400 text-xs font-mono rounded-none bg-transparent"
+                className={`${resource.unmaintained ? 'border-red-500/30 text-red-400' : 'border-green-500/30 text-green-400'} text-xs font-mono rounded-none bg-transparent`}
               >
                 {resource.language.toUpperCase()}
               </Badge>
