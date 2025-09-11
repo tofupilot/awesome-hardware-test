@@ -134,6 +134,24 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
     return stars.toString()
   }
 
+  const formatLicense = (license?: string) => {
+    if (!license) return 'N/A'
+    // Common license name mappings to shorter versions
+    const licenseMap: Record<string, string> = {
+      'BSD 3-Clause "New" or "Revised" License': 'BSD-3-Clause',
+      'BSD 2-Clause "Simplified" License': 'BSD-2-Clause',
+      'MIT License': 'MIT',
+      'Apache License 2.0': 'Apache-2.0',
+      'GNU General Public License v3.0': 'GPL-3.0',
+      'GNU General Public License v2.0': 'GPL-2.0',
+      'GNU Lesser General Public License v3.0': 'LGPL-3.0',
+      'GNU Lesser General Public License v2.1': 'LGPL-2.1',
+      'Mozilla Public License 2.0': 'MPL-2.0',
+      'The Unlicense': 'Unlicense',
+    }
+    return licenseMap[license] || license
+  }
+
   const description = typeof resource.description === 'object' 
     ? resource.description[lang] 
     : resource.description
@@ -248,7 +266,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 <Github className="h-3 w-3 mr-1" />
                 LICENSE
               </div>
-              <div className="text-white font-bold">{repoData?.license || resource.license || 'N/A'}</div>
+              <div className="text-white font-bold">{formatLicense(repoData?.license || resource.license)}</div>
             </div>
           </div>
 
