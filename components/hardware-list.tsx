@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Filter } from 'lucide-react';
 
 export function HardwareList() {
-  const { t } = useTranslations();
+  const { t, locale } = useTranslations() as { t: any; locale: 'en' | 'fr' };
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<TestCategory | 'all'>('all');
   const [activeTab, setActiveTab] = useState('all');
@@ -57,16 +57,6 @@ export function HardwareList() {
         
         {/* Search and Filter */}
         <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto mb-6">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder={t('search.placeholder')}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          
           <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as TestCategory | 'all')}>
             <SelectTrigger className="w-full sm:w-[180px]">
               <Filter className="h-4 w-4 mr-2" />
@@ -81,6 +71,16 @@ export function HardwareList() {
               ))}
             </SelectContent>
           </Select>
+          
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              placeholder={t('search.placeholder')}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
         </div>
 
         {/* Results count */}
@@ -119,7 +119,7 @@ export function HardwareList() {
 }
 
 function HardwareGrid({ items }: { items: typeof hardwareTestData }) {
-  const { t } = useTranslations();
+  const { t, locale } = useTranslations() as { t: any; locale: 'en' | 'fr' };
   
   if (items.length === 0) {
     return (
@@ -135,7 +135,7 @@ function HardwareGrid({ items }: { items: typeof hardwareTestData }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item) => (
-        <ResourceCard key={item.id} item={item} />
+        <ResourceCard key={item.id} resource={item} lang={locale} />
       ))}
     </div>
   );

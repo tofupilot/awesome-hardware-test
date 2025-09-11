@@ -35,7 +35,7 @@ function CategorySection({ category, resources }: CategorySectionProps) {
                 {resource.name}
               </a>
               <span className="text-gray-900 dark:text-gray-100">
-                {' '}- {resource.description}
+                {' '}- {typeof resource.description === 'object' ? resource.description.en : resource.description}
               </span>
               {resource.isCommercial && (
                 <span className="text-gray-600 dark:text-gray-400 italic">
@@ -63,9 +63,10 @@ export function GitHubStyle() {
   const categorizedResources = categories.reduce((acc, category) => {
     acc[category] = hardwareTestData.filter(resource => {
       const matchesCategory = resource.category === category;
+      const description = typeof resource.description === 'object' ? resource.description.en : resource.description;
       const matchesSearch = searchQuery.trim() === '' || 
         resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (resource.language && resource.language.toLowerCase().includes(searchQuery.toLowerCase()));
       
@@ -76,8 +77,9 @@ export function GitHubStyle() {
 
   const totalResources = hardwareTestData.filter(resource => {
     if (searchQuery.trim() === '') return true;
+    const description = typeof resource.description === 'object' ? resource.description.en : resource.description;
     return resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-           resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           description.toLowerCase().includes(searchQuery.toLowerCase()) ||
            resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
            (resource.language && resource.language.toLowerCase().includes(searchQuery.toLowerCase()));
   }).length;
@@ -124,7 +126,7 @@ export function GitHubStyle() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
-                    placeholder="Search resources..."
+                    placeholder="SEARCH..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm"

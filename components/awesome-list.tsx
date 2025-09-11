@@ -73,7 +73,7 @@ function ResourceItem({ resource }: { resource: HardwareTestResource }) {
             </div>
             
             <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-              {resource.description}
+              {typeof resource.description === 'object' ? resource.description.en : resource.description}
             </p>
             
             {/* Tags */}
@@ -144,9 +144,10 @@ export function AwesomeList() {
   const categorizedResources = categories.reduce((acc, category) => {
     acc[category] = hardwareTestData.filter(resource => {
       const matchesCategory = resource.category === category;
+      const description = typeof resource.description === 'object' ? resource.description.en : resource.description;
       const matchesSearch = searchQuery.trim() === '' || 
         resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (resource.language && resource.language.toLowerCase().includes(searchQuery.toLowerCase()));
       
@@ -157,8 +158,9 @@ export function AwesomeList() {
 
   const totalResources = hardwareTestData.filter(resource => {
     if (searchQuery.trim() === '') return true;
+    const description = typeof resource.description === 'object' ? resource.description.en : resource.description;
     return resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-           resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           description.toLowerCase().includes(searchQuery.toLowerCase()) ||
            resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
            (resource.language && resource.language.toLowerCase().includes(searchQuery.toLowerCase()));
   }).length;

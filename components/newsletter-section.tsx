@@ -7,8 +7,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Mail, CheckCircle } from "lucide-react"
+import { translations, Locale } from "@/lib/translations"
 
-export function NewsletterSection() {
+interface NewsletterSectionProps {
+  lang: Locale
+}
+
+export function NewsletterSection({ lang }: NewsletterSectionProps) {
+  const t = translations[lang] || translations['en']  // Fallback to English
   const [email, setEmail] = useState("")
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -30,9 +36,9 @@ export function NewsletterSection() {
       <Card className="bg-zinc-800/70 border-green-500/20 rounded-none">
         <CardContent className="p-6 text-center">
           <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
-          <h3 className="text-lg font-mono text-green-400 mb-2">[SUBSCRIPTION_CONFIRMED]</h3>
+          <h3 className="text-lg font-mono text-green-400 mb-2">{t.newsletter.confirmed}</h3>
           <p className="text-zinc-400 font-mono text-sm">
-            You'll receive updates about new hardware testing tools and frameworks.
+            {t.newsletter.confirmedText}
           </p>
         </CardContent>
       </Card>
@@ -44,17 +50,17 @@ export function NewsletterSection() {
       <CardHeader>
         <CardTitle className="font-mono text-green-400 flex items-center">
           <Mail className="h-5 w-5 mr-2" />
-          [NEWSLETTER_SUBSCRIPTION]
+          {t.newsletter.title}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-zinc-400 font-mono text-sm mb-4">
-          Stay updated with the latest hardware testing tools, frameworks, and industry insights.
+          {t.newsletter.description}
         </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning={true}>
           <Input
             type="email"
-            placeholder="ENTER_EMAIL_ADDRESS..."
+            placeholder={t.newsletter.placeholder}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="bg-zinc-900/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-green-500 focus:ring-green-500/20 rounded-none"
@@ -65,10 +71,10 @@ export function NewsletterSection() {
             disabled={isLoading}
             className="w-full bg-green-600 hover:bg-green-700 text-white font-mono rounded-none"
           >
-            {isLoading ? "[SUBSCRIBING...]" : "[SUBSCRIBE]"}
+            {isLoading ? t.newsletter.subscribing : t.newsletter.subscribe}
           </Button>
         </form>
-        <p className="text-xs text-zinc-500 font-mono mt-3">No spam. Unsubscribe anytime. Updates sent monthly.</p>
+        <p className="text-xs text-zinc-500 font-mono mt-3">{t.newsletter.disclaimer}</p>
       </CardContent>
     </Card>
   )

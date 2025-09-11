@@ -1,89 +1,114 @@
-"use client"
-
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
-import { allResources, categories, categoryIcons } from "@/lib/resources"
-import { SiteHeader } from "@/components/site-header"
+import { hardwareTestData as allResources, categories, categoryIcons } from "@/lib/hardware-data"
+import { translations, Locale } from "@/lib/translations"
 import { HeroSection } from "@/components/hero-section"
-import { CategoryNavigation } from "@/components/category-navigation"
-import { ResourceCard } from "@/components/resource-card"
 import { SiteFooter } from "@/components/site-footer"
 import { NewsletterSection } from "@/components/newsletter-section"
+import { getAllGitHubStars } from "@/lib/github-stars"
+import { CategoryNavigationServer } from "@/components/category-navigation-server"
+import { ResourceCard } from "@/components/resource-card"
+import { SearchInput } from "@/components/search-input"
 
-export default function LandingPage() {
-  const [activeCategory, setActiveCategory] = useState("All")
-  const [searchTerm, setSearchTerm] = useState("")
+interface LandingPageProps {
+  params: Promise<{
+    lang: Locale
+  }>
+  searchParams: Promise<{
+    category?: string
+    search?: string
+  }>
+}
 
+export default async function LandingPage({ params, searchParams }: LandingPageProps) {
+  const { lang } = await params
+  const { category = "All", search = "" } = await searchParams
+  const t = translations[lang]
+  
+  // Fetch GitHub stars server-side
+  const stars = await getAllGitHubStars()
+
+  // Filter resources server-side based on URL params
   const filteredResources = allResources.filter((resource) => {
+    const description = typeof resource.description === 'object' ? resource.description[lang] : resource.description
     const matchesSearch =
-      resource.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      resource.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = activeCategory === "All" || resource.category === activeCategory
+      !search ||
+      resource.name.toLowerCase().includes(search.toLowerCase()) ||
+      description.toLowerCase().includes(search.toLowerCase())
+    const matchesCategory = category === "All" || resource.category === category
     return matchesSearch && matchesCategory
   })
 
-  const getCategoryCount = (category: string) => {
-    if (category === "All") return allResources.length
-    return allResources.filter((r) => r.category === category).length
+  const getCategoryCount = (cat: string) => {
+    if (cat === "All") return allResources.length
+    return allResources.filter((r) => r.category === cat).length
   }
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
-      <SiteHeader totalResources={allResources.length} />
-      <HeroSection />
-      <CategoryNavigation
-        categories={categories}
-        categoryIcons={categoryIcons}
-        activeCategory={activeCategory}
-        onCategoryChange={setActiveCategory}
-        getCategoryCount={getCategoryCount}
-      />
-
-      <main className="container mx-auto px-4 py-8 relative z-10">
-        {/* Search */}
-        <div className="mb-8">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500" />
-            <Input
-              placeholder={`SEARCH ${activeCategory === "All" ? "ALL_RESOURCES" : activeCategory.toUpperCase()}...`}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-zinc-800/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-green-500 focus:ring-green-500/20 rounded-none"
+      <HeroSection lang={lang} />
+      
+      <nav className="border-b border-green-500/20 bg-zinc-900/98 relative z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center gap-4 py-4">
+            {/* Search Bar - Client Component */}
+            <SearchInput 
+              defaultValue={search} 
+              placeholder="SEARCH..."
+              lang={lang}
+            />
+            
+            {/* Category Buttons - Server Component with Links */}
+            <CategoryNavigationServer
+              categories={categories}
+              categoryIcons={categoryIcons}
+              activeCategory={category}
+              getCategoryCount={getCategoryCount}
+              lang={lang}
+              currentSearch={search}
             />
           </div>
-          {searchTerm && (
-            <p className="text-sm text-green-400 mt-2 font-mono">
-              [SEARCH_RESULTS: {filteredResources.length}]
-              {activeCategory !== "All" && ` [CATEGORY: ${activeCategory.toUpperCase()}]`}
-            </p>
-          )}
         </div>
+      </nav>
+
+      <main className="container mx-auto px-4 py-8 relative z-10">
+        {/* Search Results Info */}
+        {search && (
+          <div className="mb-8">
+            <p className="text-sm text-green-400 font-mono">
+              {t.search.results(filteredResources.length)}
+              {category !== "All" && ` ${t.search.category(category)}`}
+            </p>
+          </div>
+        )}
 
         {/* Resources Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredResources.map((resource, index) => (
-            <ResourceCard key={index} resource={resource} />
+            <ResourceCard 
+              key={resource.id} 
+              resource={resource} 
+              lang={lang}
+              starCount={stars[resource.id]}
+            />
           ))}
         </div>
 
         {filteredResources.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-red-400 font-mono text-lg mb-2">[ERROR: NO_RESOURCES_FOUND]</div>
+            <div className="text-red-400 font-mono text-lg mb-2">{t.search.noResults}</div>
             <p className="text-zinc-500 font-mono">
-              {searchTerm
-                ? `[QUERY: "${searchTerm}"]${activeCategory !== "All" ? ` [CATEGORY: ${activeCategory.toUpperCase()}]` : ""} [RESULTS: 0]`
-                : `[STATUS: NO_RESOURCES_AVAILABLE]`}
+              {search
+                ? t.search.noResultsQuery(search, category !== "All" ? category : undefined)
+                : t.search.noResultsStatus}
             </p>
           </div>
         )}
 
         {/* Newsletter Section */}
         <div className="mt-16">
-          <NewsletterSection />
+          <NewsletterSection lang={lang} />
         </div>
 
-        <SiteFooter />
+        <SiteFooter lang={lang} />
       </main>
     </div>
   )

@@ -353,7 +353,7 @@ export function HardwareListNew() {
                         {resource.name}
                       </h4>
                       <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-                        {resource.description}
+                        {typeof resource.description === 'object' ? resource.description.en : resource.description}
                       </p>
                       
                       {/* Tags */}

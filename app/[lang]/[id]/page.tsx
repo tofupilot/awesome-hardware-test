@@ -1,11 +1,11 @@
-"use client"
-
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { CopyButton } from "@/components/copy-button"
+import { getAllGitHubStars } from "@/lib/github-stars"
 import {
   ArrowLeft,
   ExternalLink,
@@ -13,7 +13,6 @@ import {
   Star,
   Calendar,
   Users,
-  GitFork,
   Download,
   Zap,
   Database,
@@ -23,13 +22,8 @@ import {
   TestTube,
   Package,
   BookOpen,
-  Activity,
-  Power,
-  Gauge,
-  Monitor,
-  Copy,
 } from "lucide-react"
-import { resourcesData } from "@/lib/resources"
+import { hardwareTestData } from "@/lib/hardware-data"
 
 const categoryIcons = {
   "Test Execution Engines": Zap,
@@ -42,13 +36,30 @@ const categoryIcons = {
   "Resources & Learning": BookOpen,
 }
 
-export default function ResourcePage({ params }: { params: { id: string } }) {
-  const resource = resourcesData[params.id as keyof typeof resourcesData]
+import { Locale, locales } from "@/lib/translations"
+
+export async function generateStaticParams() {
+  const params = []
+  for (const lang of locales) {
+    for (const resource of hardwareTestData) {
+      params.push({ lang, id: resource.id })
+    }
+  }
+  return params
+}
+
+export default async function ResourcePage({ params }: { params: Promise<{ id: string; lang: Locale }> }) {
+  const { id, lang } = await params
+  const resource = hardwareTestData.find(r => r.id === id)
 
   if (!resource) {
     notFound()
   }
 
+  // Fetch GitHub stars server-side
+  const stars = await getAllGitHubStars()
+  const githubStars = stars[resource.id]
+  
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
   const getPlaceholderImage = (resourceName: string) => {
@@ -61,16 +72,14 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
     return `/placeholder.svg?height=400&width=800&text=${encodeURIComponent(query)}`
   }
 
-  const formatStars = (stars: number) => {
+  const formatStars = (stars?: number) => {
+    if (!stars) return "0"
     if (stars >= 1000) {
       return `${(stars / 1000).toFixed(1)}k`
     }
     return stars.toString()
   }
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-  }
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
@@ -88,7 +97,7 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
               className="border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300 font-mono rounded-none h-8 bg-transparent"
               asChild
             >
-              <Link href={resource.githubUrl} target="_blank">
+              <Link href={resource.links?.github || '#'} target="_blank">
                 <Github className="h-4 w-4 mr-2" />
                 GITHUB
               </Link>
@@ -99,7 +108,7 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
               className="border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300 font-mono rounded-none h-8 bg-transparent"
               asChild
             >
-              <Link href={resource.url} target="_blank">
+              <Link href={resource.links?.website || resource.links?.github || '#'} target="_blank">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 VISIT
               </Link>
@@ -118,74 +127,50 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
             </div>
             <div>
               <h1 className="text-4xl font-bold font-mono text-green-400">{resource.name.toUpperCase()}</h1>
-              <p className="text-zinc-400 font-mono text-sm">[{resource.description.toUpperCase()}]</p>
+              <p className="text-zinc-400 font-mono text-sm">
+                [{typeof resource.description === 'object' 
+                  ? resource.description[lang].toUpperCase() 
+                  : (resource.description as string).toUpperCase()}]
+              </p>
             </div>
           </div>
 
-          {/* Hardware specs */}
+          {/* Repository stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono">
               <div className="text-green-400 text-xs flex items-center">
-                <Power className="h-3 w-3 mr-1" />
-                VOLTAGE
+                <Star className="h-3 w-3 mr-1" />
+                STARS
               </div>
-              <div className="text-white font-bold">{resource.voltage}</div>
+              <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
             </div>
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono">
               <div className="text-green-400 text-xs flex items-center">
-                <Gauge className="h-3 w-3 mr-1" />
-                FREQUENCY
+                <Users className="h-3 w-3 mr-1" />
+                CONTRIBUTORS
               </div>
-              <div className="text-white font-bold">{resource.frequency}</div>
+              <div className="text-white font-bold">{resource.contributors || 'N/A'}</div>
             </div>
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono">
               <div className="text-green-400 text-xs flex items-center">
-                <Activity className="h-3 w-3 mr-1" />
-                POWER
+                <Calendar className="h-3 w-3 mr-1" />
+                LAST_UPDATE
               </div>
-              <div className="text-white font-bold">{resource.powerConsumption}</div>
+              <div className="text-white font-bold">{resource.lastUpdated || 'N/A'}</div>
             </div>
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono">
               <div className="text-green-400 text-xs flex items-center">
-                <Monitor className="h-3 w-3 mr-1" />
-                TEMP_RANGE
+                <Github className="h-3 w-3 mr-1" />
+                LICENSE
               </div>
-              <div className="text-white font-bold text-xs">{resource.operatingTemp}</div>
+              <div className="text-white font-bold">{resource.license || 'N/A'}</div>
             </div>
           </div>
 
-          {/* Stats */}
+          {/* Category and Language badges */}
           <div className="flex flex-wrap gap-4 mb-6">
-            <Badge
-              variant="outline"
-              className="border-green-500/50 text-green-400 font-mono rounded-none bg-transparent"
-            >
-              <Star className="h-3 w-3 mr-1 fill-current" />
-              {formatStars(resource.stars)} STARS
-            </Badge>
-            <Badge
-              variant="outline"
-              className="border-green-500/50 text-green-400 font-mono rounded-none bg-transparent"
-            >
-              <GitFork className="h-3 w-3 mr-1" />
-              {resource.forks} FORKS
-            </Badge>
-            <Badge
-              variant="outline"
-              className="border-green-500/50 text-green-400 font-mono rounded-none bg-transparent"
-            >
-              <Users className="h-3 w-3 mr-1" />
-              {resource.contributors} CONTRIBUTORS
-            </Badge>
-            <Badge
-              variant="outline"
-              className="border-green-500/50 text-green-400 font-mono rounded-none bg-transparent"
-            >
-              <Calendar className="h-3 w-3 mr-1" />
-              UPDATED_{resource.lastUpdated}
-            </Badge>
             <Badge variant="secondary" className="bg-zinc-700/70 text-zinc-300 font-mono rounded-none">
-              {resource.language.toUpperCase()}
+              {resource.language?.toUpperCase() || 'UNKNOWN'}
             </Badge>
             <Badge variant="secondary" className="bg-green-900/70 text-green-300 font-mono rounded-none">
               {resource.category.replace(" ", "_").toUpperCase()}
@@ -219,11 +204,15 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
               </CardHeader>
               <CardContent>
                 <div className="prose prose-invert max-w-none">
-                  {resource.longDescription.split("\n\n").map((paragraph, index) => (
-                    <p key={index} className="text-zinc-300 mb-4 leading-relaxed font-mono text-sm">
-                      {paragraph}
-                    </p>
-                  ))}
+                  {(() => {
+                    const desc = resource.longDescription || 
+                      (typeof resource.description === 'object' ? resource.description[lang] : resource.description);
+                    return desc.split("\n\n").map((paragraph, index) => (
+                      <p key={index} className="text-zinc-300 mb-4 leading-relaxed font-mono text-sm">
+                        {paragraph}
+                      </p>
+                    ));
+                  })()}
                 </div>
               </CardContent>
             </Card>
@@ -233,20 +222,16 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
               <CardHeader>
                 <CardTitle className="font-mono text-green-400 flex items-center justify-between">
                   [CODE_EXAMPLE]
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <CopyButton 
+                    text={resource.installation || ''}
                     className="h-6 w-6 p-0 text-zinc-400 hover:text-green-400 rounded-none bg-transparent"
-                    onClick={() => copyToClipboard(resource.installation)}
-                  >
-                    <Copy className="h-3 w-3" />
-                  </Button>
+                  />
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="bg-zinc-900/70 border border-green-500/20 rounded-none p-4 font-mono text-sm">
                   <div className="text-zinc-500 mb-2"># Installation</div>
-                  <div className="text-green-400">{resource.installation}</div>
+                  <div className="text-green-400">{resource.installation || 'Installation instructions not available'}</div>
                   <div className="text-zinc-500 mt-4 mb-2"># Basic usage example</div>
                   <div className="text-zinc-300">
                     {resource.name === "crappy" && (
@@ -291,12 +276,19 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-3 md:grid-cols-2">
-                  {resource.features.map((feature, index) => (
-                    <div key={index} className="flex items-center text-zinc-300 font-mono text-sm">
-                      <div className="w-2 h-2 bg-green-400 rounded-none mr-3 flex-shrink-0" />
-                      {feature.toUpperCase()}
-                    </div>
-                  ))}
+                  {(() => {
+                    const features = resource.features 
+                      ? (typeof resource.features === 'object' && 'en' in resource.features 
+                          ? resource.features[lang] 
+                          : resource.features as string[])
+                      : [];
+                    return features.map((feature, index) => (
+                      <div key={index} className="flex items-center text-zinc-300 font-mono text-sm">
+                        <div className="w-2 h-2 bg-green-400 rounded-none mr-3 flex-shrink-0" />
+                        {feature.toUpperCase()}
+                      </div>
+                    ));
+                  })()}
                 </div>
               </CardContent>
             </Card>
@@ -308,7 +300,7 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-3">
-                  {resource.useCases.map((useCase, index) => (
+                  {(resource.useCases || []).map((useCase, index) => (
                     <div key={index} className="flex items-center text-zinc-300 font-mono text-sm">
                       <div className="w-2 h-2 bg-yellow-400 rounded-none mr-3 flex-shrink-0" />
                       {useCase.toUpperCase()}
@@ -347,7 +339,7 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
                   className="w-full justify-start border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300 font-mono rounded-none h-8 bg-transparent"
                   asChild
                 >
-                  <Link href={resource.githubUrl} target="_blank">
+                  <Link href={resource.links?.github || '#'} target="_blank">
                     <Github className="h-4 w-4 mr-2" />
                     GITHUB_REPOSITORY
                   </Link>
@@ -357,7 +349,7 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
                   className="w-full justify-start border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300 font-mono rounded-none h-8 bg-transparent"
                   asChild
                 >
-                  <Link href={resource.url} target="_blank">
+                  <Link href={resource.links?.website || resource.links?.github || '#'} target="_blank">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     OFFICIAL_WEBSITE
                   </Link>
@@ -387,14 +379,7 @@ export default function ResourcePage({ params }: { params: { id: string } }) {
                   <span className="text-zinc-400">STARS</span>
                   <span className="flex items-center text-green-400">
                     <Star className="h-3 w-3 mr-1 fill-current" />
-                    {formatStars(resource.stars)}
-                  </span>
-                </div>
-                <div className="flex justify-between font-mono text-sm">
-                  <span className="text-zinc-400">FORKS</span>
-                  <span className="flex items-center text-green-400">
-                    <GitFork className="h-3 w-3 mr-1" />
-                    {resource.forks}
+                    {formatStars(githubStars)}
                   </span>
                 </div>
                 <div className="flex justify-between font-mono text-sm">
