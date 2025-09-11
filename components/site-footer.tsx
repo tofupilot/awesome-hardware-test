@@ -31,7 +31,7 @@ export function SiteFooter({ lang }: SiteFooterProps) {
   
   return (
     <footer className="mt-16 pt-8 pb-6 border-t border-green-500/20">
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-zinc-500 font-mono">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm sm:text-base text-zinc-500 font-mono">
         <div className="flex items-center gap-6">
           <Link
             href="https://github.com/sschaetz/awesome-hardware-test"
@@ -50,7 +50,7 @@ export function SiteFooter({ lang }: SiteFooterProps) {
             <span>Discord</span>
           </Link>
         </div>
-        <div className="text-xs">
+        <div className="text-xs sm:text-sm">
           © {currentYear} Awesome Hardware Test · MIT License
         </div>
       </div>
