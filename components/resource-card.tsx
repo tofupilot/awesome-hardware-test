@@ -18,7 +18,7 @@ import { ImagePlaceholder } from "@/components/image-placeholder";
 interface ResourceCardProps {
   resource: HardwareTestResource;
   lang: Locale;
-  starCount?: number;
+  starCount?: number | null;
   lastRelease?: string;
   contributors?: number;
 }
@@ -26,8 +26,8 @@ interface ResourceCardProps {
 export function ResourceCard({ resource, lang, starCount, lastRelease, contributors }: ResourceCardProps) {
   const t = translations[lang] || translations['en'];  // Fallback to English
 
-  const formatStars = (stars?: number) => {
-    if (!stars) return null;
+  const formatStars = (stars?: number | null) => {
+    if (!stars || stars === 0) return null;
     if (stars >= 1000) {
       return `${(stars / 1000).toFixed(1)}k`;
     }
@@ -39,8 +39,8 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
   const formattedStars = formatStars(displayStars);
 
   return (
-    <Card className={`${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none`}>
-      <Link href={`/${lang}/${resource.id}`}>
+    <Link href={`/${lang}/${resource.id}`} className="h-full">
+      <Card className={`h-full flex flex-col ${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 !gap-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none`}>
         {/* Image */}
         <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
           {resource.image ? (
@@ -70,7 +70,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
                 {t.resource.badges.rip}
               </Badge>
             )}
-            {displayStars && (
+            {formattedStars && (
               <Badge
                 variant="secondary"
                 className={`bg-zinc-900/90 ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs font-mono rounded-none`}
@@ -90,37 +90,41 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
           </div>
         </div>
 
-        <CardHeader className="p-4">
-          <div className="flex items-start justify-between mb-2">
+        <CardHeader className="!px-4 !py-4">
+          <div className="flex items-start justify-between">
             <CardTitle className={`text-lg font-mono ${resource.unmaintained ? 'text-red-400 group-hover:text-red-300' : 'text-green-400 group-hover:text-green-300'} transition-colors`}>
               {resource.name.toUpperCase()}
             </CardTitle>
             <div className="flex items-center gap-2">
               {resource.links?.github && (
-                <Link
-                  href={resource.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm`}
-                  onClick={(e) => e.stopPropagation()}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(resource.links.github, '_blank');
+                  }}
+                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm cursor-pointer`}
+                  aria-label="View on GitHub"
                 >
                   <Github className="h-4 w-4" />
-                </Link>
+                </button>
               )}
               {resource.links?.website && (
-                <Link
-                  href={resource.links.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm`}
-                  onClick={(e) => e.stopPropagation()}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(resource.links.website, '_blank');
+                  }}
+                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm cursor-pointer`}
+                  aria-label="View website"
                 >
                   <ExternalLink className="h-4 w-4" />
-                </Link>
+                </button>
               )}
             </div>
           </div>
-          <div className="flex gap-2 mb-3 flex-wrap">
+          <div className="flex gap-2 mb-2 flex-wrap">
             {resource.language && (
               <Badge
                 variant="outline"
@@ -140,7 +144,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
             {typeof resource.description === 'object' ? resource.description[lang] : resource.description}
           </CardDescription>
         </CardHeader>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 }

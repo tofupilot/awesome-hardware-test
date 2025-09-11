@@ -44,7 +44,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
     if (diffDays === 1) return '1d'
     if (diffDays < 7) return `${diffDays}d`
     if (diffDays < 30) return `${Math.floor(diffDays / 7)}w`
-    return `${Math.floor(diffDays / 30)}m`
+    return `${Math.floor(diffDays / 30)}mo`
   }
   return (
     <section className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-green-500/20 relative">
@@ -75,32 +75,37 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
 
           <div className="overflow-x-auto">
             <div className="flex gap-3 mb-8 min-w-max">
-              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-44 flex-shrink-0">
+              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-48 flex-shrink-0">
                 <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
                   <Database className="h-3 w-3" />
                   {t.hero.stats.resources}
                 </div>
                 <div className="text-white font-bold">{hardwareTestData.length}</div>
               </div>
-              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-44 flex-shrink-0">
+              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-48 flex-shrink-0">
                 <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
                   <Tags className="h-3 w-3" />
                   {t.hero.stats.categories}
                 </div>
                 <div className="text-white font-bold">{categories.length}</div>
               </div>
-              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-44 flex-shrink-0">
+              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-48 flex-shrink-0">
                 <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
                   <GitCommit className="h-3 w-3" />
                   {t.hero.stats.lastUpdate}
                 </div>
-                <div className="text-white font-bold">{getRelativeTime()} ago</div>
+                <div className="text-white font-bold">
+                  {(() => {
+                    const time = getRelativeTime();
+                    return time === 'today' ? time : `${time} ago`;
+                  })()}
+                </div>
               </div>
               <LanguageDropdown lang={lang} />
               <Link 
                 href="https://discord.gg/XuwYANGx7J" 
                 target="_blank"
-                className="bg-zinc-800/70 border border-violet-500/20 rounded-none p-3 font-mono hover:border-violet-500/50 hover:bg-violet-900/20 transition-colors block w-44 flex-shrink-0"
+                className="bg-zinc-800/70 border border-violet-500/20 rounded-none p-3 font-mono hover:border-violet-500/40 transition-colors block w-48 flex-shrink-0"
               >
               <div className="flex items-center gap-1 text-violet-400 text-xs mb-1">
                 <DiscordIcon className="h-3 w-3" />

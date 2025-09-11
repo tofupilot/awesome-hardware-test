@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, CheckCircle, ExternalLink } from "lucide-react";
 import { translations, Locale } from "@/lib/translations";
 import { ImagePlaceholder } from "@/components/image-placeholder";
+import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
 interface NewsletterSectionProps {
   lang: Locale;
@@ -26,17 +27,34 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSubscribed(true);
-    setIsLoading(false);
-    setEmail("");
+    setError(null);
+    
+    try {
+      const result = await subscribeToNewsletter(email, lang);
+
+      if (result.success) {
+        setIsSubscribed(true);
+        setEmail("");
+      } else {
+        console.error('Newsletter subscription failed:', {
+          error: result.error,
+          details: result.details
+        });
+        setError(result.error || 'Failed to subscribe. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during newsletter subscription:', error);
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubscribed) {
@@ -62,6 +80,12 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
         {t.newsletter.description}
       </CardDescription>
 
+      {error && (
+        <div className="text-red-400 text-xs font-mono mb-2">
+          {error}
+        </div>
+      )}
+      
       <form
         onSubmit={handleSubmit}
         className="flex gap-2 mt-auto"
@@ -71,7 +95,10 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
           type="email"
           placeholder={t.newsletter.placeholder}
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setError(null); // Clear error when user types
+          }}
           className="flex-1 bg-zinc-900/70 border-sky-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-sky-500 focus:ring-sky-500/20 rounded-none text-sm"
           required
         />

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
   const isEnglish = lang === 'en'
   
   return {
-    title: isEnglish ? "Hardware Testing Tools & Frameworks" : "Outils et Frameworks de Test Matériel",
+    title: isEnglish ? "Awesome Hardware Test - Testing Tools, Frameworks & Instruments for Electronics Validation" : "Awesome Hardware Test - Outils, Frameworks et Instruments de Test Matériel",
     description: isEnglish 
       ? `${allResources.length} hardware testing tools. Find test execution engines, wafer maps, instrument interfaces for electronics validation.`
       : `${allResources.length} outils de test matériel. Moteurs d'exécution, cartes de wafers, interfaces d'instruments pour validation électronique.`,

@@ -52,6 +52,66 @@ export type TestCategory =
 export const hardwareTestData: HardwareTestResource[] = [
   // Test Execution Engines
   {
+    id: 'openhtf',
+    name: 'openhtf',
+    category: 'Test Execution Engines',
+    description: {
+      en: 'Google\'s framework for scalable hardware validation and manufacturing tests',
+      fr: 'Framework Google pour validation matérielle et tests de production'
+    },
+    language: 'Python',
+    license: 'Apache-2.0',
+    tags: ['google', 'framework', 'open-source', 'manufacturing'],
+    links: {
+      github: 'https://github.com/google/openhtf',
+      website: 'https://openhtf.com'
+    },
+    imagePlaceholder: 'google hardware testing framework web interface dashboard',
+    codeExample: `import openhtf as htf
+from openhtf.util import units
+
+# Define a test phase
+@htf.measures(htf.Measurement('voltage'))
+def test_voltage(test):
+    test.measurements.voltage = 3.3 * units.volt`,
+    longDescription: `OPENHTF is Google's open-source hardware testing framework, designed to provide a robust and scalable solution for hardware validation and manufacturing testing. Originally developed for Google's internal hardware testing needs, it has been open-sourced to benefit the broader hardware testing community.
+
+The framework provides a comprehensive set of tools for creating, executing, and managing hardware tests. It includes built-in support for test sequencing, data collection, result analysis, and reporting. OpenHTF is designed to handle everything from simple component tests to complex system-level validation.
+
+One of OpenHTF's key strengths is its plugin architecture, which allows easy integration with various test equipment and measurement instruments. The framework also provides excellent support for test data management and can integrate with various databases and analytics platforms.`,
+    features: {
+      en: [
+        'Test sequencing and orchestration',
+        'Plugin-based architecture',
+        'Built-in measurement support',
+        'Data collection and analysis',
+        'Web-based test monitoring',
+        'Database integration',
+        'Comprehensive reporting',
+        'Multi-station support',
+      ],
+      fr: [
+        'Séquençage et orchestration de tests',
+        'Architecture basée sur des plugins',
+        'Support de mesure intégré',
+        'Collecte et analyse de données',
+        'Surveillance de tests basée sur le web',
+        'Intégration de base de données',
+        'Rapports complets',
+        'Support multi-station',
+      ]
+    },
+    useCases: [
+      'Manufacturing test stations',
+      'Hardware validation labs',
+      'Quality assurance testing',
+      'Component characterization',
+      'System-level testing',
+    ],
+    installation: `pip install openhtf`,
+    documentation: 'https://github.com/google/openhtf/wiki'
+  },
+  {
     id: 'crappy',
     name: 'crappy',
     category: 'Test Execution Engines',
@@ -175,66 +235,6 @@ runner.execute(test)?;`
     ],
   },
   {
-    id: 'openhtf',
-    name: 'openhtf',
-    category: 'Test Execution Engines',
-    description: {
-      en: 'Google\'s framework for scalable hardware validation and manufacturing tests',
-      fr: 'Framework Google pour validation matérielle et tests de production'
-    },
-    language: 'Python',
-    license: 'Apache-2.0',
-    tags: ['google', 'framework', 'open-source', 'manufacturing'],
-    links: {
-      github: 'https://github.com/google/openhtf',
-      website: 'https://openhtf.com'
-    },
-    imagePlaceholder: 'google hardware testing framework web interface dashboard',
-    codeExample: `import openhtf as htf
-from openhtf.util import units
-
-# Define a test phase
-@htf.measures(htf.Measurement('voltage'))
-def test_voltage(test):
-    test.measurements.voltage = 3.3 * units.volt`,
-    longDescription: `OPENHTF is Google's open-source hardware testing framework, designed to provide a robust and scalable solution for hardware validation and manufacturing testing. Originally developed for Google's internal hardware testing needs, it has been open-sourced to benefit the broader hardware testing community.
-
-The framework provides a comprehensive set of tools for creating, executing, and managing hardware tests. It includes built-in support for test sequencing, data collection, result analysis, and reporting. OpenHTF is designed to handle everything from simple component tests to complex system-level validation.
-
-One of OpenHTF's key strengths is its plugin architecture, which allows easy integration with various test equipment and measurement instruments. The framework also provides excellent support for test data management and can integrate with various databases and analytics platforms.`,
-    features: {
-      en: [
-        'Test sequencing and orchestration',
-        'Plugin-based architecture',
-        'Built-in measurement support',
-        'Data collection and analysis',
-        'Web-based test monitoring',
-        'Database integration',
-        'Comprehensive reporting',
-        'Multi-station support',
-      ],
-      fr: [
-        'Séquençage et orchestration de tests',
-        'Architecture basée sur des plugins',
-        'Support de mesure intégré',
-        'Collecte et analyse de données',
-        'Surveillance de tests basée sur le web',
-        'Intégration de base de données',
-        'Rapports complets',
-        'Support multi-station',
-      ]
-    },
-    useCases: [
-      'Manufacturing test stations',
-      'Hardware validation labs',
-      'Quality assurance testing',
-      'Component characterization',
-      'System-level testing',
-    ],
-    installation: `pip install openhtf`,
-    documentation: 'https://github.com/google/openhtf/wiki'
-  },
-  {
     id: 'hardpy',
     name: 'HardPy',
     category: 'Test Execution Engines',
@@ -319,23 +319,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     },
     language: 'Python',
     tags: ['automation', 'measurement', 'instruments'],
-    links: {
-      github: 'https://github.com/qcha/AutoLab'
-    }
-  },
-  {
-    id: 'mats',
-    name: 'MATS',
-    category: 'Test Execution Engines',
-    description: {
-      en: 'LabVIEW-based modular system for hardware-in-the-loop testing',
-      fr: 'Système modulaire LabVIEW pour les tests hardware-in-the-loop'
-    },
-    language: 'LabVIEW',
-    tags: ['labview', 'modular', 'hil', 'automated'],
-    links: {
-      github: 'https://github.com/ni/mats'
-    }
+    links: {}
   },
   {
     id: 'lava',
@@ -460,7 +444,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['wafer', 'mapping', 'analysis', 'semiconductor'],
     links: {
-      github: 'https://github.com/MatthewTheGhoul/waferthin'
+      // GitHub repo appears to be private or removed
     },
   },
   {
@@ -474,7 +458,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['stdf', 'wafermap', 'semiconductor', 'analysis'],
     links: {
-      github: 'https://github.com/noonchen/stdf2map'
+      // GitHub repo appears to be private or removed
     },
   },
 
@@ -593,7 +577,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['medical', 'iso', 'ci-cd', 'automated'],
     links: {
-      github: 'https://github.com/Siemens/htf'
+      // GitHub repo appears to be private or removed
     },
   },
   {
@@ -607,7 +591,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['micropython', 'boards', 'embedded', 'automated'],
     links: {
-      github: 'https://github.com/hmaerki/octoprobe'
+      // GitHub repo appears to be private or removed
     },
   },
   {
@@ -621,7 +605,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['production', 'test-station', 'manufacturing', 'helper'],
     links: {
-      github: 'https://github.com/Semi-ATE/sopic'
+      // GitHub repo appears to be private or removed
     },
   },
   {

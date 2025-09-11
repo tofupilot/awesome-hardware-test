@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { CopyButton } from "@/components/copy-button"
 import { JsonLd } from "@/components/json-ld"
 import { ImagePlaceholder } from "@/components/image-placeholder"
-import { getAllGitHubData } from "@/lib/github-data"
+import { getAllGitHubData, fetchGitHubRepoData } from "@/lib/github-data"
 import { Metadata } from "next"
 import {
   ArrowLeft,
@@ -26,6 +26,7 @@ import {
   Package,
   BookOpen,
   Skull,
+  Scale,
 } from "lucide-react"
 import { hardwareTestData } from "@/lib/hardware-data"
 
@@ -115,10 +116,19 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   const { stars, repoData } = await getAllGitHubData()
   const githubStars = stars[resource.id]
   
+  // Fetch individual repo data for this resource
+  let individualRepoData = null
+  if (resource.links?.github) {
+    const match = resource.links.github.match(/github\.com\/([^\/]+)\/([^\/]+)/)
+    if (match) {
+      individualRepoData = await fetchGitHubRepoData(match[1], match[2])
+    }
+  }
+  
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
 
-  const formatStars = (stars?: number) => {
+  const formatStars = (stars?: number | null) => {
     if (stars === undefined || stars === null) return "N/A"
     if (stars === 0) return "0"
     if (stars >= 1000) {
@@ -143,6 +153,27 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
       'The Unlicense': 'Unlicense',
     }
     return licenseMap[license] || license
+  }
+
+  const formatReleaseDate = (dateString?: string) => {
+    if (!dateString) return 'N/A'
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffTime = now.getTime() - date.getTime()
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    const diffYears = Math.floor(diffDays / 365)
+    
+    if (diffYears > 0) {
+      return `${diffYears}y ago`
+    } else if (diffDays > 30) {
+      return `${Math.floor(diffDays / 30)}mo ago`
+    } else if (diffDays > 7) {
+      return `${Math.floor(diffDays / 7)}w ago`
+    } else if (diffDays > 0) {
+      return `${diffDays}d ago`
+    } else {
+      return 'Today'
+    }
   }
 
   const description = typeof resource.description === 'object' 
@@ -232,34 +263,36 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Repository stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Star className="h-3 w-3 mr-1" />
-                STARS
+          <div className="overflow-x-auto mb-6">
+            <div className="flex gap-3 min-w-max">
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Star className="h-3 w-3 mr-1" />
+                  STARS
+                </div>
+                <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
               </div>
-              <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
-            </div>
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Users className="h-3 w-3 mr-1" />
-                CONTRIBUTORS
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Users className="h-3 w-3 mr-1" />
+                  CONTRIBUTORS
+                </div>
+                <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
               </div>
-              <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
-            </div>
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Calendar className="h-3 w-3 mr-1" />
-                LAST_RELEASE
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Calendar className="h-3 w-3 mr-1" />
+                  LAST_RELEASE
+                </div>
+                <div className="text-white font-bold">{formatReleaseDate(individualRepoData?.lastRelease)}</div>
               </div>
-              <div className="text-white font-bold">N/A</div>
-            </div>
-            <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
-              <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Github className="h-3 w-3 mr-1" />
-                LICENSE
+              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                  <Scale className="h-3 w-3 mr-1" />
+                  LICENSE
+                </div>
+                <div className="text-white font-bold">{formatLicense(individualRepoData?.license || resource.license)}</div>
               </div>
-              <div className="text-white font-bold">{formatLicense(resource.license)}</div>
             </div>
           </div>
 
@@ -337,13 +370,14 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 {resource.image ? (
                   <Image
                     src={resource.image}
-                    alt={`${resource.name} interface`}
+                    alt={`${resource.name} preview`}
                     fill
                     className="object-cover"
                   />
                 ) : (
                   <ImagePlaceholder 
-                    text={resource.imagePlaceholder || `${resource.name} image coming soon`}
+                    text={`${resource.name} image coming soon`}
+                    className=""
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
@@ -470,7 +504,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 >
                   <Link href={resource.links?.github || '#'} target="_blank">
                     <Github className="h-4 w-4 mr-2" />
-                    GITHUB_REPOSITORY
+                    GITHUB
                   </Link>
                 </Button>
                 <Button
@@ -478,23 +512,11 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                   className={`w-full justify-start ${resource.unmaintained ? 'border-red-500/50 hover:bg-red-500/10 text-red-400 hover:text-red-300' : 'border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300'} font-mono rounded-none h-8 bg-transparent`}
                   asChild
                 >
-                  <Link href={resource.links?.website || resource.links?.github || '#'} target="_blank">
+                  <Link href={resource.links?.docs || resource.links?.website || resource.links?.github || '#'} target="_blank">
                     <ExternalLink className="h-4 w-4 mr-2" />
-                    OFFICIAL_WEBSITE
+                    WEBSITE
                   </Link>
                 </Button>
-                {resource.documentation && (
-                  <Button
-                    variant="outline"
-                    className={`w-full justify-start ${resource.unmaintained ? 'border-red-500/50 hover:bg-red-500/10 text-red-400 hover:text-red-300' : 'border-green-500/50 hover:bg-green-500/10 text-green-400 hover:text-green-300'} font-mono rounded-none h-8 bg-transparent`}
-                    asChild
-                  >
-                    <Link href={resource.documentation} target="_blank">
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      DOCUMENTATION
-                    </Link>
-                  </Button>
-                )}
               </CardContent>
             </Card>
 
@@ -522,7 +544,14 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                   <span className="text-zinc-400">LAST_RELEASE</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
                     <Calendar className="h-3 w-3 mr-1" />
-                    N/A
+                    {formatReleaseDate(individualRepoData?.lastRelease)}
+                  </span>
+                </div>
+                <div className="flex justify-between font-mono text-sm">
+                  <span className="text-zinc-400">LICENSE</span>
+                  <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
+                    <Scale className="h-3 w-3 mr-1" />
+                    {formatLicense(individualRepoData?.license || resource.license)}
                   </span>
                 </div>
               </CardContent>
