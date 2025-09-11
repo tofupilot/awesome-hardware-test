@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { CopyButton } from "@/components/copy-button"
 import { JsonLd } from "@/components/json-ld"
 import { ImagePlaceholder } from "@/components/image-placeholder"
+import { ResourceBadges } from "@/components/resource-badges"
 import { getAllGitHubData, fetchGitHubRepoData } from "@/lib/github-data"
 import { Metadata } from "next"
 import {
@@ -297,14 +298,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           </div>
 
           {/* Category and Language badges */}
-          <div className="flex flex-wrap gap-4 mt-4">
-            <Badge variant="secondary" className="bg-zinc-700/70 text-zinc-300 font-mono rounded-none">
-              {resource.language?.toUpperCase() || 'UNKNOWN'}
-            </Badge>
-            <Badge variant="secondary" className={`${resource.unmaintained ? 'bg-red-900/70 text-red-300' : 'bg-green-900/70 text-green-300'} font-mono rounded-none`}>
-              {resource.category.replace(" ", "_").toUpperCase()}
-            </Badge>
-          </div>
+          <ResourceBadges resource={resource} className="mt-4" />
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
@@ -372,7 +366,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                     src={resource.image}
                     alt={`${resource.name} preview`}
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                 ) : (
                   <ImagePlaceholder 

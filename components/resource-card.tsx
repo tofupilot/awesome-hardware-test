@@ -14,6 +14,7 @@ import { Github, Star, ExternalLink, Skull } from "lucide-react";
 import { translations, Locale } from "@/lib/translations";
 import { HardwareTestResource } from "@/lib/hardware-data";
 import { ImagePlaceholder } from "@/components/image-placeholder";
+import { ResourceBadges } from "@/components/resource-badges";
 
 interface ResourceCardProps {
   resource: HardwareTestResource;
@@ -38,9 +39,51 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
   const displayStars = starCount;
   const formattedStars = formatStars(displayStars);
 
+  // Determine license type badges
+  const getLicenseBadges = () => {
+    // If licenseTypes is explicitly defined, use it
+    if (resource.licenseTypes && resource.licenseTypes.length > 0) {
+      return resource.licenseTypes.map(type => {
+        const colorMap = {
+          'OSS': 'bg-green-900/90 text-green-300',
+          'FREE': 'bg-blue-900/90 text-blue-300',
+          'PAID': 'bg-violet-900/90 text-violet-300'
+        };
+        return { type, color: colorMap[type] || 'bg-zinc-900/90 text-zinc-300' };
+      });
+    }
+    
+    // Fallback to automatic detection for backward compatibility
+    const badges = [];
+    
+    if (resource.isCommercial) {
+      badges.push({ type: 'PAID', color: 'bg-violet-900/90 text-violet-300' });
+    } else if (resource.license && resource.license.toLowerCase() !== 'proprietary') {
+      badges.push({ type: 'OSS', color: 'bg-green-900/90 text-green-300' });
+    } else if (!resource.isCommercial) {
+      badges.push({ type: 'FREE', color: 'bg-blue-900/90 text-blue-300' });
+    }
+    
+    return badges;
+  };
+
+  const licenseBadges = getLicenseBadges();
+
   return (
     <Link href={`/${lang}/${resource.id}`} className="h-full">
-      <Card className={`h-full flex flex-col ${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 !gap-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none`}>
+      <Card className={`h-full flex flex-col ${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 !gap-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none relative`}>
+        {/* License badges on the left */}
+        <div className="absolute left-0 top-3 z-10 flex flex-col gap-1">
+          {licenseBadges.map((badge, index) => (
+            <div
+              key={index}
+              className={`${badge.color} text-xs font-mono rounded-none px-2 py-1`}
+            >
+              {badge.type}
+            </div>
+          ))}
+        </div>
+
         {/* Image */}
         <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
           {resource.image ? (
@@ -48,7 +91,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
               src={resource.image}
               alt={`${resource.name} preview`}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
             />
           ) : (
             <ImagePlaceholder 
@@ -77,14 +120,6 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
               >
                 <Star className="h-3 w-3 mr-1" />
                 {formattedStars}
-              </Badge>
-            )}
-            {resource.isCommercial && (
-              <Badge
-                variant="secondary"
-                className="bg-yellow-900/90 text-yellow-300 text-xs font-mono rounded-none"
-              >
-                {t.resource.badges.commercial}
               </Badge>
             )}
           </div>
@@ -124,22 +159,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
               )}
             </div>
           </div>
-          <div className="flex gap-2 mb-2 flex-wrap">
-            {resource.language && (
-              <Badge
-                variant="outline"
-                className={`${resource.unmaintained ? 'border-red-500/30 text-red-400' : 'border-green-500/30 text-green-400'} text-xs font-mono rounded-none bg-transparent`}
-              >
-                {resource.language.toUpperCase()}
-              </Badge>
-            )}
-            <Badge
-              variant="secondary"
-              className="bg-zinc-700/70 text-zinc-300 text-xs font-mono rounded-none"
-            >
-              {resource.category.replace(" ", "_").toUpperCase()}
-            </Badge>
-          </div>
+          <ResourceBadges resource={resource} className="mb-2" />
           <CardDescription className="text-zinc-400 text-sm leading-relaxed line-clamp-3 font-mono">
             {typeof resource.description === 'object' ? resource.description[lang] : resource.description}
           </CardDescription>
