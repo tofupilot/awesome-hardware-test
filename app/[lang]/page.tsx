@@ -7,6 +7,37 @@ import { getAllGitHubStars } from "@/lib/github-stars"
 import { CategoryNavigationServer } from "@/components/category-navigation-server"
 import { ResourceCard } from "@/components/resource-card"
 import { SearchInput } from "@/components/search-input"
+import { JsonLd } from "@/components/json-ld"
+import { Metadata } from "next"
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
+  const { lang } = await params
+  const isEnglish = lang === 'en'
+  
+  return {
+    title: isEnglish ? "Hardware Testing Tools & Frameworks" : "Outils et Frameworks de Test Matériel",
+    description: isEnglish 
+      ? `${allResources.length} hardware testing tools. Find test execution engines, wafer maps, instrument interfaces for electronics validation.`
+      : `${allResources.length} outils de test matériel. Moteurs d'exécution, cartes de wafers, interfaces d'instruments pour validation électronique.`,
+    alternates: {
+      canonical: `${siteUrl}/${lang}`,
+      languages: {
+        'en': '/en',
+        'fr': '/fr',
+      },
+    },
+    openGraph: {
+      title: isEnglish ? "Hardware Testing Tools Collection" : "Collection d'Outils de Test Matériel",
+      description: isEnglish 
+        ? "Open source hardware testing frameworks and tools for electronics validation"
+        : "Frameworks et outils open source pour la validation électronique",
+      url: `${siteUrl}/${lang}`,
+      locale: lang === 'en' ? 'en_US' : 'fr_FR',
+    },
+  }
+}
 
 interface LandingPageProps {
   params: Promise<{
@@ -26,6 +57,26 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
   // Fetch GitHub stars server-side
   const stars = await getAllGitHubStars()
 
+  // JSON-LD structured data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Awesome Hardware Test",
+    "description": lang === 'en' 
+      ? "Complete collection of hardware testing tools and frameworks"
+      : "Collection complète d'outils et frameworks de test matériel",
+    "url": `${siteUrl}/${lang}`,
+    "codeRepository": "https://github.com/awesome-hardware-test",
+    "programmingLanguage": ["Python", "Rust", "C++", "JavaScript"],
+    "keywords": "hardware testing, test automation, semiconductor testing, wafer maps",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "itemCount": allResources.length,
+      "bestRating": 5,
+      "worstRating": 1
+    }
+  }
+
   // Filter resources server-side based on URL params
   const filteredResources = allResources.filter((resource) => {
     const description = typeof resource.description === 'object' ? resource.description[lang] : resource.description
@@ -43,7 +94,9 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
   }
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
+    <>
+      <JsonLd data={jsonLd} />
+      <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
       <HeroSection lang={lang} />
       
       <nav className="border-b border-green-500/20 bg-zinc-900/98 relative z-10">
@@ -111,5 +164,6 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
         <SiteFooter lang={lang} />
       </main>
     </div>
+    </>
   )
 }

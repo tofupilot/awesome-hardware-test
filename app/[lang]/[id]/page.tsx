@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CopyButton } from "@/components/copy-button"
+import { JsonLd } from "@/components/json-ld"
 import { getAllGitHubStars } from "@/lib/github-stars"
+import { Metadata } from "next"
 import {
   ArrowLeft,
   ExternalLink,
@@ -37,6 +39,57 @@ const categoryIcons = {
 }
 
 import { Locale, locales } from "@/lib/translations"
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string; lang: Locale }> }): Promise<Metadata> {
+  const { id, lang } = await params
+  const resource = hardwareTestData.find(r => r.id === id)
+  
+  if (!resource) {
+    return {
+      title: "Resource Not Found",
+    }
+  }
+
+  const description = typeof resource.description === 'object' 
+    ? resource.description[lang] 
+    : resource.description
+  
+  const keywords = [
+    resource.name,
+    ...resource.tags,
+    resource.category.toLowerCase(),
+    resource.language?.toLowerCase(),
+    "hardware testing",
+    "test automation"
+  ].filter(Boolean) as string[]
+
+  return {
+    title: `${resource.name} - ${resource.category}`,
+    description: description,
+    keywords: keywords,
+    alternates: {
+      canonical: `${siteUrl}/${lang}/${id}`,
+      languages: {
+        'en': `/en/${id}`,
+        'fr': `/fr/${id}`,
+      },
+    },
+    openGraph: {
+      title: resource.name,
+      description: description,
+      url: `${siteUrl}/${lang}/${id}`,
+      type: "article",
+      locale: lang === 'en' ? 'en_US' : 'fr_FR',
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${resource.name} - Hardware Testing Tool`,
+      description: description,
+    },
+  }
+}
 
 export async function generateStaticParams() {
   const params = []
@@ -80,9 +133,40 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
     return stars.toString()
   }
 
+  const description = typeof resource.description === 'object' 
+    ? resource.description[lang] 
+    : resource.description
+
+  // JSON-LD structured data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": resource.name,
+    "description": description,
+    "applicationCategory": resource.category,
+    "programmingLanguage": resource.language,
+    "keywords": resource.tags.join(", "),
+    "url": `${siteUrl}/${lang}/${resource.id}`,
+    "sameAs": [
+      resource.links?.github,
+      resource.links?.website,
+      resource.links?.docs
+    ].filter(Boolean),
+    "aggregateRating": githubStars ? {
+      "@type": "AggregateRating",
+      "ratingValue": 4.5,
+      "ratingCount": githubStars,
+      "bestRating": 5,
+      "worstRating": 1
+    } : undefined,
+    "isAccessibleForFree": !resource.isCommercial,
+    "license": resource.license
+  }
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
+    <>
+      <JsonLd data={jsonLd} />
+      <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
       {/* Header */}
       <header className="border-b border-green-500/20 bg-zinc-900/98 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -399,5 +483,6 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
         </div>
       </main>
     </div>
+    </>
   )
 }

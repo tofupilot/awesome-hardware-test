@@ -7,9 +7,64 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+
 export const metadata: Metadata = {
-  title: "Awesome Hardware Test",
-  description: "Curated list of tested hardware components with benchmarks and reviews",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Awesome Hardware Test - Open Source Testing Tools & Frameworks",
+    template: "%s | Awesome Hardware Test"
+  },
+  description: "Complete collection of hardware testing tools. Test execution engines, wafer maps, instrument interfaces, and validation frameworks for electronics and semiconductors.",
+  keywords: ["hardware testing", "test automation", "semiconductor testing", "wafer maps", "pytest hardware", "openhtf", "pyvisa", "embedded testing", "electronics validation", "test frameworks"],
+  authors: [{ name: "Awesome Hardware Test Community" }],
+  creator: "Awesome Hardware Test",
+  publisher: "Awesome Hardware Test",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Awesome Hardware Test - Open Source Testing Tools",
+    description: "Complete collection of hardware testing tools and frameworks for electronics validation",
+    url: siteUrl,
+    siteName: "Awesome Hardware Test",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Awesome Hardware Test - Testing Tools Collection",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Awesome Hardware Test - Testing Tools & Frameworks",
+    description: "Complete collection of hardware testing tools for electronics validation",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      'en-US': '/en',
+      'fr-FR': '/fr',
+    },
+  },
 };
 
 export default function RootLayout({
