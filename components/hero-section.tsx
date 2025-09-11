@@ -50,7 +50,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
     <section className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-green-500/20 relative">
       <div className="container mx-auto px-4 py-8">
         <div className="w-full relative z-20">
-          <div className="flex flex-col sm:flex-row sm:items-start mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center mb-6">
             <div className="relative mb-4 sm:mb-0 sm:mr-4 flex-shrink-0 p-1 border border-green-500/20 w-fit">
               <Image 
                 src="/logo.png" 
