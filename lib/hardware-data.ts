@@ -15,6 +15,7 @@ export interface HardwareTestResource {
     docs?: string;
   };
   isCommercial?: boolean;
+  licenseTypes?: ('OSS' | 'FREE' | 'PAID')[];
   features?: {
     en: string[];
     fr: string[];
@@ -40,27 +41,28 @@ export interface HardwareTestResource {
 }
 
 export type TestCategory = 
-  | 'Test Execution Engines'
-  | 'Test Database & Analytics' 
-  | 'Instrument Interface' 
-  | 'Wafer Maps'
-  | 'Hardware Devices'
-  | 'Hardware Mocking'
-  | 'Test Suites'
-  | 'Videos & Resources';
+  | 'Execution_Engines'
+  | 'Database_Analytics' 
+  | 'Instrument_Interface' 
+  | 'Wafer_Maps'
+  | 'Hardware_Devices'
+  | 'Hardware_Mocking'
+  | 'Test_Suites'
+  | 'Videos_Resources';
 
 export const hardwareTestData: HardwareTestResource[] = [
-  // Test Execution Engines
+  // Execution Engines
   {
     id: 'openhtf',
     name: 'openhtf',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Google\'s framework for scalable hardware validation and manufacturing tests',
       fr: 'Framework Google pour validation matérielle et tests de production'
     },
     language: 'Python',
     license: 'Apache-2.0',
+    licenseTypes: ['OSS'],
     tags: ['google', 'framework', 'open-source', 'manufacturing'],
     links: {
       github: 'https://github.com/google/openhtf',
@@ -114,13 +116,14 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
   {
     id: 'crappy',
     name: 'crappy',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Python framework for real-time data acquisition and parallel hardware control',
       fr: 'Framework Python pour acquisition temps réel et contrôle hardware parallèle'
     },
     language: 'Python',
     license: 'GPL-3.0',
+    licenseTypes: ['OSS'],
     tags: ['python', 'real-time', 'acquisition', 'parallel'],
     links: {
       github: 'https://github.com/LaboratoireMecaniqueLille/crappy'
@@ -168,7 +171,7 @@ test.run()`
   {
     id: 'exclave',
     name: 'exclave',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Rust infrastructure for high-performance factory testing and automation',
       fr: 'Infrastructure Rust pour tests et automatisation usine haute performance'
@@ -217,7 +220,7 @@ runner.execute(test)?;`
   {
     id: 'flojoy-studio',
     name: 'Flojoy Studio',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Visual scripting IDE for no-code DAQ, test benches, and robotics control',
       fr: 'IDE de script visuel pour DAQ, bancs d\'essai et contrôle robotique sans code'
@@ -237,7 +240,7 @@ runner.execute(test)?;`
   {
     id: 'hardpy',
     name: 'HardPy',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Python library for browser-based pytest test benches with database storage',
       fr: 'Bibliothèque Python pour bancs d\'essai pytest via navigateur avec stockage BD'
@@ -251,7 +254,7 @@ runner.execute(test)?;`
   {
     id: 'robotframework',
     name: 'Robot Framework',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Automation framework for acceptance testing, ATDD, and robotic process automation',
       fr: 'Framework d\'automatisation pour tests d\'acceptation, ATDD et automatisation robotique'
@@ -266,7 +269,7 @@ runner.execute(test)?;`
   {
     id: 'labgrid',
     name: 'Labgrid',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Python library for remote control and automated testing of embedded boards',
       fr: 'Bibliothèque Python pour le contrôle à distance et les tests automatisés de cartes embarquées'
@@ -283,7 +286,7 @@ runner.execute(test)?;`
   {
     id: 'opentap',
     name: 'OpenTAP',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Open-source platform for creating and executing automated test sequences',
       fr: 'Plateforme open-source pour créer et exécuter des séquences de tests automatisées'
@@ -298,7 +301,7 @@ runner.execute(test)?;`
   {
     id: 'pytest-qt',
     name: 'pytest-qt',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Pytest plugin for automated testing of Qt GUI applications',
       fr: 'Plugin pytest pour les tests automatisés d\'applications Qt GUI'
@@ -312,7 +315,7 @@ runner.execute(test)?;`
   {
     id: 'autolab',
     name: 'AutoLab',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Simplified automation framework for measurement and instrument control',
       fr: 'Framework d\'automatisation simplifié pour les mesures et le contrôle d\'instruments'
@@ -324,7 +327,7 @@ runner.execute(test)?;`
   {
     id: 'lava',
     name: 'LAVA',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Automated validation architecture for testing deployed software on hardware',
       fr: 'Architecture de validation automatisée pour tester les logiciels déployés sur matériel'
@@ -336,26 +339,29 @@ runner.execute(test)?;`
     }
   },
 
-  // Test Database & Analytics
+  // Database Analytics
   {
     id: 'tofupilot',
     name: 'TofuPilot',
-    category: 'Test Database & Analytics',
+    category: 'Database_Analytics',
     description: {
       en: 'Plug-and-play database and analytics platform for hardware test data management',
       fr: 'Plateforme de base de données et d\'analyse plug-and-play pour la gestion des tests matériels'
     },
-    language: 'Various',
+    language: 'Python',
     isCommercial: true,
+    licenseTypes: ['FREE', 'PAID'],
     tags: ['database', 'pytest', 'analytics', 'commercial'],
     links: {
       website: 'https://tofupilot.com'
     },
+    image: '/resources/tofupilot.png',
+    installation: 'pip install tofupilot',
   },
   {
     id: 'yieldhub',
     name: 'yieldHUB',
-    category: 'Test Database & Analytics',
+    category: 'Database_Analytics',
     description: {
       en: 'Enterprise analytics platform for semiconductor yield and test data analysis',
       fr: 'Plateforme d\'analyse d\'entreprise pour le rendement et les données de test des semiconducteurs'
@@ -372,7 +378,7 @@ runner.execute(test)?;`
   {
     id: 'pyvisa',
     name: 'PyVISA',
-    category: 'Instrument Interface',
+    category: 'Instrument_Interface',
     description: {
       en: 'Python package for universal instrument control via VISA protocol',
       fr: 'Package Python pour contrôle universel d\'instruments via protocole VISA'
@@ -388,7 +394,7 @@ runner.execute(test)?;`
   {
     id: 'test-controller',
     name: 'Test Controller',
-    category: 'Instrument Interface',
+    category: 'Instrument_Interface',
     description: {
       en: 'Multi-device control and data logging for DMMs, power supplies, and electronic loads',
       fr: 'Contrôle multi-appareils et enregistrement de données pour DMM, alimentations et charges'
@@ -408,7 +414,7 @@ runner.execute(test)?;`
   {
     id: 'wafer-map',
     name: 'wafer-map',
-    category: 'Wafer Maps',
+    category: 'Wafer_Maps',
     description: {
       en: 'Python library for visualization and analysis of semiconductor wafer maps',
       fr: 'Bibliothèque Python pour la visualisation et l\'analyse de cartes de wafers'
@@ -422,7 +428,7 @@ runner.execute(test)?;`
   {
     id: 'py-wdf-reader',
     name: 'py-wdf-reader',
-    category: 'Wafer Maps',
+    category: 'Wafer_Maps',
     description: {
       en: 'Python reader for Renishaw WDF spectroscopy data files',
       fr: 'Lecteur Python pour les fichiers de données spectroscopiques WDF Renishaw'
@@ -436,7 +442,7 @@ runner.execute(test)?;`
   {
     id: 'waferthin',
     name: 'waferthin',
-    category: 'Wafer Maps',
+    category: 'Wafer_Maps',
     description: {
       en: 'Python tools for semiconductor wafer data mapping and statistical analysis',
       fr: 'Outils Python pour la cartographie et l\'analyse statistique des données de wafers'
@@ -450,7 +456,7 @@ runner.execute(test)?;`
   {
     id: 'stdf2map',
     name: 'stdf2map',
-    category: 'Wafer Maps',
+    category: 'Wafer_Maps',
     description: {
       en: 'CLI tool for generating wafer bin maps from STDF test data files',
       fr: 'Outil CLI pour générer des cartes de wafers binaires à partir de fichiers STDF'
@@ -466,7 +472,7 @@ runner.execute(test)?;`
   {
     id: 'nanovna-saver',
     name: 'NanoVNA-Saver',
-    category: 'Hardware Devices',
+    category: 'Hardware_Devices',
     description: {
       en: 'GUI application for NanoVNA vector network analyzer data acquisition and analysis',
       fr: 'Application GUI pour l\'acquisition et l\'analyse de données NanoVNA'
@@ -480,7 +486,7 @@ runner.execute(test)?;`
   {
     id: 'red-pitaya',
     name: 'Red Pitaya',
-    category: 'Hardware Devices',
+    category: 'Hardware_Devices',
     description: {
       en: 'Open-hardware platform combining oscilloscope, signal generator, and spectrum analyzer',
       fr: 'Plateforme open-hardware combinant oscilloscope, générateur de signaux et analyseur'
@@ -495,7 +501,7 @@ runner.execute(test)?;`
   {
     id: 'tinysa',
     name: 'tinySA',
-    category: 'Hardware Devices',
+    category: 'Hardware_Devices',
     description: {
       en: 'Ultra-portable spectrum analyzer for RF testing and measurement',
       fr: 'Analyseur de spectre ultra-portable pour les tests et mesures RF'
@@ -510,7 +516,7 @@ runner.execute(test)?;`
   {
     id: 'pyvisa-sim',
     name: 'PyVISA-sim',
-    category: 'Hardware Mocking',
+    category: 'Hardware_Mocking',
     description: {
       en: 'VISA instrument simulator for testing without physical hardware',
       fr: 'Simulateur d\'instruments VISA pour tester sans matériel physique'
@@ -524,7 +530,7 @@ runner.execute(test)?;`
   {
     id: 'umockdev',
     name: 'umockdev',
-    category: 'Hardware Mocking',
+    category: 'Hardware_Mocking',
     description: {
       en: 'Linux device mocking framework for hardware integration testing',
       fr: 'Framework de simulation de périphériques Linux pour les tests d\'intégration'
@@ -540,7 +546,7 @@ runner.execute(test)?;`
   {
     id: 'ltp',
     name: 'Linux Test Project',
-    category: 'Test Suites',
+    category: 'Test_Suites',
     description: {
       en: 'Comprehensive test suite for Linux kernel validation and regression testing',
       fr: 'Suite de tests complète pour la validation et les tests de régression du noyau Linux'
@@ -554,7 +560,7 @@ runner.execute(test)?;`
   {
     id: 'stress-ng',
     name: 'stress-ng',
-    category: 'Test Suites',
+    category: 'Test_Suites',
     description: {
       en: 'System stress testing tool for CPU, memory, I/O, and network load testing',
       fr: 'Outil de test de stress système pour CPU, mémoire, E/S et tests de charge réseau'
@@ -569,7 +575,7 @@ runner.execute(test)?;`
   {
     id: 'htf',
     name: 'htf',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'ISO-certified Python framework for medical device testing and CI/CD automation',
       fr: 'Framework Python certifié ISO pour les tests de dispositifs médicaux et l\'automatisation CI/CD'
@@ -583,7 +589,7 @@ runner.execute(test)?;`
   {
     id: 'octoprobe',
     name: 'octoprobe',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Automated testing framework for MicroPython boards and peripheral devices',
       fr: 'Framework de tests automatisés pour cartes MicroPython et périphériques'
@@ -597,7 +603,7 @@ runner.execute(test)?;`
   {
     id: 'sopic',
     name: 'sopic',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Python helper library for production line test station automation',
       fr: 'Bibliothèque Python d\'aide pour l\'automatisation de stations de test en production'
@@ -611,7 +617,7 @@ runner.execute(test)?;`
   {
     id: 'treeate',
     name: 'TreeATE',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Factory automation platform for product testing (Chinese language support)',
       fr: 'Plateforme d\'automatisation d\'usine pour les tests de produits (support chinois)'
@@ -631,7 +637,7 @@ runner.execute(test)?;`
   {
     id: 'pytest-embedded',
     name: 'pytest-embedded',
-    category: 'Test Execution Engines',
+    category: 'Execution_Engines',
     description: {
       en: 'Pytest plugin for automated embedded system testing and validation',
       fr: 'Plugin pytest pour les tests et la validation automatisés de systèmes embarqués'
@@ -645,25 +651,25 @@ runner.execute(test)?;`
 ];
 
 export const categories: TestCategory[] = [
-  'Test Execution Engines',
-  'Test Database & Analytics', 
-  'Instrument Interface', 
-  'Wafer Maps',
-  'Hardware Devices',
-  'Hardware Mocking',
-  'Test Suites',
-  'Videos & Resources'
+  'Execution_Engines',
+  'Database_Analytics', 
+  'Instrument_Interface', 
+  'Wafer_Maps',
+  'Hardware_Devices',
+  'Hardware_Mocking',
+  'Test_Suites',
+  'Videos_Resources'
 ];
 
 export const categoryIcons = {
-  "Test Execution Engines": "Zap",
-  "Test Database & Analytics": "Database",
-  "Instrument Interface": "Cable",
-  "Wafer Maps": "Map",
-  "Hardware Devices": "HardDrive",
-  "Hardware Mocking": "TestTube",
-  "Test Suites": "Package",
-  "Videos & Resources": "BookOpen",
+  "Execution_Engines": "Zap",
+  "Database_Analytics": "Database",
+  "Instrument_Interface": "Cable",
+  "Wafer_Maps": "Map",
+  "Hardware_Devices": "HardDrive",
+  "Hardware_Mocking": "TestTube",
+  "Test_Suites": "Package",
+  "Videos_Resources": "BookOpen",
 };
 
 export function getItemsByCategory(category: TestCategory): HardwareTestResource[] {

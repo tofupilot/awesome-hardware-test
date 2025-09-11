@@ -50,8 +50,8 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
     <section className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-green-500/20 relative">
       <div className="container mx-auto px-4 py-8">
         <div className="w-full relative z-20">
-          <div className="flex items-center mb-6">
-            <div className="relative mr-4 flex-shrink-0 p-1 border border-green-500/20">
+          <div className="flex flex-col sm:flex-row sm:items-center mb-6">
+            <div className="relative mb-4 sm:mb-0 sm:mr-4 flex-shrink-0 p-1 border border-green-500/20 w-fit">
               <Image 
                 src="/logo.png" 
                 alt="Logo" 
@@ -60,10 +60,10 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
                 className="h-12 w-12"
               />
             </div>
-            <div className="flex items-center">
-              <h1 className="text-4xl font-bold font-mono">
+            <div className="flex-1 flex items-center">
+              <h1 className="text-4xl font-bold font-mono flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2">
                 <span className="text-green-400">AWESOME</span>
-                <span className="text-white mx-2">HARDWARE</span>
+                <span className="text-white">HARDWARE</span>
                 <span className="text-green-400">TEST</span>
               </h1>
             </div>
@@ -74,7 +74,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
           </p>
 
           <div className="overflow-x-auto">
-            <div className="flex gap-3 mb-8 min-w-max">
+            <div className="flex gap-3 pb-2 min-w-max">
               <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-48 flex-shrink-0">
                 <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
                   <Database className="h-3 w-3" />
@@ -132,16 +132,21 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
           </div>
 
 
-          <p className="text-sm text-zinc-500 font-mono">
-            [{t.hero.credits.createdBy}:{" "}
-            <Link href="https://tofupilot.com" className="text-green-400 hover:underline" target="_blank">
-              TOFUPILOT
-            </Link>
-            ] [{t.hero.credits.inspiredBy}:{" "}
-            <Link href="https://github.com/sschaetz" className="text-green-400 hover:underline" target="_blank">
-              SSCHAETZ
-            </Link>
-            ]
+          <p className="text-sm text-zinc-500 font-mono flex flex-col sm:flex-row sm:gap-x-2 mt-6">
+            <span>
+              [{t.hero.credits.createdBy}:{" "}
+              <Link href="https://tofupilot.com" className="text-green-400 hover:underline" target="_blank">
+                TOFUPILOT
+              </Link>
+              ]
+            </span>
+            <span>
+              [{t.hero.credits.inspiredBy}:{" "}
+              <Link href="https://github.com/sschaetz" className="text-green-400 hover:underline" target="_blank">
+                SSCHAETZ
+              </Link>
+              ]
+            </span>
           </p>
         </div>
       </div>

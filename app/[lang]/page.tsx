@@ -1,7 +1,6 @@
 import { hardwareTestData as allResources, categories, categoryIcons } from "@/lib/hardware-data"
 import { translations, Locale } from "@/lib/translations"
 import { HeroSection } from "@/components/hero-section"
-import { SiteFooter } from "@/components/site-footer"
 import { NewsletterSection } from "@/components/newsletter-section"
 import { DiscordSection } from "@/components/discord-section"
 import { getAllGitHubData } from "@/lib/github-data"
@@ -25,8 +24,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     alternates: {
       canonical: `${siteUrl}/${lang}`,
       languages: {
-        'en': '/en',
-        'fr': '/fr',
+        'x-default': `${siteUrl}/en`,
+        'en': `${siteUrl}/en`,
+        'fr': `${siteUrl}/fr`,
       },
     },
     openGraph: {
@@ -111,7 +111,7 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
       
       <nav className="border-b border-green-500/20 bg-zinc-900/98 relative z-[5]">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4 py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 py-4">
             {/* Search Bar - Client Component */}
             <SearchInput 
               defaultValue={search} 
@@ -217,8 +217,6 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
           </div>
         )}
 
-
-        <SiteFooter lang={lang} />
       </main>
     </div>
     </>

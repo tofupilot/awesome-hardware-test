@@ -24,7 +24,7 @@ export function DiscordSection({ lang }: DiscordSectionProps) {
   const t = translations[lang] || translations['en']  // Fallback to English
 
   return (
-    <Card className="bg-zinc-800/70 border-violet-500/50 rounded-none !p-4 flex flex-col h-full">
+    <Card className="bg-zinc-800/70 border-green-500/20 rounded-none !p-4 flex flex-col h-full">
         <CardTitle className="text-lg font-mono text-violet-400">
           [DISCORD]
         </CardTitle>

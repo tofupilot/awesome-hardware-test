@@ -61,10 +61,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: `${siteUrl}/en`,
     languages: {
-      'en-US': '/en',
-      'fr-FR': '/fr',
+      'x-default': `${siteUrl}/en`,
+      'en': `${siteUrl}/en`,
+      'fr': `${siteUrl}/fr`,
     },
   },
 };
