@@ -37,9 +37,9 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
   }, [])
 
   return (
-    <div className="flex-1" ref={dropdownRef}>
+    <div className="relative flex-1" ref={dropdownRef}>
       <div 
-        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors relative"
+        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors w-full"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
