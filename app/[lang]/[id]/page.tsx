@@ -266,39 +266,86 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           {/* Repository stats */}
           <div className="overflow-x-auto">
             <div className="flex gap-3 pb-2 min-w-max">
-              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
-                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                  <Star className="h-3 w-3 mr-1" />
-                  STARS
+              {resource.links?.github && (
+                <>
+                  <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                    <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                      <Star className="h-3 w-3 mr-1" />
+                      STARS
+                    </div>
+                    <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
+                  </div>
+                  <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                    <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                      <Users className="h-3 w-3 mr-1" />
+                      CONTRIBUTORS
+                    </div>
+                    <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
+                  </div>
+                  <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                    <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                      <Calendar className="h-3 w-3 mr-1" />
+                      LAST_RELEASE
+                    </div>
+                    <div className="text-white font-bold">{formatReleaseDate(individualRepoData?.lastRelease)}</div>
+                  </div>
+                </>
+              )}
+              {resource.license && (
+                <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
+                  <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
+                    <Scale className="h-3 w-3 mr-1" />
+                    LICENSE
+                  </div>
+                  <div className="text-white font-bold">{formatLicense(resource.license)}</div>
                 </div>
-                <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
-              </div>
-              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
-                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                  <Users className="h-3 w-3 mr-1" />
-                  CONTRIBUTORS
-                </div>
-                <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
-              </div>
-              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
-                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                  <Calendar className="h-3 w-3 mr-1" />
-                  LAST_RELEASE
-                </div>
-                <div className="text-white font-bold">{formatReleaseDate(individualRepoData?.lastRelease)}</div>
-              </div>
-              <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono w-48 flex-shrink-0`}>
-                <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                  <Scale className="h-3 w-3 mr-1" />
-                  LICENSE
-                </div>
-                <div className="text-white font-bold">{formatLicense(individualRepoData?.license || resource.license)}</div>
-              </div>
+              )}
             </div>
           </div>
 
-          {/* Category and Language badges */}
-          <ResourceBadges resource={resource} className="mt-4" />
+          {/* Category, Language and License badges */}
+          <div className="flex flex-wrap items-center mt-4">
+            <ResourceBadges resource={resource} className="mr-2" />
+            {/* License type badges */}
+            <div className="flex gap-2">
+              {(() => {
+                const getLicenseBadges = () => {
+                  if (resource.licenseTypes && resource.licenseTypes.length > 0) {
+                    return resource.licenseTypes.map(type => {
+                      const colorMap = {
+                        'OSS': 'bg-green-900/70 text-green-300',
+                        'FREE': 'bg-blue-900/70 text-blue-300',
+                        'PAID': 'bg-violet-900/70 text-violet-300'
+                      };
+                      return { type, color: colorMap[type] || 'bg-zinc-900/70 text-zinc-300' };
+                    });
+                  }
+                  
+                  const badges = [];
+                  if (resource.isCommercial) {
+                    badges.push({ type: 'PAID', color: 'bg-violet-900/70 text-violet-300' });
+                  } else if (resource.license && resource.license.toLowerCase() !== 'proprietary') {
+                    badges.push({ type: 'OSS', color: 'bg-green-900/70 text-green-300' });
+                  } else if (!resource.isCommercial) {
+                    badges.push({ type: 'FREE', color: 'bg-blue-900/70 text-blue-300' });
+                  }
+                  
+                  return badges;
+                };
+                
+                const licenseBadges = getLicenseBadges();
+                return licenseBadges.map((badge, index) => (
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className={`${badge.color} text-xs font-mono rounded-none`}
+                  >
+                    {badge.type}
+                  </Badge>
+                ));
+              })()}
+            </div>
+          </div>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
@@ -376,7 +423,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
                 <div className={`absolute bottom-4 left-4 ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} font-mono text-sm`}>
-                  [SYSTEM_INTERFACE_PREVIEW]
+                  [{resource.name.toUpperCase()}_PREVIEW]
                 </div>
               </div>
             </Card>
@@ -514,42 +561,44 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
               </CardContent>
             </Card>
 
-            {/* GitHub Stats */}
-            <Card className={`bg-zinc-800/70 ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none`}>
-              <CardHeader>
-                <CardTitle className={`text-lg font-mono ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>[REPOSITORY_METRICS]</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex justify-between font-mono text-sm">
-                  <span className="text-zinc-400">STARS</span>
-                  <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Star className="h-3 w-3 mr-1 flex-shrink-0" />
-                    <span className="break-all">{formatStars(githubStars)}</span>
-                  </span>
-                </div>
-                <div className="flex justify-between font-mono text-sm">
-                  <span className="text-zinc-400">CONTRIBUTORS</span>
-                  <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Users className="h-3 w-3 mr-1 flex-shrink-0" />
-                    <span className="break-all">{repoData?.contributors || 'N/A'}</span>
-                  </span>
-                </div>
-                <div className="flex justify-between font-mono text-sm">
-                  <span className="text-zinc-400">LAST_RELEASE</span>
-                  <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
-                    <span className="break-all">{formatReleaseDate(individualRepoData?.lastRelease)}</span>
-                  </span>
-                </div>
-                <div className="flex justify-between font-mono text-sm">
-                  <span className="text-zinc-400">LICENSE</span>
-                  <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Scale className="h-3 w-3 mr-1 flex-shrink-0" />
-                    <span className="break-all">{formatLicense(individualRepoData?.license || resource.license)}</span>
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
+            {/* GitHub Stats - Only show if GitHub link exists */}
+            {resource.links?.github && (
+              <Card className={`bg-zinc-800/70 ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none`}>
+                <CardHeader>
+                  <CardTitle className={`text-lg font-mono ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>[REPOSITORY_METRICS]</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex justify-between font-mono text-sm">
+                    <span className="text-zinc-400">STARS</span>
+                    <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
+                      <Star className="h-3 w-3 mr-1 flex-shrink-0" />
+                      <span className="break-all">{formatStars(githubStars)}</span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between font-mono text-sm">
+                    <span className="text-zinc-400">CONTRIBUTORS</span>
+                    <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
+                      <Users className="h-3 w-3 mr-1 flex-shrink-0" />
+                      <span className="break-all">{repoData?.contributors || 'N/A'}</span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between font-mono text-sm">
+                    <span className="text-zinc-400">LAST_RELEASE</span>
+                    <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
+                      <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
+                      <span className="break-all">{formatReleaseDate(individualRepoData?.lastRelease)}</span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between font-mono text-sm">
+                    <span className="text-zinc-400">LICENSE</span>
+                    <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
+                      <Scale className="h-3 w-3 mr-1 flex-shrink-0" />
+                      <span className="break-all">{formatLicense(individualRepoData?.license || resource.license)}</span>
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </main>
