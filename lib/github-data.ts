@@ -14,7 +14,7 @@ interface GitHubRepoData {
   lastCommit?: string;
 }
 
-async function fetchGitHubRepoData(owner: string, repo: string): Promise<GitHubRepoData | null> {
+export async function fetchGitHubRepoData(owner: string, repo: string): Promise<GitHubRepoData | null> {
   try {
     const token = process.env.GITHUB_FETCH_STARS_TOKEN?.trim().replace(/^["']|["']$/g, '');
     
