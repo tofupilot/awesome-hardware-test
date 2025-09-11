@@ -366,13 +366,14 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 {resource.image ? (
                   <Image
                     src={resource.image}
-                    alt={`${resource.name} interface`}
+                    alt={`${resource.name} preview`}
                     fill
                     className="object-cover"
                   />
                 ) : (
                   <ImagePlaceholder 
-                    text={resource.imagePlaceholder || `${resource.name} image coming soon`}
+                    text={`${resource.name} image coming soon`}
+                    className=""
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
