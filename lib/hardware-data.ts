@@ -356,6 +356,7 @@ runner.execute(test)?;`
       website: 'https://tofupilot.com'
     },
     image: '/resources/tofupilot.png',
+    installation: 'pip install tofupilot',
   },
   {
     id: 'yieldhub',
