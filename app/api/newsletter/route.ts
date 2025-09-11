@@ -4,8 +4,13 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
+  let cleanEmail = '';
+  let lang = '';
+  
   try {
-    const { email, lang } = await request.json();
+    const body = await request.json();
+    const email = body.email;
+    lang = body.lang || 'en';
 
     if (!email) {
       return NextResponse.json(
@@ -33,7 +38,7 @@ export async function POST(request: NextRequest) {
     // Parse email to get first and last name (if provided in format: "First Last <email@example.com>")
     let firstName = '';
     let lastName = '';
-    let cleanEmail = email;
+    cleanEmail = email;
 
     const nameMatch = email.match(/^(.+?)\s*<(.+)>$/);
     if (nameMatch) {
@@ -64,10 +69,19 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Newsletter subscription error:', error);
+    // Log full error details to console
+    console.error('Newsletter subscription error:', {
+      error,
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      email: cleanEmail,
+      lang,
+      timestamp: new Date().toISOString()
+    });
     
-    // Check if it's a Resend API error
+    // Check if it's a Resend API error for duplicate email
     if (error instanceof Error && error.message.includes('already exists')) {
+      console.log(`Email already subscribed: ${cleanEmail}`);
       return NextResponse.json(
         { 
           success: true, 
@@ -78,6 +92,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Return error response with details
     return NextResponse.json(
       { 
         error: 'Failed to subscribe to newsletter',

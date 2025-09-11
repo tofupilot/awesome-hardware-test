@@ -52,13 +52,28 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
       if (response.ok) {
         setIsSubscribed(true);
         setEmail("");
-        console.log('Newsletter subscription successful:', data);
+        console.log('Newsletter subscription successful:', {
+          email,
+          response: data,
+          timestamp: new Date().toISOString()
+        });
       } else {
-        console.error('Newsletter subscription failed:', data);
+        console.error('Newsletter subscription failed:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: data,
+          email,
+          timestamp: new Date().toISOString()
+        });
         setError(data.error || 'Failed to subscribe. Please try again.');
       }
     } catch (error) {
-      console.error('Network error during newsletter subscription:', error);
+      console.error('Network error during newsletter subscription:', {
+        error,
+        message: error instanceof Error ? error.message : 'Unknown error',
+        email,
+        timestamp: new Date().toISOString()
+      });
       setError('Network error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
