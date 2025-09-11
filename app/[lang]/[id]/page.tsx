@@ -117,13 +117,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
-  const getPlaceholderImage = (resourceName: string) => {
-    const queries = {
-      crappy: "python hardware testing framework dashboard interface oscilloscope",
-      exclave: "rust factory testing infrastructure console terminal",
-      openhtf: "google hardware testing framework web interface dashboard",
-    }
-    const query = queries[resourceName as keyof typeof queries] || "hardware testing tool interface"
+  const getPlaceholderImage = () => {
+    const query = resource.imagePlaceholder || "hardware testing tool interface"
     return `/placeholder.svg?height=400&width=800&text=${encodeURIComponent(query)}`
   }
 
@@ -296,25 +291,17 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 </CardHeader>
                 <CardContent>
                   <div className="text-zinc-300 font-mono text-sm leading-relaxed">
-                    {(() => {
-                      const explanations: Record<string, string> = {
-                        'flojoy-studio': 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed. Consider alternatives like OpenHTF or pytest-embedded for similar functionality.',
-                        'treeate': 'TreeATE has not received updates since 2022. While the factory automation platform still functions, it lacks support for modern testing protocols and newer hardware interfaces. The Chinese-language documentation may also limit adoption outside of specific regions.',
-                        'test-controller': 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions like PyVISA and LabGrid which offer better protocol support and active maintenance.',
-                        'sopic': 'The SOPIC helper library for production line automation is no longer maintained. Users should evaluate whether the existing codebase meets their needs or consider migrating to actively maintained alternatives in the Semi-ATE ecosystem.',
-                      };
-                      return explanations[resource.id] || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.';
-                    })()}
+                    {resource.unmaintainedReason || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.'}
                   </div>
                 </CardContent>
               </Card>
             )}
 
             {/* Hero Image */}
-            <Card className="bg-zinc-800/70 border-green-500/20 overflow-hidden rounded-none">
+            <Card className="bg-zinc-800/70 !py-0 border-green-500/20 overflow-hidden rounded-none">
               <div className="relative h-64 bg-zinc-900/70">
                 <Image
-                  src={getPlaceholderImage(resource.name) || "/placeholder.svg"}
+                  src={getPlaceholderImage() || "/placeholder.svg"}
                   alt={`${resource.name} interface`}
                   fill
                   className="object-cover"
@@ -361,39 +348,12 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 <div className="bg-zinc-900/70 border border-green-500/20 rounded-none p-4 font-mono text-sm">
                   <div className="text-zinc-500 mb-2"># Installation</div>
                   <div className="text-green-400">{resource.installation || 'Installation instructions not available'}</div>
-                  <div className="text-zinc-500 mt-4 mb-2"># Basic usage example</div>
-                  <div className="text-zinc-300">
-                    {resource.name === "crappy" && (
-                      <>
-                        <div>import crappy</div>
-                        <div>from crappy import condition, blocks</div>
-                        <div className="mt-2"># Create a test configuration</div>
-                        <div>test = crappy.Test()</div>
-                        <div>test.add_block(blocks.Generator())</div>
-                        <div>test.run()</div>
-                      </>
-                    )}
-                    {resource.name === "exclave" && (
-                      <>
-                        <div>use exclave::test::Test;</div>
-                        <div>use exclave::runner::Runner;</div>
-                        <div className="mt-2">// Create a new test</div>
-                        <div>let test = Test::new("hardware_test");</div>
-                        <div>let runner = Runner::new();</div>
-                        <div>runner.execute(test)?;</div>
-                      </>
-                    )}
-                    {resource.name === "openhtf" && (
-                      <>
-                        <div>import openhtf as htf</div>
-                        <div>from openhtf.util import units</div>
-                        <div className="mt-2"># Define a test phase</div>
-                        <div>@htf.measures(htf.Measurement('voltage'))</div>
-                        <div>def test_voltage(test):</div>
-                        <div> test.measurements.voltage = 3.3 * units.volt</div>
-                      </>
-                    )}
-                  </div>
+                  {resource.codeExample && (
+                    <>
+                      <div className="text-zinc-500 mt-4 mb-2"># Basic usage example</div>
+                      <div className="text-zinc-300 whitespace-pre-wrap font-mono">{resource.codeExample}</div>
+                    </>
+                  )}
                 </div>
               </CardContent>
             </Card>

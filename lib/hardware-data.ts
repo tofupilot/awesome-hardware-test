@@ -28,7 +28,10 @@ export interface HardwareTestResource {
   installation?: string;
   documentation?: string;
   unmaintained?: boolean;
+  unmaintainedReason?: string;
   image?: string;
+  imagePlaceholder?: string;
+  codeExample?: string;
 }
 
 export type TestCategory = 
@@ -87,7 +90,15 @@ Key features include real-time data streaming, flexible instrument drivers, and 
       'Real-time monitoring systems',
     ],
     installation: `pip install crappy`,
-    documentation: 'https://crappy.readthedocs.io/'
+    documentation: 'https://crappy.readthedocs.io/',
+    imagePlaceholder: 'python hardware testing framework dashboard interface oscilloscope',
+    codeExample: `import crappy
+from crappy import condition, blocks
+
+# Create a test configuration
+test = crappy.Test()
+test.add_block(blocks.Generator())
+test.run()`
   },
   {
     id: 'exclave',
@@ -128,7 +139,15 @@ Exclave emphasizes modularity and extensibility, making it easy to integrate wit
     },
     useCases: ['Electronics manufacturing', 'Automotive testing', 'Quality assurance systems', 'End-of-line testing'],
     installation: `cargo install exclave`,
-    documentation: 'https://exclave.io/docs/'
+    documentation: 'https://exclave.io/docs/',
+    imagePlaceholder: 'rust factory testing infrastructure console terminal',
+    codeExample: `use exclave::test::Test;
+use exclave::runner::Runner;
+
+// Create a new test
+let test = Test::new("hardware_test");
+let runner = Runner::new();
+runner.execute(test)?;`
   },
   {
     id: 'flojoy-studio',
@@ -144,6 +163,7 @@ Exclave emphasizes modularity and extensibility, making it easy to integrate wit
       github: 'https://github.com/flojoy-ai/studio'
     },
     unmaintained: true,
+    unmaintainedReason: 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed. Consider alternatives like OpenHTF or pytest-embedded for similar functionality.',
   },
   {
     id: 'openhtf',
@@ -159,6 +179,14 @@ Exclave emphasizes modularity and extensibility, making it easy to integrate wit
     links: {
       github: 'https://github.com/google/openhtf'
     },
+    imagePlaceholder: 'google hardware testing framework web interface dashboard',
+    codeExample: `import openhtf as htf
+from openhtf.util import units
+
+# Define a test phase
+@htf.measures(htf.Measurement('voltage'))
+def test_voltage(test):
+    test.measurements.voltage = 3.3 * units.volt`,
     longDescription: `OPENHTF is Google's open-source hardware testing framework, designed to provide a robust and scalable solution for hardware validation and manufacturing testing. Originally developed for Google's internal hardware testing needs, it has been open-sourced to benefit the broader hardware testing community.
 
 The framework provides a comprehensive set of tools for creating, executing, and managing hardware tests. It includes built-in support for test sequencing, data collection, result analysis, and reporting. OpenHTF is designed to handle everything from simple component tests to complex system-level validation.
@@ -376,6 +404,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       github: 'https://github.com/test-controller/test-controller'
     },
     unmaintained: true,
+    unmaintainedReason: 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions like PyVISA and LabGrid which offer better protocol support and active maintenance.',
   },
 
   // Wafer Maps
@@ -596,6 +625,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       github: 'https://github.com/WilliamYinwei/TreeATE'
     },
     unmaintained: true,
+    unmaintainedReason: 'TreeATE has not received updates since 2022. While the factory automation platform still functions, it lacks support for modern testing protocols and newer hardware interfaces. The Chinese-language documentation may also limit adoption outside of specific regions.',
   },
   {
     id: 'pytest-embedded',
