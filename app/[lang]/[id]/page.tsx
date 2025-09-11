@@ -24,6 +24,7 @@ import {
   TestTube,
   Package,
   BookOpen,
+  Skull,
 } from "lucide-react"
 import { hardwareTestData } from "@/lib/hardware-data"
 
@@ -377,7 +378,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
               <Card className="bg-red-900/20 border-red-500/30 rounded-none">
                 <CardHeader>
                   <CardTitle className="font-mono text-red-400 flex items-center">
-                    <span className="mr-2">⚠️</span> [PROJECT_STATUS: UNMAINTAINED]
+                    <Skull className="h-5 w-5 mr-2" />
+                    [RIP: {resource.name.toUpperCase()}]
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
