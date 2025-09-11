@@ -372,62 +372,29 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
               </CardContent>
             </Card>
 
-            {/* Explanation Card */}
-            <Card className="bg-zinc-800/70 border-green-500/20 rounded-none">
-              <CardHeader>
-                <CardTitle className="font-mono text-green-400">[HOW_IT_WORKS]</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4 text-zinc-300 font-mono text-sm">
-                  <div>
-                    <h4 className="text-green-400 mb-2">ARCHITECTURE</h4>
-                    <p className="leading-relaxed">
-                      This tool implements a modular architecture with plugin-based extensions 
-                      for different test equipment. The core engine handles test sequencing, 
-                      data collection, and result reporting through a unified API.
-                    </p>
+            {/* Unmaintained Project Explanation */}
+            {resource.unmaintained && (
+              <Card className="bg-red-900/20 border-red-500/30 rounded-none">
+                <CardHeader>
+                  <CardTitle className="font-mono text-red-400 flex items-center">
+                    <span className="mr-2">⚠️</span> [PROJECT_STATUS: UNMAINTAINED]
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-zinc-300 font-mono text-sm leading-relaxed">
+                    {(() => {
+                      const explanations: Record<string, string> = {
+                        'flojoy-studio': 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed. Consider alternatives like OpenHTF or pytest-embedded for similar functionality.',
+                        'treeate': 'TreeATE has not received updates since 2022. While the factory automation platform still functions, it lacks support for modern testing protocols and newer hardware interfaces. The Chinese-language documentation may also limit adoption outside of specific regions.',
+                        'test-controller': 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions like PyVISA and LabGrid which offer better protocol support and active maintenance.',
+                        'sopic': 'The SOPIC helper library for production line automation is no longer maintained. Users should evaluate whether the existing codebase meets their needs or consider migrating to actively maintained alternatives in the Semi-ATE ecosystem.',
+                      };
+                      return explanations[resource.id] || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.';
+                    })()}
                   </div>
-                  <div>
-                    <h4 className="text-green-400 mb-2">KEY_CONCEPTS</h4>
-                    <ul className="space-y-1">
-                      <li className="flex items-start">
-                        <span className="text-green-400 mr-2">•</span>
-                        <span>Test fixtures define hardware interfaces and measurement points</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-green-400 mr-2">•</span>
-                        <span>Sequences orchestrate test flow with conditional logic</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-green-400 mr-2">•</span>
-                        <span>Data pipelines process and store results in real-time</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-green-400 mb-2">TYPICAL_WORKFLOW</h4>
-                    <ol className="space-y-1">
-                      <li className="flex items-start">
-                        <span className="text-yellow-400 mr-2">1.</span>
-                        <span>Configure test stations and equipment connections</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-yellow-400 mr-2">2.</span>
-                        <span>Define test sequences and pass/fail criteria</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-yellow-400 mr-2">3.</span>
-                        <span>Execute tests with automated data collection</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-yellow-400 mr-2">4.</span>
-                        <span>Analyze results and generate test reports</span>
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Features */}
             <Card className="bg-zinc-800/70 border-green-500/20 rounded-none">
