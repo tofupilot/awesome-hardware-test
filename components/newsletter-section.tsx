@@ -51,6 +51,7 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
         console.error('Newsletter subscription failed:', {
           error: result.error,
           details: result.details,
+          fullResult: result,
           email,
           timestamp: new Date().toISOString()
         });

@@ -5,6 +5,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function subscribeToNewsletter(email: string, lang: string) {
+  console.log('Server action subscribeToNewsletter called:', { email, lang, timestamp: new Date().toISOString() });
   let cleanEmail = '';
   
   try {
