@@ -105,7 +105,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
               <Link 
                 href="https://discord.gg/XuwYANGx7J" 
                 target="_blank"
-                className="bg-zinc-800/70 border border-violet-500/20 rounded-none p-3 font-mono hover:border-violet-500/50 hover:bg-violet-900/20 transition-colors block w-44 flex-shrink-0"
+                className="bg-zinc-800/70 border border-violet-500/20 rounded-none p-3 font-mono hover:border-violet-500/40 transition-colors block w-44 flex-shrink-0"
               >
               <div className="flex items-center gap-1 text-violet-400 text-xs mb-1">
                 <DiscordIcon className="h-3 w-3" />

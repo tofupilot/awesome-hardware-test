@@ -118,7 +118,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
 
-  const formatStars = (stars?: number) => {
+  const formatStars = (stars?: number | null) => {
     if (stars === undefined || stars === null) return "N/A"
     if (stars === 0) return "0"
     if (stars >= 1000) {

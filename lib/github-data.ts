@@ -132,7 +132,7 @@ async function fetchGitHubRepoData(owner: string, repo: string): Promise<GitHubR
 
 // Simple function to get all GitHub stars for resources
 export const getAllGitHubData = unstable_cache(
-  async (): Promise<{ stars: Record<string, number>; repoData: { stars: number; contributors: number; lastCommit: string } | null }> => {
+  async (): Promise<{ stars: Record<string, number | null>; repoData: { stars: number; contributors: number; lastCommit: string } | null }> => {
     try {
       const token = process.env.GITHUB_FETCH_STARS_TOKEN?.trim().replace(/^["']|["']$/g, '');
       const headers: HeadersInit = { 'Accept': 'application/vnd.github.v3+json' };
@@ -146,16 +146,26 @@ export const getAllGitHubData = unstable_cache(
       // Fetch stars for each resource
       const starsPromises = githubUrls.map(async ({ id, url }) => {
         const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
-        if (!match) return { id, stars: 0 };
+        if (!match) {
+          console.error(`Invalid GitHub URL format for ${id}: ${url}`);
+          return { id, stars: null };
+        }
 
         try {
           const response = await fetch(`https://api.github.com/repos/${match[1]}/${match[2]}`, {
             headers, next: { revalidate: CACHE_DURATION }
           });
+          
+          if (!response.ok) {
+            console.error(`GitHub API error for ${match[1]}/${match[2]}: ${response.status} ${response.statusText}`);
+            return { id, stars: null };
+          }
+          
           const data = await response.json();
-          return { id, stars: data.stargazers_count || 0 };
-        } catch {
-          return { id, stars: 0 };
+          return { id, stars: data.stargazers_count || null };
+        } catch (error) {
+          console.error(`Failed to fetch stars for ${match[1]}/${match[2]}:`, error);
+          return { id, stars: null };
         }
       });
 
@@ -195,7 +205,7 @@ export const getAllGitHubData = unstable_cache(
 );
 
 // Export for backward compatibility - just get stars
-export async function getAllGitHubStars(): Promise<Record<string, number>> {
+export async function getAllGitHubStars(): Promise<Record<string, number | null>> {
   const { stars } = await getAllGitHubData();
   return stars;
 }

@@ -324,20 +324,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     }
   },
   {
-    id: 'mats',
-    name: 'MATS',
-    category: 'Test Execution Engines',
-    description: {
-      en: 'LabVIEW-based modular system for hardware-in-the-loop testing',
-      fr: 'Système modulaire LabVIEW pour les tests hardware-in-the-loop'
-    },
-    language: 'LabVIEW',
-    tags: ['labview', 'modular', 'hil', 'automated'],
-    links: {
-      github: 'https://github.com/ni/mats'
-    }
-  },
-  {
     id: 'lava',
     name: 'LAVA',
     category: 'Test Execution Engines',
