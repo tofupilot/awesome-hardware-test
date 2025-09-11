@@ -258,8 +258,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['automation', 'atdd', 'rpa', 'acceptance-testing'],
     links: {
-      github: 'https://github.com/robotframework/robotframework'
-    },
+      github: 'https://github.com/robotframework/robotframework',
       website: 'https://robotframework.org'
     }
   },
