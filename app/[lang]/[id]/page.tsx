@@ -508,7 +508,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 <div className="flex justify-between font-mono text-sm">
                   <span className="text-zinc-400">STARS</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
-                    <Star className="h-3 w-3 mr-1 fill-current" />
+                    <Star className="h-3 w-3 mr-1" />
                     {formatStars(githubStars)}
                   </span>
                 </div>

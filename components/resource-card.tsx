@@ -75,7 +75,7 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
                 variant="secondary"
                 className={`bg-zinc-900/90 ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs font-mono rounded-none`}
               >
-                <Star className="h-3 w-3 mr-1 fill-current" />
+                <Star className="h-3 w-3 mr-1" />
                 {formattedStars}
               </Badge>
             )}
