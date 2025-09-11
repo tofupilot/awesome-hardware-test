@@ -51,7 +51,7 @@ export function SearchInput({ defaultValue, placeholder }: SearchInputProps) {
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <div className="relative min-w-[250px] flex-shrink-0" suppressHydrationWarning>
+      <div className="relative w-full sm:min-w-[250px] sm:flex-shrink-0" suppressHydrationWarning>
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500" />
         <Input
           placeholder={placeholder}
