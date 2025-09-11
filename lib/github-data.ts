@@ -11,6 +11,7 @@ interface GitHubRepoData {
   license?: string;
   openIssues?: number;
   forks?: number;
+  lastCommit?: string;
 }
 
 async function fetchGitHubRepoData(owner: string, repo: string): Promise<GitHubRepoData | null> {
@@ -91,13 +92,37 @@ async function fetchGitHubRepoData(owner: string, repo: string): Promise<GitHubR
       // Error fetching contributors - that's ok
     }
     
+    // Fetch latest commit (for this repo's last update)
+    let lastCommit: string | undefined;
+    if (owner === 'tofupilot' && repo === 'awesome-hardware-test') {
+      try {
+        const commitsResponse = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`,
+          {
+            headers,
+            next: { revalidate: CACHE_DURATION }
+          }
+        );
+        
+        if (commitsResponse.ok) {
+          const commitsData = await commitsResponse.json();
+          if (commitsData.length > 0) {
+            lastCommit = commitsData[0].commit.committer.date;
+          }
+        }
+      } catch (error) {
+        // Error fetching commits - that's ok
+      }
+    }
+    
     return {
       stars: repoData.stargazers_count,
       lastRelease,
       contributors,
       license: repoData.license?.name,
       openIssues: repoData.open_issues_count,
-      forks: repoData.forks_count
+      forks: repoData.forks_count,
+      lastCommit
     };
   } catch (error) {
     console.error(`Error fetching GitHub data for ${owner}/${repo}:`, error);
@@ -105,51 +130,68 @@ async function fetchGitHubRepoData(owner: string, repo: string): Promise<GitHubR
   }
 }
 
-// This function is cached for 1 hour using Next.js's unstable_cache
+// Simple function to get all GitHub stars for resources
 export const getAllGitHubData = unstable_cache(
-  async (): Promise<Record<string, GitHubRepoData>> => {
+  async (): Promise<{ stars: Record<string, number>; repoData: { stars: number; contributors: number; lastCommit: string } | null }> => {
     try {
+      const token = process.env.GITHUB_FETCH_STARS_TOKEN?.trim().replace(/^["']|["']$/g, '');
+      const headers: HeadersInit = { 'Accept': 'application/vnd.github.v3+json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+
       // Extract GitHub URLs from hardware data
       const githubUrls = hardwareTestData
         .filter(item => item.links.github)
-        .map(item => ({
-          id: item.id,
-          url: item.links.github!
-        }));
+        .map(item => ({ id: item.id, url: item.links.github! }));
 
-      // Parse owner and repo from GitHub URLs and fetch data
-      const dataPromises = githubUrls.map(async ({ id, url }) => {
+      // Fetch stars for each resource
+      const starsPromises = githubUrls.map(async ({ id, url }) => {
         const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
-        if (!match) return { id, data: null };
+        if (!match) return { id, stars: 0 };
 
-        const [, owner, repo] = match;
-        const data = await fetchGitHubRepoData(owner, repo);
-        return { id, data };
+        try {
+          const response = await fetch(`https://api.github.com/repos/${match[1]}/${match[2]}`, {
+            headers, next: { revalidate: CACHE_DURATION }
+          });
+          const data = await response.json();
+          return { id, stars: data.stargazers_count || 0 };
+        } catch {
+          return { id, stars: 0 };
+        }
       });
 
-      // Fetch all data in parallel
-      const results = await Promise.all(dataPromises);
+      // Fetch main repo data
+      let repoData = null;
+      try {
+        const [repoResponse, commitsResponse, contributorsResponse] = await Promise.all([
+          fetch('https://api.github.com/repos/tofupilot/awesome-hardware-test', { headers, next: { revalidate: CACHE_DURATION } }),
+          fetch('https://api.github.com/repos/tofupilot/awesome-hardware-test/commits?per_page=1', { headers, next: { revalidate: CACHE_DURATION } }),
+          fetch('https://api.github.com/repos/tofupilot/awesome-hardware-test/contributors?per_page=1', { headers, next: { revalidate: CACHE_DURATION } })
+        ]);
 
-      // Create a map of resource ID to GitHub data
-      const dataMap = results.reduce((acc, { id, data }) => {
-        if (data !== null) {
-          acc[id] = data;
-        }
-        return acc;
-      }, {} as Record<string, GitHubRepoData>);
+        const repo = await repoResponse.json();
+        const commits = await commitsResponse.json();
+        const contributors = await contributorsResponse.json();
 
-      // Force object serialization to avoid caching issues
-      return JSON.parse(JSON.stringify(dataMap));
+        repoData = {
+          stars: repo.stargazers_count || 0,
+          contributors: contributors.length || 0,
+          lastCommit: commits[0]?.commit?.committer?.date || new Date().toISOString()
+        };
+      } catch (error) {
+        console.error('Error fetching repo data:', error);
+      }
+
+      const results = await Promise.all(starsPromises);
+      const stars = results.reduce((acc, { id, stars }) => ({ ...acc, [id]: stars }), {});
+
+      return { stars, repoData };
     } catch (error) {
       console.error('Error fetching GitHub data:', error);
-      return {};
+      return { stars: {}, repoData: null };
     }
   },
-  ['github-data'], // Cache key
-  {
-    revalidate: CACHE_DURATION, // Revalidate after 1 hour
-    tags: ['github-data'] // Can be used to manually revalidate if needed
-  }
+  ['github-data'],
+  { revalidate: CACHE_DURATION, tags: ['github-data'] }
 );
 
 // Export for backward compatibility - just get stars

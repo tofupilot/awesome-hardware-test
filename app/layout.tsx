@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { CSPostHogProvider } from "@/components/providers/posthog-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -77,7 +79,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased bg-zinc-900 min-h-screen text-zinc-100`}
       >
-        {children}
+        <CSPostHogProvider>
+          {children}
+          <Analytics />
+        </CSPostHogProvider>
       </body>
     </html>
   );

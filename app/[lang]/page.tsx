@@ -55,8 +55,8 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
   const { category = "All", search = "" } = await searchParams
   const t = translations[lang]
   
-  // Fetch GitHub data server-side (stars, releases, contributors, etc.)
-  const githubData = await getAllGitHubData()
+  // Fetch GitHub data server-side
+  const { stars, repoData } = await getAllGitHubData()
 
   // JSON-LD structured data
   const jsonLd = {
@@ -89,6 +89,10 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
     return matchesSearch && matchesCategory
   })
 
+  // Separate active and unmaintained resources
+  const activeResources = filteredResources.filter((resource) => !resource.unmaintained)
+  const ripResources = filteredResources.filter((resource) => resource.unmaintained)
+
   const getCategoryCount = (cat: string) => {
     if (cat === "All") return allResources.length
     return allResources.filter((r) => r.category === cat).length
@@ -98,7 +102,12 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
     <>
       <JsonLd data={jsonLd} />
       <div className="min-h-screen bg-zinc-900 text-zinc-100 relative">
-      <HeroSection lang={lang} />
+      <HeroSection 
+        lang={lang} 
+        repoLastCommit={repoData?.lastCommit}
+        repoStars={repoData?.stars}
+        repoContributors={repoData?.contributors}
+      />
       
       <nav className="border-b border-green-500/20 bg-zinc-900/98 relative z-10">
         <div className="container mx-auto px-4">
@@ -106,7 +115,7 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
             {/* Search Bar - Client Component */}
             <SearchInput 
               defaultValue={search} 
-              placeholder="SEARCH"
+              placeholder="SEARCH_RESOURCES"
               lang={lang}
             />
             
@@ -134,40 +143,68 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
           </div>
         )}
 
-        {/* Resources Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredResources.map((resource, index) => {
-            const items = [];
-            
-            // Add the resource card
-            items.push(
-              <ResourceCard 
-                key={resource.id} 
-                resource={resource} 
-                lang={lang}
-                starCount={githubData[resource.id]?.stars}
-                lastRelease={githubData[resource.id]?.lastRelease}
-                contributors={githubData[resource.id]?.contributors}
-              />
-            );
-            
-            // Insert Discord card after 6th resource (2nd row in 3-col grid)
-            if (index === 5) {
-              items.push(
-                <DiscordSection key="discord-card" lang={lang} />
-              );
-            }
-            
-            // Insert Newsletter card after 12th resource (4th row in 3-col grid)  
-            if (index === 11) {
-              items.push(
-                <NewsletterSection key="newsletter-card" lang={lang} />
-              );
-            }
-            
-            return items;
-          }).flat()}
-        </div>
+        {/* Active Resources Section */}
+        {activeResources.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-xl font-mono text-green-400 mb-6">
+              [ACTIVE_RESOURCES: {activeResources.length}]
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {activeResources.map((resource, index) => {
+                const items = [];
+                
+                // Add the resource card
+                items.push(
+                  <ResourceCard 
+                    key={resource.id} 
+                    resource={resource} 
+                    lang={lang}
+                    starCount={stars[resource.id]}
+                  />
+                );
+                
+                // Insert Discord card after 9th resource (3rd row in 3-col grid) - only if no search
+                if (index === 8 && !search) {
+                  items.push(
+                    <div key="discord-card" className="md:col-span-2 lg:col-span-3">
+                      <DiscordSection lang={lang} />
+                    </div>
+                  );
+                }
+                
+                // Insert Newsletter card after 18th resource (6th row in 3-col grid) - only if no search
+                if (index === 17 && !search) {
+                  items.push(
+                    <div key="newsletter-card" className="md:col-span-2 lg:col-span-3">
+                      <NewsletterSection lang={lang} />
+                    </div>
+                  );
+                }
+                
+                return items;
+              }).flat()}
+            </div>
+          </div>
+        )}
+
+        {/* RIP Resources Section */}
+        {ripResources.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-xl font-mono text-red-400 mb-6">
+              [RIP_RESOURCES: {ripResources.length}]
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {ripResources.map((resource, index) => (
+                <ResourceCard 
+                  key={resource.id} 
+                  resource={resource} 
+                  lang={lang}
+                  starCount={stars[resource.id]}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {filteredResources.length === 0 && (
           <div className="text-center py-12">

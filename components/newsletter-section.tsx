@@ -1,115 +1,88 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Mail, CheckCircle, ExternalLink } from "lucide-react"
-import { translations, Locale } from "@/lib/translations"
-import { ImagePlaceholder } from "@/components/image-placeholder"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Mail, CheckCircle, ExternalLink } from "lucide-react";
+import { translations, Locale } from "@/lib/translations";
+import { ImagePlaceholder } from "@/components/image-placeholder";
 
 interface NewsletterSectionProps {
-  lang: Locale
+  lang: Locale;
 }
 
 export function NewsletterSection({ lang }: NewsletterSectionProps) {
-  const t = translations[lang] || translations['en']  // Fallback to English
-  const [email, setEmail] = useState("")
-  const [isSubscribed, setIsSubscribed] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const t = translations[lang] || translations["en"]; // Fallback to English
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
+    e.preventDefault();
+    if (!email) return;
 
-    setIsLoading(true)
+    setIsLoading(true);
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsSubscribed(true)
-    setIsLoading(false)
-    setEmail("")
-  }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsSubscribed(true);
+    setIsLoading(false);
+    setEmail("");
+  };
 
   if (isSubscribed) {
     return (
-      <Card className="bg-zinc-800/70 border-sky-500/20 hover:border-sky-500/50 transition-all duration-300 overflow-hidden group rounded-none">
-        <CardHeader className="p-4 text-center">
-          <CheckCircle className="h-12 w-12 text-sky-400 mx-auto mb-4" />
-          <CardTitle className="text-lg font-mono text-sky-400">
-            {t.newsletter.confirmed.toUpperCase()}
-          </CardTitle>
-          <CardDescription className="text-zinc-400 text-sm leading-relaxed font-mono">
-            {t.newsletter.confirmedText}
-          </CardDescription>
-        </CardHeader>
+      <Card className="bg-zinc-800/70 border-sky-500/50 rounded-none !p-4 flex flex-col h-full text-center">
+        <CardTitle className="text-lg font-mono text-sky-400">
+          [NEWSLETTER]
+        </CardTitle>
+        <CheckCircle className="h-12 w-12 text-sky-400 mx-auto" />
+        <CardDescription className="text-zinc-400 text-sm leading-relaxed font-mono">
+          {t.newsletter.confirmedText}
+        </CardDescription>
       </Card>
-    )
+    );
   }
 
   return (
-    <Card className="bg-zinc-800/70 border-sky-500/20 hover:border-sky-500/50 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg hover:shadow-sky-500/10 rounded-none">
-      <div onClick={(e) => e.preventDefault()}>
-        <CardHeader className="p-4">
-          <div className="flex items-start justify-between mb-2">
-            <CardTitle className="text-lg font-mono text-sky-400 group-hover:text-sky-300 transition-colors">
-              {t.newsletter.title.toUpperCase()}
-            </CardTitle>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 w-6 p-0 text-zinc-400 hover:text-sky-400 rounded-none bg-transparent"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Focus on email input when external link button is clicked
-                  const emailInput = document.querySelector('input[type="email"]') as HTMLInputElement;
-                  if (emailInput) emailInput.focus();
-                }}
-              >
-                <ExternalLink className="h-3 w-3" />
-              </Button>
-            </div>
-          </div>
-          <div className="flex gap-2 mb-3 flex-wrap">
-            <Badge
-              variant="outline"
-              className="border-sky-500/30 text-sky-400 text-xs font-mono rounded-none bg-transparent"
-            >
-              EMAIL
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-zinc-700/70 text-zinc-300 text-xs font-mono rounded-none"
-            >
-              UPDATES
-            </Badge>
-          </div>
-          <CardDescription className="text-zinc-400 text-sm leading-relaxed line-clamp-3 font-mono mb-4">
-            {t.newsletter.description}
-          </CardDescription>
-          
-          <form onSubmit={handleSubmit} className="space-y-3" suppressHydrationWarning={true}>
-            <Input
-              type="email"
-              placeholder={t.newsletter.placeholder}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-zinc-900/70 border-sky-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-sky-500 focus:ring-sky-500/20 rounded-none text-xs"
-              required
-            />
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-mono rounded-none text-xs h-8"
-            >
-              {isLoading ? t.newsletter.subscribing : t.newsletter.subscribe}
-            </Button>
-          </form>
-        </CardHeader>
-      </div>
+    <Card className="bg-zinc-800/70 border-sky-500/50 rounded-none !p-4 flex flex-col h-full">
+      <CardTitle className="text-lg font-mono text-sky-400">
+        [NEWSLETTER]
+      </CardTitle>
+      <CardDescription className="text-zinc-400 text-sm leading-relaxed font-mono flex-1">
+        {t.newsletter.description}
+      </CardDescription>
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex gap-2 mt-auto"
+        suppressHydrationWarning={true}
+      >
+        <Input
+          type="email"
+          placeholder={t.newsletter.placeholder}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="flex-1 bg-zinc-900/70 border-sky-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-sky-500 focus:ring-sky-500/20 rounded-none text-sm"
+          required
+        />
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="bg-sky-600 hover:bg-sky-700 text-white font-mono rounded-none text-sm px-6"
+        >
+          {isLoading ? t.newsletter.subscribing : t.newsletter.subscribe}
+        </Button>
+      </form>
     </Card>
-  )
+  );
 }

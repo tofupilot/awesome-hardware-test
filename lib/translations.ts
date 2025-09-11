@@ -1,26 +1,25 @@
 export const translations = {
   en: {
-    title: "Awesome Hardware Test",
-    description: "A curated list of awesome hardware testing projects and resources",
+    description: "A curated collection of hardware testing tools and frameworks for validation engineers",
     hero: {
       title: {
         awesome: "AWESOME",
         hardware: "HARDWARE", 
         test: "TEST"
       },
-      subtitle: "A curated collection of open-source tools for hardware testing. Test frameworks, instrument control libraries, wafer analysis tools, and automation solutions for validation engineers.",
+      subtitle: "A handpicked collection of resources designed to help test engineers work faster and smarter.",
       discord: {
         title: "Don't debug alone - hardware testing is hard enough already.",
         description: "Join our Discord for technical support, emotional support, and to suggest resources.",
         button: "JOIN DISCORD"
       },
       stats: {
+        resources: "RESOURCES",
+        categories: "CATEGORIES",
+        lastUpdate: "LAST_UPDATE", 
+        discordUsers: "DISCORD_USERS",
         stars: "STARS",
-        contributors: "CONTRIBUTORS",
-        commits: "COMMITS", 
-        forks: "FORKS",
-        issues: "ISSUES",
-        open: "OPEN"
+        contributors: "CONTRIBUTORS"
       },
       credits: {
         createdBy: "CREATED BY",
@@ -79,7 +78,7 @@ export const translations = {
     },
     footer: {
       maintainer: "MAINTAINER",
-      license: "LICENSE: GPL-3.0", 
+      license: "LICENSE: MIT", 
       issues: "ISSUES",
       pullRequests: "PULL_REQUESTS"
     },
@@ -88,27 +87,26 @@ export const translations = {
     }
   },
   fr: {
-    title: "Tests Matériels Impressionnants",
-    description: "Une liste organisée de projets et ressources impressionnants pour les tests matériels",
+    description: "Une collection organisée d'outils et frameworks de test matériel pour ingénieurs de validation",
     hero: {
       title: {
         awesome: "IMPRESSIONNANT",
         hardware: "MATÉRIEL", 
         test: "TEST"
       },
-      subtitle: "Une collection organisée d'outils open-source pour les tests matériels. Frameworks de test, bibliothèques de contrôle d'instruments, outils d'analyse de wafers et solutions d'automatisation pour ingénieurs de validation.",
+      subtitle: "Une collection soigneusement sélectionnée de ressources conçues pour aider les ingénieurs test à travailler plus rapidement et intelligemment.",
       discord: {
         title: "Ne débuggez pas seul - les tests matériels sont déjà assez difficiles.",
         description: "Rejoignez notre Discord pour du support technique, émotionnel, et suggérer des ressources.",
         button: "REJOINDRE DISCORD"
       },
       stats: {
+        resources: "RESSOURCES",
+        categories: "CATÉGORIES",
+        lastUpdate: "DERNIÈRE_MAJ", 
+        discordUsers: "UTILISATEURS_DISCORD",
         stars: "ÉTOILES",
-        contributors: "CONTRIBUTEURS",
-        commits: "COMMITS", 
-        forks: "FORKS",
-        issues: "ISSUES",
-        open: "OUVERT"
+        contributors: "CONTRIBUTEURS"
       },
       credits: {
         createdBy: "CRÉÉ PAR",
@@ -167,7 +165,7 @@ export const translations = {
     },
     footer: {
       maintainer: "MAINTENEUR",
-      license: "LICENCE: GPL-3.0", 
+      license: "LICENCE: MIT", 
       issues: "PROBLÈMES",
       pullRequests: "PULL_REQUESTS"
     },

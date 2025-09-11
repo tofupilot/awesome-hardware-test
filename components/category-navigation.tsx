@@ -78,7 +78,7 @@ export function CategoryNavigation({
           <div className="relative min-w-[250px] flex-shrink-0">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500" />
             <Input
-              placeholder="SEARCH"
+              placeholder="SEARCH_RESOURCES"
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               className="pl-10 bg-zinc-800/70 border-green-500/30 text-zinc-100 placeholder-zinc-500 font-mono focus:border-green-500 focus:ring-green-500/20 rounded-none"
