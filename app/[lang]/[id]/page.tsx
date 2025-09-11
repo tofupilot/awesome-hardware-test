@@ -518,7 +518,10 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 </div>
                 <div className="flex justify-between font-mono text-sm">
                   <span className="text-zinc-400">LAST_RELEASE</span>
-                  <span className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs`}>{repoData?.lastRelease || 'N/A'}</span>
+                  <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
+                    <Calendar className="h-3 w-3 mr-1" />
+                    {repoData?.lastRelease || 'N/A'}
+                  </span>
                 </div>
               </CardContent>
             </Card>
