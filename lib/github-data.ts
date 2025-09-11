@@ -196,12 +196,6 @@ export const getAllGitHubData = unstable_cache(
 
 // Export for backward compatibility - just get stars
 export async function getAllGitHubStars(): Promise<Record<string, number>> {
-  const allData = await getAllGitHubData();
-  const starsMap: Record<string, number> = {};
-  
-  for (const [id, data] of Object.entries(allData)) {
-    starsMap[id] = data.stars;
-  }
-  
-  return starsMap;
+  const { stars } = await getAllGitHubData();
+  return stars;
 }

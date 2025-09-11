@@ -109,7 +109,7 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
         repoContributors={repoData?.contributors}
       />
       
-      <nav className="border-b border-green-500/20 bg-zinc-900/98 relative z-10">
+      <nav className="border-b border-green-500/20 bg-zinc-900/98 relative z-[5]">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 py-4">
             {/* Search Bar - Client Component */}

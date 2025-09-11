@@ -2,11 +2,6 @@ export const translations = {
   en: {
     description: "A curated collection of hardware testing tools and frameworks for validation engineers",
     hero: {
-      title: {
-        awesome: "AWESOME",
-        hardware: "HARDWARE", 
-        test: "TEST"
-      },
       subtitle: "A handpicked collection of resources designed to help test engineers work faster and smarter.",
       discord: {
         title: "Don't debug alone - hardware testing is hard enough already.",
@@ -16,7 +11,8 @@ export const translations = {
       stats: {
         resources: "RESOURCES",
         categories: "CATEGORIES",
-        lastUpdate: "LAST_UPDATE", 
+        lastUpdate: "LAST_UPDATE",
+        languages: "LANGUAGES",
         discordUsers: "DISCORD_USERS",
         stars: "STARS",
         contributors: "CONTRIBUTORS"
@@ -89,11 +85,6 @@ export const translations = {
   fr: {
     description: "Une collection organisée d'outils et frameworks de test matériel pour ingénieurs de validation",
     hero: {
-      title: {
-        awesome: "IMPRESSIONNANT",
-        hardware: "MATÉRIEL", 
-        test: "TEST"
-      },
       subtitle: "Une collection soigneusement sélectionnée de ressources conçues pour aider les ingénieurs test à travailler plus rapidement et intelligemment.",
       discord: {
         title: "Ne débuggez pas seul - les tests matériels sont déjà assez difficiles.",
@@ -103,7 +94,8 @@ export const translations = {
       stats: {
         resources: "RESSOURCES",
         categories: "CATÉGORIES",
-        lastUpdate: "DERNIÈRE_MAJ", 
+        lastUpdate: "DERNIÈRE_MAJ",
+        languages: "LANGUES",
         discordUsers: "UTILISATEURS_DISCORD",
         stars: "ÉTOILES",
         contributors: "CONTRIBUTEURS"

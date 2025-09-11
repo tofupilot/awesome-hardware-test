@@ -1,10 +1,6 @@
-"use client"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink } from "lucide-react"
+import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -19,7 +15,6 @@ const DiscordIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 import { translations, Locale } from "@/lib/translations"
-import { ImagePlaceholder } from "@/components/image-placeholder"
 
 interface DiscordSectionProps {
   lang: Locale

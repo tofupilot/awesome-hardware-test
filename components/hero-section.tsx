@@ -1,9 +1,9 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Star, GitFork, Users, GitCommit, CircleDot, MessageCircle, Database, Tags } from "lucide-react"
+import { Database, Tags, GitCommit } from "lucide-react"
 import { translations, Locale } from "@/lib/translations"
-import { Button } from "@/components/ui/button"
 import { hardwareTestData, categories } from "@/lib/hardware-data"
+import { LanguageDropdown } from "@/components/language-dropdown"
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -49,7 +49,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
   return (
     <section className="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-green-500/20 relative">
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl relative z-10">
+        <div className="w-full relative z-20">
           <div className="flex items-center mb-6">
             <div className="relative mr-4 flex-shrink-0 p-1 border border-green-500/20">
               <Image 
@@ -62,9 +62,9 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
             </div>
             <div className="flex items-center">
               <h1 className="text-4xl font-bold font-mono">
-                <span className="text-green-400">{t.hero.title.awesome}</span>
-                <span className="text-white mx-2">{t.hero.title.hardware}</span>
-                <span className="text-green-400">{t.hero.title.test}</span>
+                <span className="text-green-400">AWESOME</span>
+                <span className="text-white mx-2">HARDWARE</span>
+                <span className="text-green-400">TEST</span>
               </h1>
             </div>
           </div>
@@ -73,33 +73,35 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
             {t.hero.subtitle}
           </p>
 
-          <div className="flex gap-4 mb-8 max-w-3xl">
-            <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono flex-1">
-              <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
-                <Database className="h-3 w-3" />
-                {t.hero.stats.resources}
+          <div className="overflow-x-auto">
+            <div className="flex gap-3 mb-8 min-w-max">
+              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-44 flex-shrink-0">
+                <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
+                  <Database className="h-3 w-3" />
+                  {t.hero.stats.resources}
+                </div>
+                <div className="text-white font-bold">{hardwareTestData.length}</div>
               </div>
-              <div className="text-white font-bold">{hardwareTestData.length}</div>
-            </div>
-            <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono flex-1">
-              <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
-                <Tags className="h-3 w-3" />
-                {t.hero.stats.categories}
+              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-44 flex-shrink-0">
+                <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
+                  <Tags className="h-3 w-3" />
+                  {t.hero.stats.categories}
+                </div>
+                <div className="text-white font-bold">{categories.length}</div>
               </div>
-              <div className="text-white font-bold">{categories.length}</div>
-            </div>
-            <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono flex-1">
-              <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
-                <GitCommit className="h-3 w-3" />
-                {t.hero.stats.lastUpdate}
+              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-44 flex-shrink-0">
+                <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
+                  <GitCommit className="h-3 w-3" />
+                  {t.hero.stats.lastUpdate}
+                </div>
+                <div className="text-white font-bold">{getRelativeTime()} ago</div>
               </div>
-              <div className="text-white font-bold">{getRelativeTime()} ago</div>
-            </div>
-            <Link 
-              href="https://discord.gg/XuwYANGx7J" 
-              target="_blank"
-              className="bg-zinc-800/70 border border-violet-500/20 rounded-none p-3 font-mono hover:border-violet-500/50 hover:bg-violet-900/20 transition-colors block flex-1"
-            >
+              <LanguageDropdown lang={lang} />
+              <Link 
+                href="https://discord.gg/XuwYANGx7J" 
+                target="_blank"
+                className="bg-zinc-800/70 border border-violet-500/20 rounded-none p-3 font-mono hover:border-violet-500/50 hover:bg-violet-900/20 transition-colors block w-44 flex-shrink-0"
+              >
               <div className="flex items-center gap-1 text-violet-400 text-xs mb-1">
                 <DiscordIcon className="h-3 w-3" />
                 {t.hero.stats.discordUsers}
@@ -121,6 +123,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
               </div>
               <div className="text-white font-bold">{repoContributors || '0'}</div>
             </div> */}
+            </div>
           </div>
 
 

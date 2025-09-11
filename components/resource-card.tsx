@@ -97,32 +97,27 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
             </CardTitle>
             <div className="flex items-center gap-2">
               {resource.links?.github && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={`h-6 w-6 p-0 text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400' : 'hover:text-green-400'} rounded-none bg-transparent`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(resource.links.github, "_blank");
-                  }}
+                <Link
+                  href={resource.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm`}
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <Github className="h-3 w-3" />
-                </Button>
+                  <Github className="h-4 w-4" />
+                </Link>
               )}
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`h-6 w-6 p-0 text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400' : 'hover:text-green-400'} rounded-none bg-transparent`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(
-                    resource.links?.website || resource.links?.github || "#",
-                    "_blank"
-                  );
-                }}
-              >
-                <ExternalLink className="h-3 w-3" />
-              </Button>
+              {resource.links?.website && (
+                <Link
+                  href={resource.links.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`h-8 w-8 flex items-center justify-center text-zinc-400 ${resource.unmaintained ? 'hover:text-red-400 hover:bg-red-900/20' : 'hover:text-green-400 hover:bg-green-900/20'} transition-all duration-200 rounded-none hover:shadow-sm`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+              )}
             </div>
           </div>
           <div className="flex gap-2 mb-3 flex-wrap">

@@ -112,9 +112,8 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   }
 
   // Fetch GitHub data server-side
-  const githubData = await getAllGitHubData()
-  const repoData = githubData[resource.id]
-  const githubStars = repoData?.stars
+  const { stars, repoData } = await getAllGitHubData()
+  const githubStars = stars[resource.id]
   
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
@@ -253,14 +252,14 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 <Calendar className="h-3 w-3 mr-1" />
                 LAST_RELEASE
               </div>
-              <div className="text-white font-bold">{repoData?.lastRelease || 'N/A'}</div>
+              <div className="text-white font-bold">N/A</div>
             </div>
             <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
               <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
                 <Github className="h-3 w-3 mr-1" />
                 LICENSE
               </div>
-              <div className="text-white font-bold">{formatLicense(repoData?.license || resource.license)}</div>
+              <div className="text-white font-bold">{formatLicense(resource.license)}</div>
             </div>
           </div>
 
@@ -523,7 +522,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                   <span className="text-zinc-400">LAST_RELEASE</span>
                   <span className={`flex items-center ${resource.unmaintained ? 'text-red-400' : 'text-green-400'}`}>
                     <Calendar className="h-3 w-3 mr-1" />
-                    {repoData?.lastRelease || 'N/A'}
+                    N/A
                   </span>
                 </div>
               </CardContent>
