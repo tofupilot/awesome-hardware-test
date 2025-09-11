@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CopyButton } from "@/components/copy-button"
 import { JsonLd } from "@/components/json-ld"
+import { ImagePlaceholder } from "@/components/image-placeholder"
 import { getAllGitHubData } from "@/lib/github-data"
 import { Metadata } from "next"
 import {
@@ -117,10 +118,6 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
   
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
-  const getPlaceholderImage = () => {
-    const query = resource.imagePlaceholder || "hardware testing tool interface"
-    return `/placeholder.svg?height=400&width=800&text=${encodeURIComponent(query)}`
-  }
 
   const formatStars = (stars?: number) => {
     if (stars === undefined || stars === null) return "N/A"
@@ -338,12 +335,18 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
             {/* Hero Image */}
             <Card className={`bg-zinc-800/70 !py-0 ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} overflow-hidden rounded-none`}>
               <div className="relative h-64 bg-zinc-900/70">
-                <Image
-                  src={getPlaceholderImage() || "/placeholder.svg"}
-                  alt={`${resource.name} interface`}
-                  fill
-                  className="object-cover"
-                />
+                {resource.image ? (
+                  <Image
+                    src={resource.image}
+                    alt={`${resource.name} interface`}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <ImagePlaceholder 
+                    text={resource.imagePlaceholder || `${resource.name} interface preview`}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
                 <div className={`absolute bottom-4 left-4 ${resource.unmaintained ? 'text-red-400' : 'text-green-400'} font-mono text-sm`}>
                   [SYSTEM_INTERFACE_PREVIEW]
