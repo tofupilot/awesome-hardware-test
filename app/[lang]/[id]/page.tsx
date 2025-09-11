@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CopyButton } from "@/components/copy-button"
 import { JsonLd } from "@/components/json-ld"
-import { getAllGitHubStars } from "@/lib/github-stars"
+import { getAllGitHubData } from "@/lib/github-data"
 import { Metadata } from "next"
 import {
   ArrowLeft,
@@ -109,9 +109,10 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
     notFound()
   }
 
-  // Fetch GitHub stars server-side
-  const stars = await getAllGitHubStars()
-  const githubStars = stars[resource.id]
+  // Fetch GitHub data server-side
+  const githubData = await getAllGitHubData()
+  const repoData = githubData[resource.id]
+  const githubStars = repoData?.stars
   
   const CategoryIcon = categoryIcons[resource.category as keyof typeof categoryIcons] || Zap
 
@@ -233,21 +234,21 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 <Users className="h-3 w-3 mr-1" />
                 CONTRIBUTORS
               </div>
-              <div className="text-white font-bold">{resource.contributors || 'N/A'}</div>
+              <div className="text-white font-bold">{repoData?.contributors || 'N/A'}</div>
             </div>
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono">
               <div className="text-green-400 text-xs flex items-center">
                 <Calendar className="h-3 w-3 mr-1" />
-                LAST_UPDATE
+                LAST_RELEASE
               </div>
-              <div className="text-white font-bold">{resource.lastUpdated || 'N/A'}</div>
+              <div className="text-white font-bold">{repoData?.lastRelease || 'N/A'}</div>
             </div>
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono">
               <div className="text-green-400 text-xs flex items-center">
                 <Github className="h-3 w-3 mr-1" />
                 LICENSE
               </div>
-              <div className="text-white font-bold">{resource.license || 'N/A'}</div>
+              <div className="text-white font-bold">{repoData?.license || resource.license || 'N/A'}</div>
             </div>
           </div>
 
@@ -470,12 +471,12 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                   <span className="text-zinc-400">CONTRIBUTORS</span>
                   <span className="flex items-center text-green-400">
                     <Users className="h-3 w-3 mr-1" />
-                    {resource.contributors}
+                    {repoData?.contributors || 'N/A'}
                   </span>
                 </div>
                 <div className="flex justify-between font-mono text-sm">
-                  <span className="text-zinc-400">LAST_UPDATE</span>
-                  <span className="text-green-400 text-xs">{resource.lastUpdated}</span>
+                  <span className="text-zinc-400">LAST_RELEASE</span>
+                  <span className="text-green-400 text-xs">{repoData?.lastRelease || 'N/A'}</span>
                 </div>
               </CardContent>
             </Card>
