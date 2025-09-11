@@ -239,7 +239,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className={`bg-zinc-800/70 border ${resource.unmaintained ? 'border-red-500/20' : 'border-green-500/20'} rounded-none p-3 font-mono`}>
               <div className={`${resource.unmaintained ? 'text-red-400' : 'text-green-400'} text-xs flex items-center`}>
-                <Star className="h-3 w-3 mr-1 fill-current" />
+                <Star className="h-3 w-3 mr-1" />
                 STARS
               </div>
               <div className="text-white font-bold">{formatStars(githubStars) || 'N/A'}</div>
