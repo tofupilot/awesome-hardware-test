@@ -51,7 +51,7 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
       </div>
       
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-green-500/20 rounded-none z-50">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-green-500/20 rounded-none z-[9999]">
           <button
             className={`w-full text-left p-3 font-mono text-sm hover:bg-green-500/10 transition-colors ${lang === 'en' ? 'text-green-400' : 'text-zinc-300'}`}
             onClick={() => handleLanguageChange('en')}
