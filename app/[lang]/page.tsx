@@ -3,7 +3,7 @@ import { translations, Locale } from "@/lib/translations"
 import { HeroSection } from "@/components/hero-section"
 import { SiteFooter } from "@/components/site-footer"
 import { NewsletterSection } from "@/components/newsletter-section"
-import { getAllGitHubStars } from "@/lib/github-stars"
+import { getAllGitHubData } from "@/lib/github-data"
 import { CategoryNavigationServer } from "@/components/category-navigation-server"
 import { ResourceCard } from "@/components/resource-card"
 import { SearchInput } from "@/components/search-input"
@@ -54,8 +54,8 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
   const { category = "All", search = "" } = await searchParams
   const t = translations[lang]
   
-  // Fetch GitHub stars server-side
-  const stars = await getAllGitHubStars()
+  // Fetch GitHub data server-side (stars, releases, contributors, etc.)
+  const githubData = await getAllGitHubData()
 
   // JSON-LD structured data
   const jsonLd = {
@@ -140,7 +140,9 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
               key={resource.id} 
               resource={resource} 
               lang={lang}
-              starCount={stars[resource.id]}
+              starCount={githubData[resource.id]?.stars}
+              lastRelease={githubData[resource.id]?.lastRelease}
+              contributors={githubData[resource.id]?.contributors}
             />
           ))}
         </div>

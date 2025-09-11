@@ -21,7 +21,7 @@ export interface HardwareTestResource {
   };
   // New fields for enhanced UI
   stars?: number;
-  lastUpdated?: string;
+  lastRelease?: string;
   contributors?: number;
   longDescription?: string;
   useCases?: string[];
@@ -57,9 +57,6 @@ export const hardwareTestData: HardwareTestResource[] = [
     links: {
       github: 'https://github.com/LaboratoireMecaniqueLille/crappy'
     },
-    stars: 89,
-    lastUpdated: '2024-01-15',
-    contributors: 12,
     longDescription: `CRAPPY is a Python framework designed for hardware testing and control applications. It provides a comprehensive solution for real-time data acquisition, control, and monitoring of hardware systems.
 
 The framework is built with parallelization in mind, allowing multiple processes to run simultaneously for efficient hardware testing workflows. It's particularly useful for complex test setups that require coordination between multiple instruments and devices.
@@ -106,9 +103,6 @@ Key features include real-time data streaming, flexible instrument drivers, and 
     links: {
       github: 'https://github.com/exclave/exclave'
     },
-    stars: 234,
-    lastUpdated: '2024-02-20',
-    contributors: 8,
     longDescription: `EXCLAVE is a modern factory test infrastructure built from the ground up in Rust. It's designed to handle the demanding requirements of manufacturing environments where reliability, performance, and safety are paramount.
 
 The framework provides a robust foundation for building automated test systems that can scale from small production lines to large manufacturing facilities. Its Rust foundation ensures memory safety and high performance, critical for factory environments.
@@ -149,9 +143,6 @@ Exclave emphasizes modularity and extensibility, making it easy to integrate wit
     links: {
       github: 'https://github.com/flojoy-ai/studio'
     },
-    stars: 456,
-    lastUpdated: '2024-02-25',
-    contributors: 23,
   },
   {
     id: 'openhtf',
@@ -167,9 +158,6 @@ Exclave emphasizes modularity and extensibility, making it easy to integrate wit
     links: {
       github: 'https://github.com/google/openhtf'
     },
-    stars: 1234,
-    lastUpdated: '2024-02-28',
-    contributors: 45,
     longDescription: `OPENHTF is Google's open-source hardware testing framework, designed to provide a robust and scalable solution for hardware validation and manufacturing testing. Originally developed for Google's internal hardware testing needs, it has been open-sourced to benefit the broader hardware testing community.
 
 The framework provides a comprehensive set of tools for creating, executing, and managing hardware tests. It includes built-in support for test sequencing, data collection, result analysis, and reporting. OpenHTF is designed to handle everything from simple component tests to complex system-level validation.
@@ -220,9 +208,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/everypinio/hardpy'
     },
-    stars: 78,
-    lastUpdated: '2024-02-10',
-    contributors: 6,
   },
   {
     id: 'robotframework',
@@ -255,9 +240,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       docs: 'https://labgrid.readthedocs.io/en/latest/getting_started.html',
       website: 'https://labgrid.readthedocs.io'
     },
-    stars: 350,
-    lastUpdated: '2024-03-01',
-    contributors: 28
   },
   {
     id: 'opentap',
@@ -378,9 +360,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       github: 'https://github.com/pyvisa/pyvisa',
       docs: 'https://pyvisa.readthedocs.io'
     },
-    stars: 987,
-    lastUpdated: '2024-02-15',
-    contributors: 78,
   },
   {
     id: 'test-controller',
@@ -395,9 +374,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/test-controller/test-controller'
     },
-    stars: 23,
-    lastUpdated: '2023-08-12',
-    contributors: 3,
     unmaintained: true,
   },
 
@@ -415,9 +391,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/dougthor42/wafer_map'
     },
-    stars: 78,
-    lastUpdated: '2024-01-20',
-    contributors: 5,
   },
   {
     id: 'py-wdf-reader',
@@ -432,9 +405,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/alchem0x2A/py-wdf-reader'
     },
-    stars: 34,
-    lastUpdated: '2023-11-08',
-    contributors: 4,
   },
   {
     id: 'waferthin',
@@ -449,9 +419,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/MatthewTheGhoul/waferthin'
     },
-    stars: 12,
-    lastUpdated: '2023-09-14',
-    contributors: 2,
   },
   {
     id: 'stdf2map',
@@ -466,9 +433,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/noonchen/stdf2map'
     },
-    stars: 45,
-    lastUpdated: '2024-01-28',
-    contributors: 3,
   },
 
   // Hardware Devices
@@ -485,9 +449,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/NanoVNA-Saver/nanovna-saver'
     },
-    stars: 456,
-    lastUpdated: '2024-02-22',
-    contributors: 23,
   },
   {
     id: 'red-pitaya',
@@ -503,9 +464,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       github: 'https://github.com/RedPitaya/RedPitaya',
       website: 'https://www.redpitaya.com'
     },
-    stars: 789,
-    lastUpdated: '2024-02-18',
-    contributors: 56,
   },
   {
     id: 'tinysa',
@@ -535,9 +493,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/pyvisa/pyvisa-sim'
     },
-    stars: 156,
-    lastUpdated: '2024-01-25',
-    contributors: 12,
   },
   {
     id: 'umockdev',
@@ -552,9 +507,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/martinpitt/umockdev'
     },
-    stars: 234,
-    lastUpdated: '2024-02-14',
-    contributors: 8,
   },
 
   // Test Suites
@@ -600,9 +552,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/Siemens/htf'
     },
-    stars: 123,
-    lastUpdated: '2024-02-18',
-    contributors: 12,
   },
   {
     id: 'octoprobe',
@@ -617,9 +566,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/hmaerki/octoprobe'
     },
-    stars: 45,
-    lastUpdated: '2024-01-22',
-    contributors: 6,
   },
   {
     id: 'sopic',
@@ -634,9 +580,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/Semi-ATE/sopic'
     },
-    stars: 34,
-    lastUpdated: '2024-01-15',
-    contributors: 4,
   },
   {
     id: 'treeate',
@@ -651,9 +594,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/WilliamYinwei/TreeATE'
     },
-    stars: 156,
-    lastUpdated: '2022-08-30',
-    contributors: 8,
     unmaintained: true,
   },
   {
@@ -669,9 +609,6 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     links: {
       github: 'https://github.com/espressif/pytest-embedded'
     },
-    stars: 567,
-    lastUpdated: '2024-02-28',
-    contributors: 23,
   }
 ];
 

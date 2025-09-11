@@ -19,9 +19,11 @@ interface ResourceCardProps {
   resource: HardwareTestResource;
   lang: Locale;
   starCount?: number;
+  lastRelease?: string;
+  contributors?: number;
 }
 
-export function ResourceCard({ resource, lang, starCount }: ResourceCardProps) {
+export function ResourceCard({ resource, lang, starCount, lastRelease, contributors }: ResourceCardProps) {
   const t = translations[lang] || translations['en'];  // Fallback to English
 
   const formatStars = (stars?: number) => {
