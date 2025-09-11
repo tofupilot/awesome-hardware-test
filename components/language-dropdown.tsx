@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { Code, ChevronDown } from "lucide-react"
+import { Earth, ChevronDown } from "lucide-react"
 import { translations, Locale } from "@/lib/translations"
 
 interface LanguageDropdownProps {
@@ -37,13 +37,13 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
   }, [])
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative flex-1" ref={dropdownRef}>
       <div 
-        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono flex-1 cursor-pointer hover:border-green-500/40 transition-colors"
+        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors w-full"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
-          <Code className="h-3 w-3" />
+          <Earth className="h-3 w-3" />
           {t.hero.stats.languages}
           <ChevronDown className={`h-3 w-3 ml-auto transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </div>

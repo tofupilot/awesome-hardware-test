@@ -186,7 +186,8 @@ runner.execute(test)?;`
     license: 'Apache-2.0',
     tags: ['google', 'framework', 'open-source', 'manufacturing'],
     links: {
-      github: 'https://github.com/google/openhtf'
+      github: 'https://github.com/google/openhtf',
+      website: 'https://openhtf.com'
     },
     imagePlaceholder: 'google hardware testing framework web interface dashboard',
     codeExample: `import openhtf as htf
@@ -396,6 +397,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     tags: ['visa', 'instruments', 'control', 'measurement'],
     links: {
       github: 'https://github.com/pyvisa/pyvisa',
+      website: 'https://pyvisa.com',
       docs: 'https://pyvisa.readthedocs.io'
     },
   },
