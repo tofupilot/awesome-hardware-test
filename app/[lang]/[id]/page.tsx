@@ -344,7 +344,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                   />
                 ) : (
                   <ImagePlaceholder 
-                    text={resource.imagePlaceholder || `${resource.name} interface preview`}
+                    text={resource.imagePlaceholder || `${resource.name} image coming soon`}
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-transparent" />
