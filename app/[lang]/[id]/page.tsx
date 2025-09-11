@@ -285,6 +285,31 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Unmaintained Project Explanation */}
+            {resource.unmaintained && (
+              <Card className="bg-red-900/20 border-red-500/30 rounded-none">
+                <CardHeader>
+                  <CardTitle className="font-mono text-red-400 flex items-center">
+                    <Skull className="h-5 w-5 mr-2" />
+                    [RIP {resource.name.toUpperCase()}]
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-zinc-300 font-mono text-sm leading-relaxed">
+                    {(() => {
+                      const explanations: Record<string, string> = {
+                        'flojoy-studio': 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed. Consider alternatives like OpenHTF or pytest-embedded for similar functionality.',
+                        'treeate': 'TreeATE has not received updates since 2022. While the factory automation platform still functions, it lacks support for modern testing protocols and newer hardware interfaces. The Chinese-language documentation may also limit adoption outside of specific regions.',
+                        'test-controller': 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions like PyVISA and LabGrid which offer better protocol support and active maintenance.',
+                        'sopic': 'The SOPIC helper library for production line automation is no longer maintained. Users should evaluate whether the existing codebase meets their needs or consider migrating to actively maintained alternatives in the Semi-ATE ecosystem.',
+                      };
+                      return explanations[resource.id] || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.';
+                    })()}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Hero Image */}
             <Card className="bg-zinc-800/70 border-green-500/20 overflow-hidden rounded-none">
               <div className="relative h-64 bg-zinc-900/70">
@@ -372,31 +397,6 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                 </div>
               </CardContent>
             </Card>
-
-            {/* Unmaintained Project Explanation */}
-            {resource.unmaintained && (
-              <Card className="bg-red-900/20 border-red-500/30 rounded-none">
-                <CardHeader>
-                  <CardTitle className="font-mono text-red-400 flex items-center">
-                    <Skull className="h-5 w-5 mr-2" />
-                    [RIP: {resource.name.toUpperCase()}]
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-zinc-300 font-mono text-sm leading-relaxed">
-                    {(() => {
-                      const explanations: Record<string, string> = {
-                        'flojoy-studio': 'Flojoy Studio was discontinued after the company shut down operations in 2024. The visual scripting IDE showed promise for no-code test automation but is no longer actively developed. Consider alternatives like OpenHTF or pytest-embedded for similar functionality.',
-                        'treeate': 'TreeATE has not received updates since 2022. While the factory automation platform still functions, it lacks support for modern testing protocols and newer hardware interfaces. The Chinese-language documentation may also limit adoption outside of specific regions.',
-                        'test-controller': 'Test Controller development ceased several years ago. The multi-device control functionality has been superseded by more modern solutions like PyVISA and LabGrid which offer better protocol support and active maintenance.',
-                        'sopic': 'The SOPIC helper library for production line automation is no longer maintained. Users should evaluate whether the existing codebase meets their needs or consider migrating to actively maintained alternatives in the Semi-ATE ecosystem.',
-                      };
-                      return explanations[resource.id] || 'This project is no longer actively maintained. While the existing code may still be functional, users should be aware that no new features, bug fixes, or security updates will be provided. Consider evaluating alternative solutions that have active community support.';
-                    })()}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
             {/* Features */}
             <Card className="bg-zinc-800/70 border-green-500/20 rounded-none">
