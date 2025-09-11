@@ -39,8 +39,8 @@ export function ResourceCard({ resource, lang, starCount, lastRelease, contribut
   const formattedStars = formatStars(displayStars);
 
   return (
-    <Link href={`/${lang}/${resource.id}`}>
-      <Card className={`${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 !gap-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none`}>
+    <Link href={`/${lang}/${resource.id}`} className="h-full">
+      <Card className={`h-full flex flex-col ${resource.unmaintained ? 'bg-red-900/20 border-red-500/30 hover:border-red-500/50 hover:shadow-red-500/10' : 'bg-zinc-800/70 border-green-500/20 hover:border-green-500/50 hover:shadow-green-500/10'} !py-0 !gap-0 transition-all duration-300 overflow-hidden group cursor-pointer hover:shadow-lg rounded-none`}>
         {/* Image */}
         <div className="relative h-48 bg-zinc-900/70 overflow-hidden">
           {resource.image ? (

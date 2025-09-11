@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, CheckCircle, ExternalLink } from "lucide-react";
 import { translations, Locale } from "@/lib/translations";
 import { ImagePlaceholder } from "@/components/image-placeholder";
+import { subscribeToNewsletter } from "@/app/actions/newsletter";
 
 interface NewsletterSectionProps {
   lang: Locale;
@@ -36,45 +37,33 @@ export function NewsletterSection({ lang }: NewsletterSectionProps) {
     setError(null);
     
     try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          email, 
-          lang 
-        }),
-      });
+      const result = await subscribeToNewsletter(email, lang);
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (result.success) {
         setIsSubscribed(true);
         setEmail("");
         console.log('Newsletter subscription successful:', {
           email,
-          response: data,
+          response: result,
           timestamp: new Date().toISOString()
         });
       } else {
         console.error('Newsletter subscription failed:', {
-          status: response.status,
-          statusText: response.statusText,
-          error: data,
+          error: result.error,
+          details: result.details,
           email,
           timestamp: new Date().toISOString()
         });
-        setError(data.error || 'Failed to subscribe. Please try again.');
+        setError(result.error || 'Failed to subscribe. Please try again.');
       }
     } catch (error) {
-      console.error('Network error during newsletter subscription:', {
+      console.error('Error during newsletter subscription:', {
         error,
         message: error instanceof Error ? error.message : 'Unknown error',
         email,
         timestamp: new Date().toISOString()
       });
-      setError('Network error. Please check your connection and try again.');
+      setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
