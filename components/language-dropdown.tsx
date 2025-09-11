@@ -37,9 +37,9 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
   }, [])
 
   return (
-    <div className="relative flex-1" ref={dropdownRef}>
+    <div className="flex-1" ref={dropdownRef}>
       <div 
-        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors w-full"
+        className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono cursor-pointer hover:border-green-500/40 transition-colors relative"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
@@ -51,7 +51,7 @@ export function LanguageDropdown({ lang }: LanguageDropdownProps) {
       </div>
       
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-green-500/20 rounded-none z-[9999]">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-green-500/20 rounded-none z-[9999] shadow-lg">
           <button
             className={`w-full text-left p-3 font-mono text-sm hover:bg-green-500/10 transition-colors ${lang === 'en' ? 'text-green-400' : 'text-zinc-300'}`}
             onClick={() => handleLanguageChange('en')}
