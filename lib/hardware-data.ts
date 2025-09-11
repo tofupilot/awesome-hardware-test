@@ -258,7 +258,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['automation', 'atdd', 'rpa', 'acceptance-testing'],
     links: {
-      github: 'https://github.com/robotframework/robotframework',
+      github: 'https://github.com/robotframework/robotframework'
+    },
       website: 'https://robotframework.org'
     }
   },
@@ -274,7 +275,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     license: 'LGPL-2.1',
     tags: ['embedded', 'board-control', 'remote-testing', 'automation', 'hardware'],
     links: {
-      github: 'https://github.com/labgrid-project/labgrid',
+      github: 'https://github.com/labgrid-project/labgrid'
+    },
       docs: 'https://labgrid.readthedocs.io/en/latest/getting_started.html',
       website: 'https://labgrid.readthedocs.io'
     },
@@ -290,7 +292,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'C#',
     tags: ['csharp', 'automation', 'platform', 'sequences'],
     links: {
-      github: 'https://github.com/opentap/opentap',
+      github: 'https://github.com/opentap/opentap'
+    },
       website: 'https://www.opentap.io'
     }
   },
@@ -395,7 +398,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'Python',
     tags: ['visa', 'instruments', 'control', 'measurement'],
     links: {
-      github: 'https://github.com/pyvisa/pyvisa',
+      github: 'https://github.com/pyvisa/pyvisa'
+    },
       docs: 'https://pyvisa.readthedocs.io'
     },
   },
@@ -502,7 +506,8 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     language: 'C',
     tags: ['oscilloscope', 'signal-generator', 'spectrum-analyzer', 'open-hardware'],
     links: {
-      github: 'https://github.com/RedPitaya/RedPitaya',
+      github: 'https://github.com/RedPitaya/RedPitaya'
+    },
       website: 'https://www.redpitaya.com'
     },
   },

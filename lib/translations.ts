@@ -16,7 +16,8 @@ export const translations = {
       stats: {
         resources: "RESOURCES",
         categories: "CATEGORIES",
-        lastUpdate: "LAST_UPDATE", 
+        lastUpdate: "LAST_UPDATE",
+        languages: "LANGUAGES",
         discordUsers: "DISCORD_USERS",
         stars: "STARS",
         contributors: "CONTRIBUTORS"
@@ -103,7 +104,8 @@ export const translations = {
       stats: {
         resources: "RESSOURCES",
         categories: "CATÉGORIES",
-        lastUpdate: "DERNIÈRE_MAJ", 
+        lastUpdate: "DERNIÈRE_MAJ",
+        languages: "LANGUES",
         discordUsers: "UTILISATEURS_DISCORD",
         stars: "ÉTOILES",
         contributors: "CONTRIBUTEURS"

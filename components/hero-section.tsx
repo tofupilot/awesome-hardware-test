@@ -1,9 +1,13 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
-import { Star, GitFork, Users, GitCommit, CircleDot, MessageCircle, Database, Tags } from "lucide-react"
+import { Star, GitFork, Users, GitCommit, CircleDot, MessageCircle, Database, Tags, Code, ChevronDown } from "lucide-react"
 import { translations, Locale } from "@/lib/translations"
 import { Button } from "@/components/ui/button"
 import { hardwareTestData, categories } from "@/lib/hardware-data"
+import { useState, useRef, useEffect } from "react"
+import { useRouter, usePathname } from "next/navigation"
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -27,6 +31,33 @@ interface HeroSectionProps {
 
 export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors }: HeroSectionProps) {
   const t = translations[lang] || translations['en']  // Fallback to English
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+  const pathname = usePathname()
+  
+  // Get website languages count
+  const getLanguagesCount = () => {
+    return Object.keys(translations).length // EN, FR = 2
+  }
+
+  // Handle language change
+  const handleLanguageChange = (newLang: Locale) => {
+    const currentPath = pathname.replace(`/${lang}`, `/${newLang}`)
+    router.push(currentPath)
+    setIsLanguageDropdownOpen(false)
+  }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsLanguageDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
   
   // Get actual relative time from GitHub API
   const getRelativeTime = () => {
@@ -73,7 +104,7 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
             {t.hero.subtitle}
           </p>
 
-          <div className="flex gap-4 mb-8 max-w-3xl">
+          <div className="flex gap-3 mb-8 max-w-4xl">
             <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono flex-1">
               <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
                 <Database className="h-3 w-3" />
@@ -94,6 +125,36 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
                 {t.hero.stats.lastUpdate}
               </div>
               <div className="text-white font-bold">{getRelativeTime()} ago</div>
+            </div>
+            <div className="relative" ref={dropdownRef}>
+              <div 
+                className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono flex-1 cursor-pointer hover:border-green-500/40 transition-colors"
+                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+              >
+                <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
+                  <Code className="h-3 w-3" />
+                  {t.hero.stats.languages}
+                  <ChevronDown className={`h-3 w-3 ml-auto transition-transform ${isLanguageDropdownOpen ? 'rotate-180' : ''}`} />
+                </div>
+                <div className="text-white font-bold">{getLanguagesCount()}</div>
+              </div>
+              
+              {isLanguageDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-green-500/20 rounded-none z-50">
+                  <button
+                    className={`w-full text-left p-3 font-mono text-sm hover:bg-green-500/10 transition-colors ${lang === 'en' ? 'text-green-400' : 'text-zinc-300'}`}
+                    onClick={() => handleLanguageChange('en')}
+                  >
+                    🇺🇸 English
+                  </button>
+                  <button
+                    className={`w-full text-left p-3 font-mono text-sm hover:bg-green-500/10 transition-colors border-t border-green-500/10 ${lang === 'fr' ? 'text-green-400' : 'text-zinc-300'}`}
+                    onClick={() => handleLanguageChange('fr')}
+                  >
+                    🇫🇷 Français
+                  </button>
+                </div>
+              )}
             </div>
             <Link 
               href="https://discord.gg/XuwYANGx7J" 
