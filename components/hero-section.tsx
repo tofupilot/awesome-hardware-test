@@ -94,7 +94,12 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
                   <GitCommit className="h-3 w-3" />
                   {t.hero.stats.lastUpdate}
                 </div>
-                <div className="text-white font-bold">{getRelativeTime()} ago</div>
+                <div className="text-white font-bold">
+                  {(() => {
+                    const time = getRelativeTime();
+                    return time === 'today' ? time : `${time} ago`;
+                  })()}
+                </div>
               </div>
               <LanguageDropdown lang={lang} />
               <Link 
