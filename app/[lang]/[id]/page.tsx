@@ -285,7 +285,7 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
               <>
                 <Card className="bg-red-900/20 border-red-500/30 rounded-none">
                   <CardHeader>
-                    <CardTitle className="font-mono text-red-400 flex items-center items-baseline">
+                    <CardTitle className="font-mono text-red-400 flex items-center">
                       <Skull className="h-5 w-5 mr-2 flex-shrink-0" />
                       <span>[RIP {resource.name.toUpperCase()}]</span>
                     </CardTitle>
@@ -307,20 +307,24 @@ export default async function ResourcePage({ params }: { params: Promise<{ id: s
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         {resource.recommendedReplacements.map((replacement) => (
                           <Link
                             key={replacement.id}
                             href={`/${lang}/${replacement.id}`}
-                            className="flex items-start gap-3 text-green-400 hover:text-green-300 font-mono text-sm transition-colors group"
+                            className="block p-3 bg-green-900/10 border border-green-500/20 rounded-none hover:bg-green-900/20 hover:border-green-500/40 transition-all group"
                           >
-                            <span className="text-green-400 mt-0.5">→</span>
-                            <div className="flex-1">
-                              <div className="font-bold underline">{replacement.name.toUpperCase()}</div>
-                              {replacement.reason && (
-                                <div className="text-zinc-400 text-xs mt-1">// {replacement.reason}</div>
-                              )}
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-green-400">→</span>
+                              <div className="font-bold text-green-400 group-hover:text-green-300 font-mono">
+                                {replacement.name.toUpperCase()}
+                              </div>
                             </div>
+                            {replacement.reason && (
+                              <div className="text-zinc-400 text-sm font-mono pl-5">
+                                {replacement.reason}
+                              </div>
+                            )}
                           </Link>
                         ))}
                       </div>
