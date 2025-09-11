@@ -274,11 +274,10 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
     license: 'LGPL-2.1',
     tags: ['embedded', 'board-control', 'remote-testing', 'automation', 'hardware'],
     links: {
-      github: 'https://github.com/labgrid-project/labgrid'
-    },
+      github: 'https://github.com/labgrid-project/labgrid',
       docs: 'https://labgrid.readthedocs.io/en/latest/getting_started.html',
       website: 'https://labgrid.readthedocs.io'
-    },
+    }
   },
   {
     id: 'opentap',
