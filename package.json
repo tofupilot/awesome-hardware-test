@@ -5,9 +5,8 @@
   "description": "Curated list of tested hardware components with benchmarks and reviews",
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/build-info.js && next build",
-    "start": "next start",
-    "build-info": "node scripts/build-info.js"
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.3",
