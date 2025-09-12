@@ -10,7 +10,7 @@ import { SearchInput } from "@/components/search-input"
 import { JsonLd } from "@/components/json-ld"
 import { Metadata } from "next"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awesome-hardware-test.com';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params

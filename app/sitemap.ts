@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { hardwareTestData } from '@/lib/hardware-data'
 import { locales } from '@/lib/translations'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awesome-hardware-test.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date()

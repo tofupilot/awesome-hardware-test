@@ -9,7 +9,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awesome-hardware-test.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
