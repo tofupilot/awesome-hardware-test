@@ -75,16 +75,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning className="bg-zinc-900">
-      <body
-        className={`${inter.variable} antialiased bg-zinc-900 min-h-screen text-zinc-100`}
-      >
-        <CSPostHogProvider>
-          {children}
-          <Analytics />
-        </CSPostHogProvider>
-      </body>
-    </html>
-  );
+  return children;
 }
