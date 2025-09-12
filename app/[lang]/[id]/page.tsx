@@ -44,7 +44,7 @@ const categoryIcons = {
 
 import { Locale, locales } from "@/lib/translations"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awesome-hardware-test.com';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string; lang: Locale }> }): Promise<Metadata> {
   const { id, lang } = await params

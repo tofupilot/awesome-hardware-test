@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { Locale } from '@/lib/translations';
 import { SiteFooter } from '@/components/site-footer';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awesome-hardware-test.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awesome-hardware-test.com';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
