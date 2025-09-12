@@ -20,8 +20,8 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
   // Check if there is any supported locale in the pathname
-  const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
   // For root path, redirect to detected locale or default
@@ -33,14 +33,17 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // Redirect other paths missing locale
-  if (pathnameIsMissingLocale) {
+  // Only redirect if pathname doesn't have locale and isn't a static file
+  if (!pathnameHasLocale && !pathname.includes('.')) {
     const locale = getLocale(request);
     return NextResponse.redirect(
       new URL(`/${locale}${pathname}`, request.url),
       { status: 301 } // Use permanent redirect for SEO
     );
   }
+
+  // Continue without redirecting for paths that already have locale
+  return NextResponse.next();
 }
 
 export const config = {
