@@ -1,6 +1,6 @@
 # Awesome Hardware Test
 
-A curated collection of resources designed to help test engineers work faster and smarter.
+A curated collection of resources designed to help test engineers work faster.
 
 **🌐 Visit [awesome-hardware-test.com](https://awesome-hardware-test.com)**
 

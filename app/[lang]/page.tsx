@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
   return {
     title: isEnglish ? "Awesome Hardware Test - Testing Tools, Frameworks & Instruments for Electronics Validation" : "Awesome Hardware Test - Outils, Frameworks et Instruments de Test Matériel",
     description: isEnglish 
-      ? `${allResources.length} hardware testing tools. Find test execution engines, wafer maps, instrument interfaces for electronics validation.`
-      : `${allResources.length} outils de test matériel. Moteurs d'exécution, cartes de wafers, interfaces d'instruments pour validation électronique.`,
+      ? "A handpicked collection of resources designed to help test engineers work faster."
+      : "Une collection de ressources sélectionnées pour aider les ingénieurs de test à travailler plus rapidement.",
     alternates: {
       canonical: `${siteUrl}/${lang}`,
       languages: {
@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     openGraph: {
       title: isEnglish ? "Hardware Testing Tools Collection" : "Collection d'Outils de Test Matériel",
       description: isEnglish 
-        ? "Open source hardware testing frameworks and tools for electronics validation"
-        : "Frameworks et outils open source pour la validation électronique",
+        ? "A handpicked collection of resources designed to help test engineers work faster."
+        : "Une collection de ressources sélectionnées pour aider les ingénieurs de test à travailler plus rapidement.",
       url: `${siteUrl}/${lang}`,
       locale: lang === 'en' ? 'en_US' : 'fr_FR',
     },

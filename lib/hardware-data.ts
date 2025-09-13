@@ -122,7 +122,7 @@ One of OpenHTF's key strengths is its plugin architecture, which allows easy int
       fr: 'Framework Python pour acquisition temps réel et contrôle hardware parallèle'
     },
     language: 'Python',
-    license: 'GPL-3.0',
+    license: 'GPL-2.0',
     licenseTypes: ['OSS'],
     tags: ['python', 'real-time', 'acquisition', 'parallel'],
     links: {
@@ -177,7 +177,8 @@ test.run()`
       fr: 'Infrastructure Rust pour tests et automatisation usine haute performance'
     },
     language: 'Rust',
-    license: 'Apache-2.0',
+    license: 'BSD-3-Clause',
+    licenseTypes: ['OSS'],
     tags: ['rust', 'factory', 'infrastructure', 'testing'],
     links: {
       github: 'https://github.com/exclave/exclave'
@@ -226,6 +227,8 @@ runner.execute(test)?;`
       fr: 'IDE de script visuel pour DAQ, bancs d\'essai et contrôle robotique sans code'
     },
     language: 'Python',
+    license: 'MIT',
+    licenseTypes: ['OSS'],
     tags: ['visual-scripting', 'daq', 'robotics', 'no-code'],
     links: {
       github: 'https://github.com/flojoy-ai/studio'
@@ -237,6 +240,25 @@ runner.execute(test)?;`
       { id: 'pytest-embedded', name: 'pytest-embedded', reason: 'Modern pytest plugin for embedded testing' }
     ],
   },
+  // TofuPilot at position #5
+  {
+    id: 'tofupilot',
+    name: 'TofuPilot',
+    category: 'Database_Analytics',
+    description: {
+      en: 'Python-friendly plug-and-play database and analytics platform for hardware test data management',
+      fr: 'Plateforme de base de données et d\'analyse plug-and-play compatible Python pour la gestion des tests matériels'
+    },
+    language: 'Python',
+    isCommercial: true,
+    licenseTypes: ['FREE', 'PAID'],
+    tags: ['database', 'pytest', 'analytics', 'commercial'],
+    links: {
+      website: 'https://tofupilot.com'
+    },
+    image: '/resources/tofupilot.png',
+    installation: 'pip install tofupilot',
+  },
   {
     id: 'hardpy',
     name: 'HardPy',
@@ -246,6 +268,8 @@ runner.execute(test)?;`
       fr: 'Bibliothèque Python pour bancs d\'essai pytest via navigateur avec stockage BD'
     },
     language: 'Python',
+    license: 'GPL-3.0',
+    licenseTypes: ['OSS'],
     tags: ['pytest', 'browser', 'database', 'test-bench'],
     links: {
       github: 'https://github.com/everypinio/hardpy'
@@ -260,6 +284,8 @@ runner.execute(test)?;`
       fr: 'Framework d\'automatisation pour tests d\'acceptation, ATDD et automatisation robotique'
     },
     language: 'Python',
+    license: 'Apache-2.0',
+    licenseTypes: ['OSS'],
     tags: ['automation', 'atdd', 'rpa', 'acceptance-testing'],
     links: {
       github: 'https://github.com/robotframework/robotframework',
@@ -292,6 +318,8 @@ runner.execute(test)?;`
       fr: 'Plateforme open-source pour créer et exécuter des séquences de tests automatisées'
     },
     language: 'C#',
+    license: 'MPL-2.0',
+    licenseTypes: ['OSS'],
     tags: ['csharp', 'automation', 'platform', 'sequences'],
     links: {
       github: 'https://github.com/opentap/opentap',
@@ -307,6 +335,8 @@ runner.execute(test)?;`
       fr: 'Plugin pytest pour les tests automatisés d\'applications Qt GUI'
     },
     language: 'Python',
+    license: 'MIT',
+    licenseTypes: ['OSS'],
     tags: ['pytest', 'qt', 'gui-testing', 'plugin'],
     links: {
       github: 'https://github.com/pytest-dev/pytest-qt'
@@ -321,6 +351,7 @@ runner.execute(test)?;`
       fr: 'Framework d\'automatisation simplifié pour les mesures et le contrôle d\'instruments'
     },
     language: 'Python',
+    licenseTypes: ['OSS'],
     tags: ['automation', 'measurement', 'instruments'],
     links: {}
   },
@@ -333,6 +364,8 @@ runner.execute(test)?;`
       fr: 'Architecture de validation automatisée pour tester les logiciels déployés sur matériel'
     },
     language: 'Python',
+    license: 'GPL-2.0',
+    licenseTypes: ['OSS'],
     tags: ['linaro', 'validation', 'automated', 'deployment'],
     links: {
       github: 'https://github.com/Linaro/lava'
@@ -340,24 +373,6 @@ runner.execute(test)?;`
   },
 
   // Database Analytics
-  {
-    id: 'tofupilot',
-    name: 'TofuPilot',
-    category: 'Database_Analytics',
-    description: {
-      en: 'Plug-and-play database and analytics platform for hardware test data management',
-      fr: 'Plateforme de base de données et d\'analyse plug-and-play pour la gestion des tests matériels'
-    },
-    language: 'Python',
-    isCommercial: true,
-    licenseTypes: ['FREE', 'PAID'],
-    tags: ['database', 'pytest', 'analytics', 'commercial'],
-    links: {
-      website: 'https://tofupilot.com'
-    },
-    image: '/resources/tofupilot.png',
-    installation: 'pip install tofupilot',
-  },
   {
     id: 'yieldhub',
     name: 'yieldHUB',
@@ -384,11 +399,49 @@ runner.execute(test)?;`
       fr: 'Package Python pour contrôle universel d\'instruments via protocole VISA'
     },
     language: 'Python',
+    license: 'MIT',
+    licenseTypes: ['OSS'],
     tags: ['visa', 'instruments', 'control', 'measurement'],
     links: {
       github: 'https://github.com/pyvisa/pyvisa',
       website: 'https://pyvisa.com',
       docs: 'https://pyvisa.readthedocs.io'
+    },
+  },
+  {
+    id: 'pyserial',
+    name: 'pySerial',
+    category: 'Instrument_Interface',
+    description: {
+      en: 'Python library for serial port communication with hardware devices',
+      fr: 'Bibliothèque Python pour la communication série avec les périphériques matériels'
+    },
+    language: 'Python',
+    license: 'BSD',
+    licenseTypes: ['OSS'],
+    tags: ['serial', 'rs232', 'rs485', 'uart', 'communication'],
+    links: {
+      website: 'https://pyserial.com',
+      github: 'https://github.com/pyserial/pyserial',
+      docs: 'https://pyserial.readthedocs.io'
+    },
+  },
+  {
+    id: 'pymodbus',
+    name: 'PyModbus',
+    category: 'Instrument_Interface',
+    description: {
+      en: 'Python implementation of the Modbus protocol for industrial communication',
+      fr: 'Implémentation Python du protocole Modbus pour la communication industrielle'
+    },
+    language: 'Python',
+    license: 'BSD',
+    licenseTypes: ['OSS'],
+    tags: ['modbus', 'industrial', 'plc', 'rtu', 'tcp', 'communication'],
+    links: {
+      website: 'https://pymodbus.org',
+      github: 'https://github.com/pymodbus-dev/pymodbus',
+      docs: 'https://pymodbus.readthedocs.io'
     },
   },
   {
@@ -420,6 +473,8 @@ runner.execute(test)?;`
       fr: 'Bibliothèque Python pour la visualisation et l\'analyse de cartes de wafers'
     },
     language: 'Python',
+    license: 'GPL-3.0',
+    licenseTypes: ['OSS'],
     tags: ['semiconductor', 'wafer', 'mapping', 'visualization'],
     links: {
       github: 'https://github.com/dougthor42/wafer_map'
@@ -434,6 +489,8 @@ runner.execute(test)?;`
       fr: 'Lecteur Python pour les fichiers de données spectroscopiques WDF Renishaw'
     },
     language: 'Python',
+    license: 'MIT',
+    licenseTypes: ['OSS'],
     tags: ['wdf', 'renishaw', 'spectroscopy', 'reader'],
     links: {
       github: 'https://github.com/alchem0x2A/py-wdf-reader'
@@ -448,6 +505,7 @@ runner.execute(test)?;`
       fr: 'Outils Python pour la cartographie et l\'analyse statistique des données de wafers'
     },
     language: 'Python',
+    licenseTypes: ['OSS'],
     tags: ['wafer', 'mapping', 'analysis', 'semiconductor'],
     links: {
       // GitHub repo appears to be private or removed
@@ -462,6 +520,7 @@ runner.execute(test)?;`
       fr: 'Outil CLI pour générer des cartes de wafers binaires à partir de fichiers STDF'
     },
     language: 'Python',
+    licenseTypes: ['OSS'],
     tags: ['stdf', 'wafermap', 'semiconductor', 'analysis'],
     links: {
       // GitHub repo appears to be private or removed
@@ -478,6 +537,8 @@ runner.execute(test)?;`
       fr: 'Application GUI pour l\'acquisition et l\'analyse de données NanoVNA'
     },
     language: 'Python',
+    license: 'GPL-3.0',
+    licenseTypes: ['OSS'],
     tags: ['nanovna', 'vna', 'network-analyzer', 'rf'],
     links: {
       github: 'https://github.com/NanoVNA-Saver/nanovna-saver'
@@ -492,6 +553,8 @@ runner.execute(test)?;`
       fr: 'Plateforme open-hardware combinant oscilloscope, générateur de signaux et analyseur'
     },
     language: 'C',
+    license: 'BSD',
+    licenseTypes: ['OSS'],
     tags: ['oscilloscope', 'signal-generator', 'spectrum-analyzer', 'open-hardware'],
     links: {
       github: 'https://github.com/RedPitaya/RedPitaya',
@@ -522,6 +585,8 @@ runner.execute(test)?;`
       fr: 'Simulateur d\'instruments VISA pour tester sans matériel physique'
     },
     language: 'Python',
+    license: 'MIT',
+    licenseTypes: ['OSS'],
     tags: ['visa', 'simulation', 'mocking', 'testing'],
     links: {
       github: 'https://github.com/pyvisa/pyvisa-sim'
@@ -536,6 +601,8 @@ runner.execute(test)?;`
       fr: 'Framework de simulation de périphériques Linux pour les tests d\'intégration'
     },
     language: 'C',
+    license: 'LGPL-2.1+',
+    licenseTypes: ['OSS'],
     tags: ['linux', 'mocking', 'devices', 'integration'],
     links: {
       github: 'https://github.com/martinpitt/umockdev'
@@ -552,6 +619,8 @@ runner.execute(test)?;`
       fr: 'Suite de tests complète pour la validation et les tests de régression du noyau Linux'
     },
     language: 'C',
+    license: 'GPL-2.0',
+    licenseTypes: ['OSS'],
     tags: ['linux', 'kernel', 'stress-testing', 'regression'],
     links: {
       github: 'https://github.com/linux-test-project/ltp'
@@ -566,6 +635,8 @@ runner.execute(test)?;`
       fr: 'Outil de test de stress système pour CPU, mémoire, E/S et tests de charge réseau'
     },
     language: 'C',
+    license: 'GPL-2.0',
+    licenseTypes: ['OSS'],
     tags: ['stress-testing', 'cpu', 'memory', 'disk', 'system'],
     links: {
       github: 'https://github.com/ColinIanKing/stress-ng'
@@ -581,6 +652,7 @@ runner.execute(test)?;`
       fr: 'Framework Python certifié ISO pour les tests de dispositifs médicaux et l\'automatisation CI/CD'
     },
     language: 'Python',
+    licenseTypes: ['OSS'],
     tags: ['medical', 'iso', 'ci-cd', 'automated'],
     links: {
       // GitHub repo appears to be private or removed
@@ -595,6 +667,7 @@ runner.execute(test)?;`
       fr: 'Framework de tests automatisés pour cartes MicroPython et périphériques'
     },
     language: 'Python',
+    licenseTypes: ['OSS'],
     tags: ['micropython', 'boards', 'embedded', 'automated'],
     links: {
       // GitHub repo appears to be private or removed
@@ -609,6 +682,7 @@ runner.execute(test)?;`
       fr: 'Bibliothèque Python d\'aide pour l\'automatisation de stations de test en production'
     },
     language: 'Python',
+    licenseTypes: ['OSS'],
     tags: ['production', 'test-station', 'manufacturing', 'helper'],
     links: {
       // GitHub repo appears to be private or removed
@@ -623,6 +697,8 @@ runner.execute(test)?;`
       fr: 'Plateforme d\'automatisation d\'usine pour les tests de produits (support chinois)'
     },
     language: 'C++',
+    license: 'LGPL-3.0',
+    licenseTypes: ['OSS'],
     tags: ['chinese', 'factory', 'automation', 'platform'],
     links: {
       github: 'https://github.com/WilliamYinwei/TreeATE'
@@ -643,6 +719,8 @@ runner.execute(test)?;`
       fr: 'Plugin pytest pour les tests et la validation automatisés de systèmes embarqués'
     },
     language: 'Python',
+    license: 'MIT',
+    licenseTypes: ['OSS'],
     tags: ['pytest', 'embedded', 'plugin', 'espressif'],
     links: {
       github: 'https://github.com/espressif/pytest-embedded'
