@@ -1,8 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Database, Tags, GitCommit } from "lucide-react"
+import { Database, GitCommit } from "lucide-react"
 import { translations, Locale } from "@/lib/translations"
-import { hardwareTestData, categories } from "@/lib/hardware-data"
+import { hardwareTestData } from "@/lib/hardware-data"
 import { LanguageDropdown } from "@/components/language-dropdown"
 
 const DiscordIcon = ({ className }: { className?: string }) => (
@@ -81,13 +81,6 @@ export function HeroSection({ lang, repoLastCommit, repoStars, repoContributors 
                   {t.hero.stats.resources}
                 </div>
                 <div className="text-white font-bold">{hardwareTestData.length}</div>
-              </div>
-              <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-48 flex-shrink-0">
-                <div className="flex items-center gap-1 text-green-400 text-xs mb-1">
-                  <Tags className="h-3 w-3" />
-                  {t.hero.stats.categories}
-                </div>
-                <div className="text-white font-bold">{categories.length}</div>
               </div>
               <div className="bg-zinc-800/70 border border-green-500/20 rounded-none p-3 font-mono w-48 flex-shrink-0">
                 <div className="flex items-center gap-1 text-green-400 text-xs mb-1">

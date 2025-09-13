@@ -37,7 +37,7 @@ export function DiscordSection({ lang }: DiscordSectionProps) {
         >
           <Link href="https://discord.gg/XuwYANGx7J" target="_blank" className="flex items-center gap-2 justify-center">
             <DiscordIcon className="h-4 w-4" />
-            JOIN DISCORD
+            {t.hero.discord.button}
           </Link>
         </Button>
     </Card>
