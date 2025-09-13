@@ -67,7 +67,7 @@ export default async function LandingPage({ params, searchParams }: LandingPageP
       ? "Complete collection of hardware testing tools and frameworks"
       : "Collection complète d'outils et frameworks de test matériel",
     "url": `${siteUrl}/${lang}`,
-    "codeRepository": "https://github.com/awesome-hardware-test",
+    "codeRepository": "https://github.com/tofupilot/awesome-hardware-test",
     "programmingLanguage": ["Python", "Rust", "C++", "JavaScript"],
     "keywords": "hardware testing, test automation, semiconductor testing, wafer maps",
     "aggregateRating": {
