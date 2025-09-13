@@ -196,7 +196,7 @@ export function GitHubStyle() {
                       <p className="mb-2">
                         Inspired by{' '}
                         <a 
-                          href="https://github.com/sschaetz/awesome-hardware-test" 
+                          href="https://github.com/tofupilot/awesome-hardware-test" 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="text-blue-600 dark:text-blue-400 hover:underline"

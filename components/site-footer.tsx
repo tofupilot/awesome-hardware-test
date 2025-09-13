@@ -34,7 +34,7 @@ export function SiteFooter({ lang }: SiteFooterProps) {
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm sm:text-base text-zinc-500 font-mono">
         <div className="flex items-center gap-6">
           <Link
-            href="https://github.com/sschaetz/awesome-hardware-test"
+            href="https://github.com/tofupilot/awesome-hardware-test"
             className="flex items-center gap-2 hover:text-green-400 transition-colors"
             target="_blank"
           >
