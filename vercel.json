@@ -85,6 +85,11 @@
       "permanent": true
     },
     {
+      "source": "/",
+      "destination": "https://www.tofupilot.com/guides/open-source-test-executive-alternatives",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "destination": "https://www.tofupilot.com/guides/open-source-test-executive-alternatives",
       "permanent": true
