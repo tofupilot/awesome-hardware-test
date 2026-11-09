@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/:lang(en|fr)/openhtf",
+      "destination": "https://www.openhtf.com",
+      "permanent": true
+    },
+    {
+      "source": "/openhtf",
+      "destination": "https://www.openhtf.com",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/hardpy",
+      "destination": "https://www.tofupilot.com/guides/hardpy-vs-tofupilot-test-executive-comparison",
+      "permanent": true
+    },
+    {
+      "source": "/hardpy",
+      "destination": "https://www.tofupilot.com/guides/hardpy-vs-tofupilot-test-executive-comparison",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/flojoy-studio",
+      "destination": "https://www.tofupilot.com/guides/flojoy-studio-alternatives-for-hardware-test",
+      "permanent": true
+    },
+    {
+      "source": "/flojoy-studio",
+      "destination": "https://www.tofupilot.com/guides/flojoy-studio-alternatives-for-hardware-test",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/exclave",
+      "destination": "https://www.tofupilot.com/guides/exclave-vs-tofupilot-factory-test-comparison",
+      "permanent": true
+    },
+    {
+      "source": "/exclave",
+      "destination": "https://www.tofupilot.com/guides/exclave-vs-tofupilot-factory-test-comparison",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/opentap",
+      "destination": "https://www.tofupilot.com/guides/opentap-vs-tofupilot-test-sequencer-comparison",
+      "permanent": true
+    },
+    {
+      "source": "/opentap",
+      "destination": "https://www.tofupilot.com/guides/opentap-vs-tofupilot-test-sequencer-comparison",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/yieldhub",
+      "destination": "https://www.tofupilot.com/guides/yieldhub-vs-tofupilot-test-data-analytics",
+      "permanent": true
+    },
+    {
+      "source": "/yieldhub",
+      "destination": "https://www.tofupilot.com/guides/yieldhub-vs-tofupilot-test-data-analytics",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/robotframework",
+      "destination": "https://www.tofupilot.com/guides/robot-framework-vs-tofupilot-for-hardware-test",
+      "permanent": true
+    },
+    {
+      "source": "/robotframework",
+      "destination": "https://www.tofupilot.com/guides/robot-framework-vs-tofupilot-for-hardware-test",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|fr)/tofupilot",
+      "destination": "https://www.tofupilot.com/framework",
+      "permanent": true
+    },
+    {
+      "source": "/tofupilot",
+      "destination": "https://www.tofupilot.com/framework",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "destination": "https://www.tofupilot.com/guides/open-source-test-executive-alternatives",
+      "permanent": true
+    }
+  ]
+}

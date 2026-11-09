@@ -1,10 +1,9 @@
 # Awesome Hardware Test
 
-A curated collection of resources designed to help test engineers work faster.
+This list has moved to TofuPilot. awesome-hardware-test.com now redirects there:
 
-**🌐 Visit [awesome-hardware-test.com](https://awesome-hardware-test.com)**
-
-**💬 Join our [Discord community](https://discord.gg/XuwYANGx7J)**
+- [Open Source Test Executive Alternatives](https://www.tofupilot.com/guides/open-source-test-executive-alternatives)
+- [TofuPilot guides](https://www.tofupilot.com/guides)
 
 ## License
 
